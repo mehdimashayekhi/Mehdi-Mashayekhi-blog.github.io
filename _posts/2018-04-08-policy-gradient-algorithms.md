@@ -1,8 +1,8 @@
 ---
 layout: post
 comments: false
-title: "Policy Gradient Algorithms"
-date: 2018-04-08 00:15:06
+title: "Hierarchical Reinforcement Learning"
+date: 2019-05-23 00:15:06
 tags: reinforcement-learning review
 ---
 

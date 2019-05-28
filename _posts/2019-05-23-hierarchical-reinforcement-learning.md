@@ -82,7 +82,7 @@ In the following we deep dive into one of the most important HRL algorithms whic
 
 **Option** is defined by a tuple tuple ($$I_\omega(s)$$, $$\pi_\omega(a \vert s)$$, $$\beta_\omega(s)$$). 
 
-![MADDPG]({{ '/assets/images/option.png' | relative_url }})
+![OPTIONS]({{ '/assets/images/option.png' | relative_url }})
 {: class="center" style="width: 70%;"}
 *Fig. 1. Decision Making with Options. (Image source: [Richard S. Sutton, et al, 1999](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf))*
 
@@ -96,6 +96,10 @@ For Markov options, special temporal-difference methods can be used to learn use
 ### The Option-critic Architecture
 
 [[paper](https://arxiv.org/pdf/1609.05140.pdf)\|[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)]
+
+![OPTION CRITIC]({{ '/assets/images/OPTION_CRITIC.png' | relative_url }})
+{: class="center" style="width: 70%;"}
+*Fig. 1. Decision Making with Options. (Image source: [Pierre-Luc Bacon, et al, 2016](https://arxiv.org/pdf/1609.05140.pdf))*
 
 
 ### Summary of Other HRL Algorithms

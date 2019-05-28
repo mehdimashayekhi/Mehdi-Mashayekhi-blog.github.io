@@ -61,6 +61,7 @@ Imagine you want to build a cooking robot. In order for the robot to cook we can
 - High-level actions: choosing a recipe, making a grocery list, getting groceries and finally cook.
 - Medium-level actions: getting a pot, putting ingredients in the  pot, string until smooth, checking the recipe  
 - Low-level actions: wrist and arm movement while stirring, pouring
+
 All these steps have to be seamlessly integrated. Dividing the actions into various levels of abstraction is called temporal abstraction. 
 Hierarchical reinforcement learning is a promising method which extends conventional reinforcement learning approaches, by exploiting temporal abstraction, where decisions are not needed at each step, but rather invoke the execution of temporally-extended actions which follow their own policies until termination. 
 

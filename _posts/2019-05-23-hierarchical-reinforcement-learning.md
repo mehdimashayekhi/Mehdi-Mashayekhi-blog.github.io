@@ -46,6 +46,8 @@ Here is a list of notations to help you read through equations in the post easil
 
 ## What is Hierarchical Reinforcement learning (HRL)
 
+Hierarchical reinforcement learning is a promising method which extends conventional reinforcement learning approaches, by exploiting temporal abstraction, where decisions are not needed at each step, but rather invoke the execution of temporally-extended actions which follow their own policies until termination. 
+
 ### Main limitations of RL, in Comparison to HRL
 
 - Data inefficiency

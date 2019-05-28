@@ -44,7 +44,7 @@ Here is a list of notations to help you read through equations in the post easil
 | $$Q^\pi(s, a)$$ | Similar to $$V^\pi(.)$$, the value of (state, action) pair when we follow a policy π; $$Q^\pi(s, a) = \mathbb{E}_{a\sim \pi} [G_t \vert S_t = s, A_t = a]$$. |
 | $$A(s, a)$$ | Advantage function, $$A(s, a) = Q(s, a) - V(s)$$; it can be considered as another version of Q-value with lower variance by taking the state-value off as the baseline. |
 
-
+## What is Hierarchical Reinforcement learning (HRL)
 
 ### Main limitations of RL, in Comparison to HRL
 
@@ -54,7 +54,7 @@ Here is a list of notations to help you read through equations in the post easil
 - Abstraction
 
 
-## What is Hierarchical Reinforcement learning (HRL)
+## HRL Algorithms
 
 Tons of policy gradient algorithms have been proposed during recent years and there is no way for me to exhaust them. I'm introducing some of them that I happened to know and read about.
 

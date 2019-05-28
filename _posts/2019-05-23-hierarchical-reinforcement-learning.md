@@ -117,7 +117,9 @@ Let’s see how it works in a simple action-value actor-critic algorithm.
 Two learning rates, $$\alpha_\theta$$ and $$\alpha_w$$, are predefined for policy and value function parameter updates respectively.
 
 ### Summary of Other HRL Algorithms
-tbd
+- Feudal Learning
+- Successor Features (SFs) and Generalized policy improvement (GPI)
+- Subgoal Discovery
 
 ## Quick Summary and Future Research
 
@@ -152,3 +154,8 @@ After reading through all the algorithms above, I list a few building blocks or 
 
 [3] Pierre-Luc Bacon, et al.[The Option-Critic Architecture](https://arxiv.org/pdf/1609.05140.pdf). 2016.
 
+[4] André Barreto, et al.[Successor Features for Transfer in Reinforcement Learning](https://papers.nips.cc/paper/6994-successor-features-for-transfer-in-reinforcement-learning.pdf). 2017.
+
+[5] André Barreto, et al.[Feudal Reinforcement Learning](http://www.cs.toronto.edu/~fritz/absps/dh93.pdf). 1993.
+
+[6] Tejas D. Kulkarni, et al.[Hierarchical Deep Reinforcement Learning: Integrating Temporal Abstraction and Intrinsic Motivation](https://arxiv.org/abs/1604.06057). 2016.

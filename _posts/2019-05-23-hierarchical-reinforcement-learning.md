@@ -43,6 +43,9 @@ Here is a list of notations to help you read through equations in the post easil
 | $$Q(s, a)$$ | Action-value function is similar to $$V(s)$$, but it assesses the expected return of a pair of state and action (s, a); $$Q_w(.)$$ is a action value function parameterized by w. |
 | $$Q^\pi(s, a)$$ | Similar to $$V^\pi(.)$$, the value of (state, action) pair when we follow a policy π; $$Q^\pi(s, a) = \mathbb{E}_{a\sim \pi} [G_t \vert S_t = s, A_t = a]$$. |
 | $$A(s, a)$$ | Advantage function, $$A(s, a) = Q(s, a) - V(s)$$; it can be considered as another version of Q-value with lower variance by taking the state-value off as the baseline. |
+| $$I_\omega(s)$$ | An initiation function (precondition). |
+| $$\pi_\omega(a \vert s)$$ | An internal policy (behavior). |
+| $$\beta_\omega(s)$$ | a termination function (post-condition). |
 
 ### Some of Main Ingredients of Reinforcement Learning
 - Value Functions

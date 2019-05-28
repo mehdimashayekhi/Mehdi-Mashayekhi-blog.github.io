@@ -173,9 +173,8 @@ After reading through all the algorithms above, I list a few building blocks or 
 
 ---
 
-*If you notice mistakes and errors in this post, don't hesitate to contact me at [lilian dot wengweng at gmail dot com] and I would be very happy to correct them right away!*
+*If you notice mistakes and errors in this post, please don't hesitate to contact me at [mehdi dot mashayekhi dot 65 at gmail dot com] and I would be very happy to correct them right away!*
 
-See you in the next post :D
 
 
 ## References

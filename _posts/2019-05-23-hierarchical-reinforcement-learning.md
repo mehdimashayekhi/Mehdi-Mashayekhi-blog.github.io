@@ -99,6 +99,13 @@ The process is pretty straightforward:
 
 A widely used variation of REINFORCE is to subtract a baseline value from the return $$G_t$$ to *reduce the variance of gradient estimation while keeping the bias unchanged* (Remember we always want to do this when possible). For example, a common baseline is to subtract state-value from action-value, and if applied, we would use advantage $$A(s, a) = Q(s, a) - V(s)$$ in the gradient ascent update. This [post](https://danieltakeshi.github.io/2017/03/28/going-deeper-into-reinforcement-learning-fundamentals-of-policy-gradients/) nicely explained why a baseline works for reducing the variance, in addition to a set of fundamentals of policy gradient.
 
+#### Options
+TBD
+#### MonteCarlo Model Learning
+TBD
+#### IntraOptionModelLearningAgent
+For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these intra-option methods.
+
 
 
 ### The Option-critic Architecture
@@ -123,7 +130,7 @@ Let’s see how it works in a simple action-value actor-critic algorithm.
 
 Two learning rates, $$\alpha_\theta$$ and $$\alpha_w$$, are predefined for policy and value function parameter updates respectively.
 
-## Quick Summary
+## Quick Summary and Future Research
 
 After reading through all the algorithms above, I list a few building blocks or principles that seem to be common among them:
 

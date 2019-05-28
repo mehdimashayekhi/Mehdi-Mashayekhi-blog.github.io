@@ -77,30 +77,6 @@ Tons of policy gradient algorithms have been proposed during recent years and th
 
 **Option** is defined by a tuple tuple ($$I_\omega(s)$$, $$\pi_\omega(a \vert s)$$, $$\beta_\omega(s)$$). 
 
-**Options** (Monte-Carlo policy gradient) relies on an estimated return by [Monte-Carlo]({{ site.baseurl }}{% post_url 2018-02-19-a-long-peek-into-reinforcement-learning %}#monte-carlo-methods) methods using episode samples to update the policy parameter $$\theta$$. REINFORCE works because the expectation of the sample gradient is equal to the actual gradient:
-
-
-$$
-\begin{aligned}
-\nabla_\theta J(\theta)
-&= \mathbb{E}_\pi [Q^\pi(s, a) \nabla_\theta \ln \pi_\theta(a \vert s)] & \\
-&= \mathbb{E}_\pi [G_t \nabla_\theta \ln \pi_\theta(A_t \vert S_t)] & \scriptstyle{\text{; Because } Q^\pi(S_t, A_t) = \mathbb{E}_\pi[G_t \vert S_t, A_t]}
-\end{aligned}
-$$
-
-Therefore we are able to measure $$G_t$$ from real sample trajectories and use that to update our policy gradient. It relies on a full trajectory and that’s why it is a Monte-Carlo method. 
-
-The process is pretty straightforward:
-1. Initialize the policy parameter θ at random.
-2. Generate one trajectory on policy $$\pi_\theta$$: $$S_1, A_1, R_2, S_2, A_2, \dots, S_T$$.
-3. For t=1, 2, ... , T:
-    1. Estimate the the return $$G_t$$;
-    2. Update policy parameters: $$\theta \leftarrow \theta + \alpha \gamma^t G_t \nabla_\theta \ln \pi_\theta(A_t \vert S_t)$$
-
-A widely used variation of REINFORCE is to subtract a baseline value from the return $$G_t$$ to *reduce the variance of gradient estimation while keeping the bias unchanged* (Remember we always want to do this when possible). For example, a common baseline is to subtract state-value from action-value, and if applied, we would use advantage $$A(s, a) = Q(s, a) - V(s)$$ in the gradient ascent update. This [post](https://danieltakeshi.github.io/2017/03/28/going-deeper-into-reinforcement-learning-fundamentals-of-policy-gradients/) nicely explained why a baseline works for reducing the variance, in addition to a set of fundamentals of policy gradient.
-
-#### Options
-TBD
 #### MonteCarlo Model Learning
 TBD
 #### Intra-Option Model Learning
@@ -112,23 +88,6 @@ For Markov options, special temporal-difference methods can be used to learn use
 
 [[paper](https://arxiv.org/pdf/1609.05140.pdf)\|[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)]
 
-Two main components in policy gradient are the policy model and the value function. It makes a lot of sense to learn the value function in addition to the policy, since knowing the value function can assist the policy update, such as by reducing gradient variance in vanilla policy gradients, and that is exactly what the **Actor-Critic** method does. 
-
-
-Actor-critic methods consist of two models, which may optionally share parameters:
-* **Critic** updates the value function parameters w and depending on the algorithm it could be action-value $$Q_w(a \vert s)$$ or state-value $$V_w(s)$$.
-* **Actor** updates the policy parameters θ for $$\pi_\theta(a \vert s)$$, in the direction suggested by the critic.
-
-Let’s see how it works in a simple action-value actor-critic algorithm.
-1. Initialize s, θ, w at random; sample $$a \sim \pi_\theta(a \vert s)$$.
-2. For $$t = 1 \dots T$$:
-    1. Sample reward $$r_t \sim R(s, a)$$ and next state $$s’ \sim P(s’ \vert s, a)$$;
-    2. Then sample the next action $$a’ \sim \pi_\theta(a’ \vert s’)$$;
-    3. Update the policy parameters: $$\theta \leftarrow \theta + \alpha_\theta Q_w(s, a) \nabla_\theta \ln \pi_\theta(a \vert s)$$;
-    4. Compute the correction (TD error) for action-value at time t: <br/>$$\delta_t = r_t + \gamma Q_w(s’, a’) - Q_w(s, a)$$ <br/>and use it to update the parameters of action-value function:<br/> $$w \leftarrow w + \alpha_w \delta_t \nabla_w Q_w(s, a)$$
-    5. Update $$a \leftarrow a’$$ and $$s \leftarrow s’$$.
-
-Two learning rates, $$\alpha_\theta$$ and $$\alpha_w$$, are predefined for policy and value function parameter updates respectively.
 
 ### Summary of Other HRL Algorithms
 - Feudal Learning
@@ -137,21 +96,7 @@ Two learning rates, $$\alpha_\theta$$ and $$\alpha_w$$, are predefined for polic
 
 ## Quick Summary and Future Research
 
-After reading through all the algorithms above, I list a few building blocks or principles that seem to be common among them:
-
-* Try to reduce the variance and keep the bias unchanged to stabilize learning.
-* Off-policy gives us better exploration and helps us use data samples more efficiently.
-* Experience replay (training data sampled from a replay memory buffer);
-* Target network that is either frozen periodically or updated slower than the actively learned policy network;
-* Batch normalization;
-* Entropy-regularized reward;
-* The critic and actor can share lower layer parameters of the network and two output heads for policy and value functions.
-* It is possible to learn with deterministic policy rather than stochastic one.
-* Put constraint on the divergence between policy updates.
-* New optimization methods (such as K-FAC).
-* Entropy maximization of the policy helps encourage exploration.
-* Try not to overestimate the value function.
-* TBA more.
+TBD
 
 
 ---

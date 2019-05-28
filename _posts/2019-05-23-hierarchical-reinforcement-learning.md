@@ -130,6 +130,9 @@ Let’s see how it works in a simple action-value actor-critic algorithm.
 
 Two learning rates, $$\alpha_\theta$$ and $$\alpha_w$$, are predefined for policy and value function parameter updates respectively.
 
+### Summary of Other HRL Algorithms
+tbd
+
 ## Quick Summary and Future Research
 
 After reading through all the algorithms above, I list a few building blocks or principles that seem to be common among them:

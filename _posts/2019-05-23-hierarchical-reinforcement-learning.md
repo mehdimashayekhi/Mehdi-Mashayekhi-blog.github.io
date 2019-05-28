@@ -158,5 +158,4 @@ After reading through all the algorithms above, I list a few building blocks or 
 
 [5] André Barreto, et al.[Feudal Reinforcement Learning](http://www.cs.toronto.edu/~fritz/absps/dh93.pdf). 1993.
 
-[6] Tejas D. Kulkarni, et al.[Hierarchical Deep Reinforcement Learning: Integrating Temporal Abstraction and Intrinsic Motivation](https://arxiv.org/abs/1604.06057). 1993.
-
+[6] Tejas D. Kulkarni, et al.[Hierarchical Deep Reinforcement Learning: Integrating Temporal Abstraction and Intrinsic Motivation](https://arxiv.org/abs/1604.06057). 2016.

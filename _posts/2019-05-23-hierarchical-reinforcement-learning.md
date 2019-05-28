@@ -75,7 +75,9 @@ Tons of policy gradient algorithms have been proposed during recent years and th
 
 ### Options Framework
 
-**REINFORCE** (Monte-Carlo policy gradient) relies on an estimated return by [Monte-Carlo]({{ site.baseurl }}{% post_url 2018-02-19-a-long-peek-into-reinforcement-learning %}#monte-carlo-methods) methods using episode samples to update the policy parameter $$\theta$$. REINFORCE works because the expectation of the sample gradient is equal to the actual gradient:
+[[paper](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf)\|[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)]
+
+**Options** (Monte-Carlo policy gradient) relies on an estimated return by [Monte-Carlo]({{ site.baseurl }}{% post_url 2018-02-19-a-long-peek-into-reinforcement-learning %}#monte-carlo-methods) methods using episode samples to update the policy parameter $$\theta$$. REINFORCE works because the expectation of the sample gradient is equal to the actual gradient:
 
 
 $$
@@ -101,6 +103,8 @@ A widely used variation of REINFORCE is to subtract a baseline value from the re
 
 ### The Option-critic Architecture
 
+[[paper](https://arxiv.org/pdf/1609.05140.pdf)\|[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)]
+
 Two main components in policy gradient are the policy model and the value function. It makes a lot of sense to learn the value function in addition to the policy, since knowing the value function can assist the policy update, such as by reducing gradient variance in vanilla policy gradients, and that is exactly what the **Actor-Critic** method does. 
 
 
@@ -118,39 +122,6 @@ Let’s see how it works in a simple action-value actor-critic algorithm.
     5. Update $$a \leftarrow a’$$ and $$s \leftarrow s’$$.
 
 Two learning rates, $$\alpha_\theta$$ and $$\alpha_w$$, are predefined for policy and value function parameter updates respectively.
-
-### A3C
-
-[[paper](https://arxiv.org/abs/1602.01783)\|[code](https://github.com/dennybritz/reinforcement-learning/tree/master/PolicyGradient/a3c)]
-
-**Asynchronous Advantage Actor-Critic** ([Mnih et al., 2016](https://arxiv.org/abs/1602.01783)), short for **A3C**, is a classic policy gradient method with a special focus on parallel training. 
-
-In A3C, the critics learn the value function while multiple actors are trained in parallel and get synced with global parameters from time to time. Hence, A3C is designed to work well for parallel training.
-
-Let’s use the state-value function as an example. The loss function for state value is to minimize the mean squared error, $$J_v(w) = (G_t - V_w(s))^2$$ and gradient descent can be applied to find the optimal w. This state-value function is used as the baseline in the policy gradient update.
-
-Here is the algorithm outline:
-1. We have global parameters, θ and w; similar thread-specific parameters, θ’ and w’.
-2. Initialize the time step $$t = 1$$
-3. While $$T <= T_\text{MAX}$$:
-    1. Reset gradient: dθ = 0 and dw = 0.
-    2. Synchronize thread-specific parameters with global ones: θ’ = θ and w’ = w.
-    3. $$t_\text{start}$$ = t and sample a starting state $$s_t$$.
-    4. While ($$s_t$$ != TERMINAL) and $$t - t_\text{start} <= t_\text{max}$$:
-        1. Pick the action $$A_t \sim \pi_{\theta’}(A_t \vert S_t)$$ and receive a new reward $$R_t$$ and a new state $$s_{t+1}$$.
-        2. Update t = t + 1 and T = T + 1
-    5. Initialize the variable that holds the return estimation $$R = \begin{cases} 
-	0 & \text{if } s_t \text{ is TERMINAL} \\
-	V_{w’}(s_t) & \text{otherwise}
-	\end{cases}
-	$$
-    6. For $$i = t-1, \dots, t_\text{start}$$:
-        1. $$R \leftarrow \gamma R + R_i$$; here R is a MC measure of $$G_i$$.
-        2. Accumulate gradients w.r.t. θ’: $$d\theta \leftarrow d\theta + \nabla_{\theta’} \log \pi_{\theta’}(a_i \vert s_i)(R - V_{w'}(s_i))$$;<br/>Accumulate gradients w.r.t. w’: $$dw \leftarrow dw + 2 (R - V_{w’}(s_i)) \nabla_{w’} (R - V_{w’}(s_i))$$.
-    7. Update asynchronously θ using dθ, and w using dw.
-
-A3C enables the parallelism in multiple agent training. The gradient accumulation step (6.2) can be considered as a parallelized reformation of minibatch-based stochastic gradient update: the values of w or θ get corrected by a little bit in the direction of each training thread independently.
-
 
 ## Quick Summary
 

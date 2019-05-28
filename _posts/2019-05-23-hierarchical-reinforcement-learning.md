@@ -19,7 +19,7 @@ image: "A3C_vs_A2C.png"
 
 ## What is Reinforcement learning (RL)
 
-Reinforcement learning is learning what to do—mapping states to actions—so as to maximize a numerical reward. The learner is not told which actions to perform, but instead must learn which actions lead to the most reward by trying them. Actions not only may affect the immediate reward, but also the next situation and, through that, all future rewards. Trial-and-error searching, and delayed reward—are the two most important unique features of reinforcement learning. 
+Reinforcement learning is learning what to do—mapping states to actions—so as to maximize a numerical reward. The learner is not told which actions to perform, but instead must learn which actions lead to the most reward by trying them. Actions not only may affect the immediate reward, but also the next situation and, through that, all future rewards. Trial-and-error searching, and delayed reward—are the two most important unique features of reinforcement learning.
 
 
 ### Notations
@@ -44,7 +44,7 @@ Here is a list of notations to help you read through equations in the post easil
 | $$Q^\pi(s, a)$$ | Similar to $$V^\pi(.)$$, the value of (state, action) pair when we follow a policy π; $$Q^\pi(s, a) = \mathbb{E}_{a\sim \pi} [G_t \vert S_t = s, A_t = a]$$. |
 | $$A(s, a)$$ | Advantage function, $$A(s, a) = Q(s, a) - V(s)$$; it can be considered as another version of Q-value with lower variance by taking the state-value off as the baseline. |
 
-
+## What is Hierarchical Reinforcement learning (HRL)
 
 ### Main limitations of RL, in Comparison to HRL
 
@@ -54,7 +54,7 @@ Here is a list of notations to help you read through equations in the post easil
 - Abstraction
 
 
-## What is Hierarchical Reinforcement learning (HRL)
+## HRL Algorithms
 
 Tons of policy gradient algorithms have been proposed during recent years and there is no way for me to exhaust them. I'm introducing some of them that I happened to know and read about.
 

@@ -44,6 +44,11 @@ Here is a list of notations to help you read through equations in the post easil
 | $$Q^\pi(s, a)$$ | Similar to $$V^\pi(.)$$, the value of (state, action) pair when we follow a policy π; $$Q^\pi(s, a) = \mathbb{E}_{a\sim \pi} [G_t \vert S_t = s, A_t = a]$$. |
 | $$A(s, a)$$ | Advantage function, $$A(s, a) = Q(s, a) - V(s)$$; it can be considered as another version of Q-value with lower variance by taking the state-value off as the baseline. |
 
+### Some of Main Ingredients of Reinforcement Learning
+- Value Functions
+- Temporal Difference (TD) Learning
+- Advantage Function
+
 ## What is Hierarchical Reinforcement learning (HRL)
 
 Hierarchical reinforcement learning is a promising method which extends conventional reinforcement learning approaches, by exploiting temporal abstraction, where decisions are not needed at each step, but rather invoke the execution of temporally-extended actions which follow their own policies until termination. 

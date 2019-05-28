@@ -63,12 +63,14 @@ Imagine you want to build a cooking robot. In order for the robot to cook we can
 - Low-level actions: wrist and arm movement while stirring, pouring
 
 All these steps have to be seamlessly integrated. Dividing the actions into various levels of abstraction is called temporal abstraction. 
-Hierarchical reinforcement learning is a promising method which extends conventional reinforcement learning approaches, by exploiting temporal abstraction, where decisions are not needed at each step, but rather invoke the execution of temporally-extended actions which follow their own policies until termination. 
+Hierarchical reinforcement learning is a promising method which extends conventional reinforcement learning approaches, by exploiting temporal abstraction-- multiple-time step ``macro`` actions.
+Temporal abstraction allows us to only exploring/computing values for interesting states, and transfer learning across problems/regions.
 
 
 ## HRL Algorithms
 
-Tons of policy gradient algorithms have been proposed during recent years and there is no way for me to exhaust them. I'm introducing some of them that I happened to know and read about.
+In the following we deep dive into one of the most important HRL algorithms which is ``Options Framework``, and summarize some of other HRL algorithms.
+
 
 
 ### Options Framework

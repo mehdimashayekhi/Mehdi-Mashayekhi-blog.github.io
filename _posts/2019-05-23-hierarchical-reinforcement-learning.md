@@ -19,7 +19,7 @@ image: "A3C_vs_A2C.png"
 
 ## What is Reinforcement learning (RL)
 
-Policy gradient is an approach to solve reinforcement learning problems. If you haven’t looked into the field of reinforcement learning, please first read the section ["A (Long) Peek into Reinforcement Learning >> Key Concepts"]({{ site.baseurl }}{% post_url 2018-02-19-a-long-peek-into-reinforcement-learning %}#key-concepts) for the problem definition and key concepts.
+Reinforcement learning is learning what to do—mapping states to actions—so as to maximize a numerical reward. The learner is not told which actions to perform, but instead must learn which actions lead to the most reward by trying them. Actions not only may affect the immediate reward, but also the next situation and, through that, all future rewards. Trial-and-error searching, and delayed reward—are the two most important unique features of reinforcement learning.
 
 
 ### Notations

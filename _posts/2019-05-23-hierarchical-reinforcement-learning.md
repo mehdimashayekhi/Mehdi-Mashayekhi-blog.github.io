@@ -75,6 +75,8 @@ Tons of policy gradient algorithms have been proposed during recent years and th
 
 [[paper](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf)\|[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)]
 
+**Option** is defined by a tuple tuple ($$\pi(a \vert s)$$, $$\I(s)$$, \beta). 
+
 **Options** (Monte-Carlo policy gradient) relies on an estimated return by [Monte-Carlo]({{ site.baseurl }}{% post_url 2018-02-19-a-long-peek-into-reinforcement-learning %}#monte-carlo-methods) methods using episode samples to update the policy parameter $$\theta$$. REINFORCE works because the expectation of the sample gradient is equal to the actual gradient:
 
 

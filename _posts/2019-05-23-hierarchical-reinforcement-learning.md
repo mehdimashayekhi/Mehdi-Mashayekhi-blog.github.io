@@ -196,7 +196,7 @@ def updateModels(self, state, reward, next_state):
 
     # Update model for every option consistent with last action taken
     for option in consistent_options:
-        o = self._oIdx(option)
+        o = option
 
         # Update N table
         #self.N[s1, o] += 1
@@ -211,9 +211,7 @@ def updateModels(self, state, reward, next_state):
         # Update P 
         p_target_all = self.gamma * (1 - option.beta[next_state]) * \
             self.P[s2, o]
-
         self.P[s1, o] += alpha * (p_target_all - self.P[s1, o])
-
         self.P[s1, o, s2] += alpha * self.gamma * \
             option.beta[next_state]
 ```

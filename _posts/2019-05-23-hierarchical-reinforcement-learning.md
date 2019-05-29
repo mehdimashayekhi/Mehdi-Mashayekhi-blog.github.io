@@ -43,9 +43,9 @@ Here is a list of notations to help you read through equations in the post easil
 | $$Q(s, a)$$ | Action-value function is similar to $$V(s)$$, but it assesses the expected return of a pair of state and action (s, a); $$Q_w(.)$$ is a action value function parameterized by w. |
 | $$Q^\pi(s, a)$$ | Similar to $$V^\pi(.)$$, the value of (state, action) pair when we follow a policy π; $$Q^\pi(s, a) = \mathbb{E}_{a\sim \pi} [G_t \vert S_t = s, A_t = a]$$. |
 | $$A(s, a)$$ | Advantage function, $$A(s, a) = Q(s, a) - V(s)$$; it can be considered as another version of Q-value with lower variance by taking the state-value off as the baseline. |
-| $$I_\omega(s)$$ | An initiation function (precondition). |
-| $$\pi_\omega(a \vert s)$$ | An internal policy (behavior). |
-| $$\beta_\omega(s)$$ | a termination function (post-condition). |
+| $$I_o(s)$$ | An initiation function (precondition). |
+| $$\pi_o(a \vert s)$$ | An internal policy (behavior). |
+| $$\beta_o(s)$$ | a termination function (post-condition). |
 
 ### Some of Main Ingredients of Reinforcement Learning
 - Value Functions
@@ -80,14 +80,14 @@ In the following we deep dive into one of the most important HRL algorithms whic
 
 [[paper](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf)\|[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)]
 
-**Option** is defined by a tuple tuple ($$I_\omega(s)$$, $$\pi_\omega(a \vert s)$$, $$\beta_\omega(s)$$). 
+**Option** is defined by a tuple tuple ($$I_o(s)$$, $$\pi_o(a \vert s)$$, $$\beta_o(s)$$). 
 
 ![OPTIONS]({{ '/assets/images/option.png' | relative_url }})
 {: class="center" style="width: 70%;"}
 *Fig. 1. Decision Making with Options. (Image source: [Richard S. Sutton, et al, 1999](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf))*
 
 #### MonteCarlo Model Learning
-what is meant by model learning is to dtermine the transition dynamic of an option ($$p_{ss’}^{\omega}$$, and the expected reward under an option ($$r_{s^{\omega}$$)).  
+what is meant by model learning is to dtermine the transition dynamic of an option ($$p_{ss’}^{o}$$, and the expected reward under an option ($$r_{s^{o}$$)).  
 #### Intra-Option Model Learning
 For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these intra-option methods.
 

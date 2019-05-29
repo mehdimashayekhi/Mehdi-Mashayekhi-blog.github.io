@@ -203,13 +203,13 @@ def updateModels(self, state, reward, next_state):
         alpha = 0.25
 
         # Update R 
-        r_target = reward + self.gamma * (1 - option.beta[next_state]) * self.R[s2, o]
+        r_target = reward + self.gamma * (1 - option.beta[s2]) * self.R[s2, o]
         self.R[s1, o] += alpha * (r_target - self.R[s1, o])
 
         # Update P 
-        p_target_all = self.gamma * (1 - option.beta[next_state]) * self.P[s2, o]
+        p_target_all = self.gamma * (1 - option.beta[s2]) * self.P[s2, o]
         self.P[s1, o] += alpha * (p_target_all - self.P[s1, o])
-        self.P[s1, o, s2] += alpha * self.gamma * option.beta[next_state]
+        self.P[s1, o, s2] += alpha * self.gamma * option.beta[s2]
 ```
 
 

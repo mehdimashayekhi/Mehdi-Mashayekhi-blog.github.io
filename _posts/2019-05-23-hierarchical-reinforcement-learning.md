@@ -155,6 +155,11 @@ Full implementation can be found here [[code](https://github.com/mehdimashayekhi
 
 #### Intra-Option Model Learning
 As you saw, one disadvantage of Monte Carlo model-learning method is that it updates the model of an option only when the option terminates. As a result, it cannot be used for non-terminating options, and can only be applied to one option at a time --the one option that is executing at that time. For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these ``intra-option`` methods.
+Intra-option methods can even be used to learn about an option without ever performing it, as long as actions selected are consistent with the option. Intra-option approaches are examples of off-policy learning, since they learn about the effects of one policy while actually behaving according to another. There are Bellman equations similar to flat RL models, using intra-option method:
+
+$$
+r_s^{o} = \sum_{a \isin A} \pi_(s,a) [r_s^{a} + \sum_{s'}p_{ss'}^{a}(1-\beta(s'))r_s'^{o} ]
+$$
 
 ```python
 def storeTransition(self, state, reward, next_state):

@@ -3,7 +3,7 @@ layout: post
 comments: true
 title: "Hierarchical Reinforcement Learning"
 date: 2019-05-23 00:15:06
-tags: reinforcement-learning long-read
+tags: reinforcement-learning
 image: "A3C_vs_A2C.png"
 ---
 
@@ -88,12 +88,12 @@ In the following we deep dive into one of the most important HRL algorithms whic
 
 #### Monte Carlo Model Learning
 What is meant by model learning is to determine the transition dynamics of an option (i.e., $$p_{ss’}^{o}$$), and the expected reward under an option (i.e., $$r_s^{o}$$), given experience and knowledge of $$o$$ (i.e., of its $$I$$, $$\pi$$, and $$\beta$$). A monte carlo approach is to execute the option to termination many times in each state
-s, recording in each case the resultant next state s′, and cumulative discounted reward r. An incremental learning rule for this could update its model after each execution of o by :
+s, recording in each case the resultant next state s′, and cumulative discounted reward r. An incremental learning rule for this could update its model after each execution of $$o$$ by :
 
 $$
 \begin{aligned}
 & r_s^{o} = r_s^{o} + \alpha [r-r_s^{o}] \\
-& r_s^{o} = r_s^{o} + \alpha [r-r_s^{o}]
+& p_{sx}^{o} = p_{sx}^{o} + \gamma^k [\delta_{s’x}- p_{sx}^{o}]
 \end{aligned}
 $$
 

@@ -7,7 +7,7 @@ tags: reinforcement-learning
 image: "A3C_vs_A2C.png"
 ---
 
-> Abstract: In this post, we are going to look deep into Hierarchical Reinforcement Learning (HRL), and one of the moset important HRL algorithm proposed in recent years which is Options Framework, and its subsequent extentionns--option-critic.
+> (WIP)Abstract: In this post, we are going to look deep into Hierarchical Reinforcement Learning (HRL), and one of the moset important HRL algorithm proposed in recent years which is Options Framework, and its subsequent extentionns--option-critic.
 
 
 <!--more-->

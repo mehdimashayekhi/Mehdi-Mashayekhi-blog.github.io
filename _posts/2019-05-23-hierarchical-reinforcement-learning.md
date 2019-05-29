@@ -139,7 +139,7 @@ def _resetCurrentOption(self):
     self.starting_state = None
 ```
 
-Full implementation can be found here [[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)].
+Full implementation can be found here [[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)]. The environment used here is the four-rooms domain as in [Richard S. Sutton, et al, 1999](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf).
 
 #### Intra-Option Model Learning
 For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these intra-option methods.

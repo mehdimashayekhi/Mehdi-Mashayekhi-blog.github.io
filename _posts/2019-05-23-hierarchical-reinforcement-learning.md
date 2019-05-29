@@ -87,7 +87,7 @@ In the following we deep dive into one of the most important HRL algorithms whic
 *Fig. 1. Decision Making with Options. (Image source: [Richard S. Sutton, et al, 1999](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf))*
 
 #### MonteCarlo Model Learning
-what is meant by model learning is to dtermine the transition dynamic of an option ($$p_{ss’}^{\omega}$$, and the expected reward under an option ($$r_{s^{\omega}$$)).  
+what is meant by model learning is to dtermine the transition dynamic of an option ($$p_{ss’}^{\omega}$$, and the expected reward under an option ($$r_s^{\omega}$$)).  
 #### Intra-Option Model Learning
 For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these intra-option methods.
 

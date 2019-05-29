@@ -99,6 +99,112 @@ $$
 
 for all x ∈ $$S^+$$, where $$\delta_{s’x}$$ = 1 if s′ = x and is 0 else, and where the step-size parameter, α, may be constant or may depend on the state, option, and time. For example here, α is 1 divided by the number of times that o has been experienced in s, then these updates maintain the estimates as sample averages of the experienced outcomes. However the averaging is done, we call these SMDP model-learning methods because, they are based on jumping from initiation to termination of each option.
 
+```python
+import gym
+env = gym.make('CartPole-v1')
+# The observation space is `Box(4,)`, a 4-element vector.
+observation_size = env.observation_space.shape[0]
+```
+
+We have a helper function for creating the networks below:
+```python
+# section 5 of the paper; http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf
+import numpy as np
+import random
+from option import Option
+
+""" Simple agent using Monte-Carlo model learning, selecting actions
+    randomly """
+class MonteCarloModelLearningAgent():
+    def __init__(self, gamma=0.9):    
+        # List of all options
+        self.options = \
+         [Option("left"), Option("up"), Option("right"), Option("down"),
+          Option("topleft->topright"), Option("topleft->botleft"),
+          Option("topright->topleft"), Option("topright->botright"),
+          Option("botleft->topleft"), Option("botleft->botright"),
+          Option("botright->botleft"), Option("botright->topright")]
+        
+        self.gamma = gamma # Discount factor, 0.9 by default as in paper
+        self.current_option = None
+        self.starting_state = None # Starting state of current option
+        self.k = 0   # Number of time steps elapsed in current option
+        self.cumulative_reward = 0  # Total reward for current option
+        
+        # R[s, o] = expected cumulative discounted reward when starting
+        #   option o in state s
+        # P[s, o, s'] = multi-time model of ending up in state s' when 
+        #   starting option o in state s
+        # N[s, o] = number of times option o is taken in state s
+        n_states = 13 * 13
+        n_options = len(self.options)
+        self.R = np.zeros((n_states, n_options))
+        self.P = np.zeros((n_states, n_options, n_states))
+        self.N = np.zeros((n_states, n_options))
+        
+    def randomPolicy(self, state):
+        # If we are not currently following an option
+        if self.current_option is None:
+            # Pick a new option and record starting state
+            self._pickNewOption(state)
+        
+        # Select action according to policy of current option 
+        action, _ = self.current_option.pickAction(state)
+        return action
+    
+    # Remark : state argument is unused, we update only for the starting
+    # state of the finishing option (which is recorded in the agent)
+    def recordTransition(self, state, reward, next_state):
+        # Add reward discounted by current discounting factor
+        self.cumulative_reward += (self.gamma ** self.k) * reward
+        self.k += 1 # Increment k after
+        
+        # If current option terminates at next state
+        if self.current_option.beta[next_state] == 1:
+            # Update N, R and P tables
+            self._updateTables(reward, next_state)
+            # Reset current option to None
+            self._resetCurrentOption()
+        
+    def _sIdx(self, state):
+        return state[0] * 13 + state[1]
+    
+    def _oIdx(self, option):
+        return self.options.index(option)
+        
+    def _pickNewOption(self, state):
+        # Generate list of valid options
+        available_options = []
+        for option in self.options:
+            if option.I[state] == 1:
+                available_options.append(option) 
+        # Pick one randomly
+        self.current_option = random.choice(available_options)  
+        # Set starting state of option
+        self.starting_state = state
+    
+#     One disadvantage of SMDP model-learning methods is that they improve the model of an option 
+#     only when the option terminates.
+    def _updateTables(self, reward, next_state):
+        s1 = self._sIdx(self.starting_state)
+        o = self._oIdx(self.current_option)
+        s2 = self._sIdx(next_state)
+        
+        # Update N, R and P tables
+        self.N[s1, o] += 1
+        alpha = (1. / self.N[s1, o])
+        #R[s1, o] ← R[s1, o] + α (Gt − R[s1, o])  #Incremental Mean update
+        self.R[s1, o] += alpha * (self.cumulative_reward - self.R[s1, o])
+        self.P[s1, o, s2] += alpha * (self.gamma ** self.k) 
+        self.P[s1, o] -= alpha * self.P[s1, o]  # 
+        
+    def _resetCurrentOption(self):
+        self.k = 0
+        self.cumulative_reward = 0
+        self.current_option = None
+        self.starting_state = None
+```
+
 #### Intra-Option Model Learning
 For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these intra-option methods.
 

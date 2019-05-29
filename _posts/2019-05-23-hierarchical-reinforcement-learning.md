@@ -197,7 +197,6 @@ def updateModels(self, state, reward, next_state):
     # Update model for every option consistent with last action taken
     for option in consistent_options:
         o = option
-
         # Update N table
         #self.N[s1, o] += 1
         #alpha = (1. / self.N[s1, o])

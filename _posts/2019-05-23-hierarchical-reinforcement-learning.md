@@ -165,6 +165,14 @@ $$
 p_{sx}^{o} = \sum_{a} \pi(s,a) \sum_{s'}p_{ss'}^{a}\big[(1-\beta(s'))p_{s'x}^{o}+\beta(s')\delta_{s’x}\big]
 $$
 
+then the update rules are :
+$$
+\begin{aligned}
+& r_s_{t}^{o} = r_s_{t}^{o} + \alpha [r_{t+1}+\gamma(1-\beta(s_{t+1}))r_s_{t+1}^{o}-r_s_{t}^{o}] \\
+& p_{s_{t}x}^{o} = p_{sx}^{o} + \alpha[\gamma^k \delta_{s’x}- p_{sx}^{o}]
+\end{aligned}
+$$
+
 ```python
 def storeTransition(self, state, reward, next_state):
     self.updateModels(state, reward, next_state)

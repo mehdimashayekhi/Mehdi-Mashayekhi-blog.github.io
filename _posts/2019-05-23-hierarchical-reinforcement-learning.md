@@ -3,7 +3,7 @@ layout: post
 comments: true
 title: "Hierarchical Reinforcement Learning"
 date: 2019-05-23 00:15:06
-tags: reinforcement-learning long-read
+tags: reinforcement-learning
 image: "A3C_vs_A2C.png"
 ---
 

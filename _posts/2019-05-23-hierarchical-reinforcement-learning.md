@@ -161,6 +161,10 @@ $$
 r_s^{o} = \sum_{a} \pi(s,a) [r_s^{a} + \sum_{s'}p_{ss'}^{a}(1-\beta(s'))r_{s'}^{o} ]
 $$
 
+$$
+p_{sx}^{o} = \sum_{a} \pi(s,a) \sum_{s'}p_{ss'}^{a}[(1-\beta(s'))p_{s'x}^{o}+\beta(s')\delta_{s’x}]
+$$
+
 ```python
 def storeTransition(self, state, reward, next_state):
     self.updateModels(state, reward, next_state)

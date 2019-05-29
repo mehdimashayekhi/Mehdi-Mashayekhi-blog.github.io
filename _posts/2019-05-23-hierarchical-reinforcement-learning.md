@@ -92,8 +92,8 @@ s, recording in each case the resultant next state s′, and cumulative discount
 
 $$
 \begin{aligned}
-& $$r_s^{o}$$ <- $$r_s^{o}$$ + \alpha [r-$$r_s^{o}$$] \\
-& $$r_s^{o}$$ <- $$r_s^{o}$$ + \alpha [r-$$r_s^{o}$$]
+& r_s^{o} = r_s^{o} + \alpha [r-r_s^{o}] \\
+& r_s^{o} = r_s^{o} + \alpha [r-r_s^{o}]
 \end{aligned}
 $$
 

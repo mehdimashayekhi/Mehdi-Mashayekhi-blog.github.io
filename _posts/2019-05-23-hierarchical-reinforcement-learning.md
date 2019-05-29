@@ -100,7 +100,7 @@ $$
 for all x ∈ $$S^+$$, where $$\delta_{s’x}$$ = 1 if s′ = x and is 0 else, and where the step-size parameter, α, may be constant or may depend on the state, option, and time. For example here, α is 1 divided by the number of times that o has been experienced in s, then these updates maintain the estimates as sample averages of the experienced outcomes. However the averaging is done, we call these SMDP model-learning methods because, they are based on jumping from initiation to termination of each option.
 
 ```python
-def recordTransition(self, state, reward, next_state):
+def storeTransition(self, state, reward, next_state):
     # Add reward discounted by current discounting factor
     self.cumulative_reward += (self.gamma ** self.k) * reward
     self.k += 1 # Increment k after
@@ -108,16 +108,16 @@ def recordTransition(self, state, reward, next_state):
     # If current option terminates at next state
     if self.current_option.beta[next_state] == 1:
         # Update N, R and P tables
-        self._updateModels(reward, next_state)
+        self.updateModels(reward, next_state)
         # Reset current option to None
-        self._resetCurrentOption()
+        self.resetCurrentOption()
 ```
 
 Note that, we update only for the starting state of the finishing option (which is recorded in the agent). Here is how to incrementally update the model:
 
 ```python
 # only update the model when the option terminates
-def _updateModels(self, reward, next_state):
+def updateModels(self, reward, next_state):
     s1 = self.starting_state # starting state of the finishing option
     o = self.current_option
     s2 = next_state
@@ -132,7 +132,7 @@ def _updateModels(self, reward, next_state):
 ```
 
 ```python
-def _resetCurrentOption(self):
+def resetCurrentOption(self):
     self.k = 0
     self.cumulative_reward = 0
     self.current_option = None

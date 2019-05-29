@@ -100,14 +100,6 @@ $$
 for all x ∈ $$S^+$$, where $$\delta_{s’x}$$ = 1 if s′ = x and is 0 else, and where the step-size parameter, α, may be constant or may depend on the state, option, and time. For example here, α is 1 divided by the number of times that o has been experienced in s, then these updates maintain the estimates as sample averages of the experienced outcomes. However the averaging is done, we call these SMDP model-learning methods because, they are based on jumping from initiation to termination of each option.
 
 ```python
-import gym
-env = gym.make('CartPole-v1')
-# The observation space is `Box(4,)`, a 4-element vector.
-observation_size = env.observation_space.shape[0]
-```
-
-We have a helper function for creating the networks below:
-```python
 # section 5 of the paper; http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf
 import numpy as np
 import random

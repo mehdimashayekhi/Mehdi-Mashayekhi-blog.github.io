@@ -154,8 +154,51 @@ def resetCurrentOption(self):
 Full implementation can be found here [[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)]. The environment used here is the four-rooms domain as in [Richard S. Sutton, et al, 1999](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf).
 
 #### Intra-Option Model Learning
-For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these intra-option methods.
+As you saw, one disadvantage of Monte Carlo model-learning method is that it updates the model of an option only when the option terminates. As a result, it cannot be used for non-terminating options, and can only be applied to one option at a time--the one option that is executing at that time. For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these ``intra-option`` methods.
 
+```python
+def storeTransition(self, state, reward, next_state):
+    self.updateModels(state, reward, next_state)
+    if self.current_option.beta[next_state] == 1:
+        self.current_option = None
+```
+
+As you can see, we update model on every transition; contrary to monte carlo model learning. Here is how to update the models:
+
+```python
+def updateModels(self, state, reward, next_state):
+    s1 = state
+    s2 = next_state
+
+    # List of all options consistent with last action taken
+    consistent_options = []
+    for option in self.options:
+        if option.pi[state] == self.last_action_taken:
+            consistent_options.append(option)
+
+    # Update model for every option consistent with last action taken
+    for option in consistent_options:
+        o = self._oIdx(option)
+
+        # Update N table
+        #self.N[s1, o] += 1
+        #alpha = (1. / self.N[s1, o])
+        alpha = 0.25
+
+        # Update R 
+        r_target = reward + self.gamma * \
+            (1 - option.beta[next_state]) * self.R[s2, o]
+        self.R[s1, o] += alpha * (r_target - self.R[s1, o])
+
+        # Update P 
+        p_target_all = self.gamma * (1 - option.beta[next_state]) * \
+            self.P[s2, o]
+
+        self.P[s1, o] += alpha * (p_target_all - self.P[s1, o])
+
+        self.P[s1, o, s2] += alpha * self.gamma * \
+            option.beta[next_state]
+```
 
 
 ### The Option-critic Architecture

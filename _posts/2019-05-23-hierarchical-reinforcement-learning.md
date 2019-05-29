@@ -106,8 +106,6 @@ self.current_option = None
 self.starting_state = None # Starting state of current option
 self.k = 0   # Number of time steps elapsed in current option
 self.cumulative_reward = 0  # Total reward for current option
-
-n_options = len(self.options)
 self.R = np.zeros((n_states, n_options)) #expected cumulative discounted reward when starting option o in state s
 self.P = np.zeros((n_states, n_options, n_states)) #multi-time model of ending up in state s' when starting option o in state s
 self.N = np.zeros((n_states, n_options)) #number of times option o is taken in state s

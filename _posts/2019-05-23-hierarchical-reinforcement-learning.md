@@ -113,7 +113,7 @@ def recordTransition(self, state, reward, next_state):
         self._resetCurrentOption()
 ```
 
-Note that, we update only for the starting state of the finishing option (which is recorded in the agent). Here is how to update to incrementally update the models.
+Note that, we update only for the starting state of the finishing option (which is recorded in the agent). Here is how to incrementally update the models:
 
 ```python
 # only update the model when the option terminates

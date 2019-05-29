@@ -154,7 +154,7 @@ def resetCurrentOption(self):
 Full implementation can be found here [[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)]. The environment used here is the four-rooms domain as in [Richard S. Sutton, et al, 1999](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf).
 
 #### Intra-Option Model Learning
-As you saw, one disadvantage of Monte Carlo model-learning method is that it updates the model of an option only when the option terminates. As a result, it cannot be used for non-terminating options, and can only be applied to one option at a time--the one option that is executing at that time. For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these ``intra-option`` methods.
+As you saw, one disadvantage of Monte Carlo model-learning method is that it updates the model of an option only when the option terminates. As a result, it cannot be used for non-terminating options, and can only be applied to one option at a time --the one option that is executing at that time. For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these ``intra-option`` methods.
 
 ```python
 def storeTransition(self, state, reward, next_state):

@@ -114,7 +114,7 @@ def _updateModels(self, reward, next_state):
     self.P[s1, o, s2] += alpha * (self.gamma ** self.k) 
     self.P[s1, o] -= alpha * self.P[s1, o] 
 ```
-Full implementation can be found here [code](https://github.com/mehdimashayekhi/Some-RL-Implementation)].
+Full implementation can be found here [[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)].
 
 #### Intra-Option Model Learning
 For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these intra-option methods.

@@ -169,7 +169,7 @@ then the update rules are :
 
 $$
 \begin{aligned}
-& r_{s_{t}}^o = r_s^{o} + \alpha [r_{t+1}+\gamma(1-\beta(s_{t+1}))r_s^{o}-r_s^{o}] \\
+& r_{s_{t}}^o = r_{s_{t}}^o + \alpha [r_{t+1}+\gamma(1-\beta(s_{t+1}))r_{s_{t+1}}^o-r_{s_{t}}^o] \\
 & p_{sx}^{o} = p_{sx}^{o} + \alpha[\gamma(1-\beta(s_{t+1}))p_{sx}^{o}+\gamma\beta(s_{t+1})\delta_{sx}- p_{sx}^{o}]
 \end{aligned}
 $$

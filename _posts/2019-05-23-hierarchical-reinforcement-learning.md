@@ -166,10 +166,11 @@ p_{sx}^{o} = \sum_{a} \pi(s,a) \sum_{s'}p_{ss'}^{a}\big[(1-\beta(s'))p_{s'x}^{o}
 $$
 
 then the update rules are :
+
 $$
 \begin{aligned}
-& r_s^{o} = r_s^{o} + \alpha [r_{t+1}+\gamma(1-\beta(s_{t+1}))r_s_{t+1}^{o}-r_s_{t}^{o}]  \\
-& p_^{o} = p_{sx}^{o} + \alpha[\gamma^k \delta_{s’x}- p_{sx}^{o}]
+& r_s^{o} = r_s^{o} + \alpha [r-r_s^{o}] \\
+& p_{sx}^{o} = p_{sx}^{o} + \alpha[\gamma^k \delta_{s’x}- p_{sx}^{o}]
 \end{aligned}
 $$
 

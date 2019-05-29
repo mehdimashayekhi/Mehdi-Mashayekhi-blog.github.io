@@ -163,7 +163,7 @@ def storeTransition(self, state, reward, next_state):
         self.current_option = None
 ```
 
-As you can see, we update model on every transition; contrary to monte carlo model learning. Here is how to update the models:
+As you can see, we update model on every transition; contrary to Monte Carlo model learning. Here is how to update the models:
 
 ```python
 def updateModels(self, state, reward, next_state):

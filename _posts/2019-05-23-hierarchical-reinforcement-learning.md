@@ -158,11 +158,11 @@ As you saw, one disadvantage of Monte Carlo model-learning method is that it upd
 Intra-option methods can even be used to learn about an option without ever performing it, as long as actions selected are consistent with the option. Intra-option approaches are examples of off-policy learning, since they learn about the effects of one policy while actually behaving according to another. There are Bellman equations similar to flat RL models, using intra-option method:
 
 $$
-r_s^{o} = \sum_{a} \pi(s,a) [r_s^{a} + \sum_{s'}p_{ss'}^{a}(1-\beta(s'))r_{s'}^{o} ]
+r_s^{o} = \sum_{a} \pi(s,a) \big[r_s^{a} + \sum_{s'}p_{ss'}^{a}(1-\beta(s'))r_{s'}^{o} \big]
 $$
 
 $$
-p_{sx}^{o} = \sum_{a} \pi(s,a) \sum_{s'}p_{ss'}^{a}[(1-\beta(s'))p_{s'x}^{o}+\beta(s')\delta_{s’x}]
+p_{sx}^{o} = \sum_{a} \pi(s,a) \sum_{s'}p_{ss'}^{a}\big[(1-\beta(s'))p_{s'x}^{o}+\beta(s')\delta_{s’x}\big]
 $$
 
 ```python

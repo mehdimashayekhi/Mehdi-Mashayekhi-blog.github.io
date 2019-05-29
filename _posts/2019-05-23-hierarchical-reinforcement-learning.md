@@ -86,8 +86,17 @@ In the following we deep dive into one of the most important HRL algorithms whic
 {: class="center" style="width: 70%;"}
 *Fig. 1. Decision Making with Options. (Image source: [Richard S. Sutton, et al, 1999](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf))*
 
-#### MonteCarlo Model Learning
-What is meant by model learning is to determine the transition dynamics of an option (i.e., $$p_{ss’}^{o}$$), and the expected reward under an option (i.e., $$r_s^{o}$$), given experience and knowledge of $$o$$ (i.e., of its $$I$$, $$\pi$$, and $$\beta$$)
+#### Monte Carlo Model Learning
+What is meant by model learning is to determine the transition dynamics of an option (i.e., $$p_{ss’}^{o}$$), and the expected reward under an option (i.e., $$r_s^{o}$$), given experience and knowledge of $$o$$ (i.e., of its $$I$$, $$\pi$$, and $$\beta$$). A monte carlo approach is to execute the option to termination many times in each state
+s, recording in each case the resultant next state s′, and cumulative discounted reward r. An incremental learning rule for this could update its model after each execution of o by :
+
+$$
+\begin{aligned}
+& $$r_s^{o}$$ <- $$r_s^{o}$$ + \alpha [r-$$r_s^{o}$$] \\
+& $$r_s^{o}$$ <- $$r_s^{o}$$ + \alpha [r-$$r_s^{o}$$]
+\end{aligned}
+$$
+
 #### Intra-Option Model Learning
 For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these intra-option methods.
 

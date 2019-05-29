@@ -169,8 +169,8 @@ then the update rules are :
 
 $$
 \begin{aligned}
-& r_{s_{t}}^o = r_{s_{t}}^o + \alpha [r_{t+1}+\gamma(1-\beta(s_{t+1}))r_{s_{t+1}}^o-r_{s_{t}}^o] \\
-& p_{sx}^{o} = p_{sx}^{o} + \alpha[\gamma(1-\beta(s_{t+1}))p_{sx}^{o}+\gamma\beta(s_{t+1})\delta_{sx}- p_{sx}^{o}]
+& r_{s_{t}}^o = r_{s_{t}}^o + \alpha \big[r_{t+1}+\gamma(1-\beta(s_{t+1}))r_{s_{t+1}}^o-r_{s_{t}}^o \big] \\
+& p_{s_{t}x}^o = p_{s_{t}x}^o + \alpha \big[\gamma(1-\beta(s_{t+1}))p_{s_{t+1}x}^o+\gamma\beta(s_{t+1})\delta_{s_{t+1}x}- p_{s_{t}x}^o \big]
 \end{aligned}
 $$
 

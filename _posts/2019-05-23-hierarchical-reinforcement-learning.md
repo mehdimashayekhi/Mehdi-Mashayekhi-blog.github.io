@@ -100,6 +100,20 @@ $$
 for all x ∈ $$S^+$$, where $$\delta_{s’x}$$ = 1 if s′ = x and is 0 else, and where the step-size parameter, α, may be constant or may depend on the state, option, and time. For example here, α is 1 divided by the number of times that o has been experienced in s, then these updates maintain the estimates as sample averages of the experienced outcomes. However the averaging is done, we call these SMDP model-learning methods because, they are based on jumping from initiation to termination of each option.
 
 ```python
+# Inputs
+self.gamma = gamma # Discount factor, 0.9 by default as in paper
+self.current_option = None
+self.starting_state = None # Starting state of current option
+self.k = 0   # Number of time steps elapsed in current option
+self.cumulative_reward = 0  # Total reward for current option
+
+n_options = len(self.options)
+self.R = np.zeros((n_states, n_options)) #expected cumulative discounted reward when starting option o in state s
+self.P = np.zeros((n_states, n_options, n_states)) #multi-time model of ending up in state s' when starting option o in state s
+self.N = np.zeros((n_states, n_options)) #number of times option o is taken in state s
+```
+
+```python
 def storeTransition(self, state, reward, next_state):
     # Add reward discounted by current discounting factor
     self.cumulative_reward += (self.gamma ** self.k) * reward

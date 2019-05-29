@@ -93,9 +93,11 @@ s, recording in each case the resultant next state s′, and cumulative discount
 $$
 \begin{aligned}
 & r_s^{o} = r_s^{o} + \alpha [r-r_s^{o}] \\
-& p_{sx}^{o} = p_{sx}^{o} + \gamma^k [\delta_{s’x}- p_{sx}^{o}]
+& p_{sx}^{o} = p_{sx}^{o} + \alpha[\gamma^k \delta_{s’x}- p_{sx}^{o}]
 \end{aligned}
 $$
+
+for all x ∈ S^+, where \delta_{s’x} = 1 if s′ = x and is 0 else, and where the step-size parameter, α, may be constant or may depend on the state, option, and time. For example here, α is 1 divided by the number of times that o has been experienced in s, then these updates maintain the estimates as sample averages of the experienced outcomes. However the averaging is done, we call these SMDP model-learning methods because, they are based on jumping from initiation to termination of each option.
 
 #### Intra-Option Model Learning
 For Markov options, special temporal-difference methods can be used to learn usefully about the model of an option before the option terminates. We call these intra-option methods.
@@ -123,7 +125,7 @@ TBD
 
 ---
 
-*If you notice mistakes and errors in this post, please don't hesitate to contact me at [mehdi dot mashayekhi dot 65 at gmail dot com] and I would be very happy to correct them right away!*
+*If you notice mistakes and errors in this post, please don't hesitate to contact me at [mehdi dot mashayekhi dot 65 at gmail dot com]*
 
 
 

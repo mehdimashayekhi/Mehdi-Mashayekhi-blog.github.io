@@ -78,7 +78,7 @@ In the following we deep dive into one of the most important HRL algorithms whic
 
 ### Options Framework
 
-[[paper](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf)\|[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)]
+[[paper](http://www-anw.cs.umass.edu/~barto/courses/cs687/Sutton-Precup-Singh-AIJ99.pdf)\|[code](https://github.com/mehdimashayekhi/Some-RL-Implementation/tree/master/options_HRL)]
 
 **Option** is defined by a tuple tuple ($$I_o(s)$$, $$\pi_o(a \vert s)$$, $$\beta_o(s)$$). 
 
@@ -215,7 +215,7 @@ def updateModels(self, state, reward, next_state):
 
 ### The Option-critic Architecture
 
-[[paper](https://arxiv.org/pdf/1609.05140.pdf)\|[code](https://github.com/mehdimashayekhi/Some-RL-Implementation)]
+[[paper](https://arxiv.org/pdf/1609.05140.pdf)\|[code](https://github.com/mehdimashayekhi/Some-RL-Implementation/tree/master/options_HRL)]
 
 ![OPTION CRITIC]({{ '/assets/images/OPTION_CRITIC.png' | relative_url }})
 {: class="center" style="width: 70%;"}

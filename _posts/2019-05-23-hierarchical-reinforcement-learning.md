@@ -221,6 +221,11 @@ def updateModels(self, state, reward, next_state):
 {: class="center" style="width: 70%;"}
 *Fig. 1. Decision Making with Options. (Image source: [Pierre-Luc Bacon, et al, 2016](https://arxiv.org/pdf/1609.05140.pdf))*
 
+here is the option critic algorithm:
+![OPTION CRITIC]({{ '/assets/images/option_critic_algo.png' | relative_url }})
+{: class="center" style="width: 70%;"}
+*Fig. 1. Decision Making with Options. (Image source: [Pierre-Luc Bacon, et al, 2016](https://arxiv.org/pdf/1609.05140.pdf))*
+
 
 ### Summary of Other HRL Algorithms
 - Feudal Learning

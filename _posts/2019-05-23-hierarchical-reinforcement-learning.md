@@ -217,11 +217,14 @@ def updateModels(self, state, reward, next_state):
 
 [[paper](https://arxiv.org/pdf/1609.05140.pdf)\|[code](https://github.com/mehdimashayekhi/Some-RL-Implementation/tree/master/options_HRL)]
 
+The option critic architecture is shown in figure below:
+
 ![OPTION CRITIC]({{ '/assets/images/OPTION_CRITIC.png' | relative_url }})
 {: class="center" style="width: 70%;"}
 *Fig. 1. Decision Making with Options. (Image source: [Pierre-Luc Bacon, et al, 2016](https://arxiv.org/pdf/1609.05140.pdf))*
 
 here is the option critic algorithm:
+
 ![OPTION CRITIC]({{ '/assets/images/option_critic_algo.png' | relative_url }})
 {: class="center" style="width: 70%;"}
 *Fig. 1. Decision Making with Options. (Image source: [Pierre-Luc Bacon, et al, 2016](https://arxiv.org/pdf/1609.05140.pdf))*

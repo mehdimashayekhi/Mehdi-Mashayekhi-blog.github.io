@@ -15,7 +15,9 @@ image: "A3C_vs_A2C.png"
 * TOC
 {:toc}
 
-## Background on Pruning Algorithms
+## Background 
+
+### Classical Pruning Algorithms
 
 The core idea in pruning is to find a saliency for the weight parameters and remove those with low saliency with the belief that these will influence the model least.
 
@@ -37,9 +39,18 @@ $$
 
 which seems a  a very good saliency metric.
 
-### Optimal Brain Damage (OBD)
+#### Optimal Brain Damage (OBD)
 TBD
-### Optimal Brain Sergeon (OBS)
+#### Optimal Brain Sergeon (OBS)
+TBD
+
+### Curvature approximation
+TBD
+#### K-FAC
+TBD
+#### EKFAC
+TBD
+## Pruning Using EKFAC 
 TBD
 
 

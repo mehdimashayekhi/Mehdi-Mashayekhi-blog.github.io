@@ -44,9 +44,10 @@ Because computing the full Hessian in deep networks is intractable, the Hessian 
 
 $$
 \begin{aligned}
-& {\Delta \Theta}_{q} =-\theta_{q}^{*}  and  {\Delta \mathcal{L}}_{OBD} = \frac {1}{2}{\theta_{q}}^{*} H_{qq}
+& {\Delta \Theta}_{q} =-\theta_{q}^{*}  &  {\Delta \mathcal{L}}_{OBD} = \frac {1}{2}({\theta_{q}}^{*})^{2} H_{qq}
 \end{aligned}
 $$
+
 #### Optimal Brain Sergeon (OBS)
 TBD
 

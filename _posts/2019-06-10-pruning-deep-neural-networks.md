@@ -17,7 +17,9 @@ image: "A3C_vs_A2C.png"
 
 ## Background on Pruning Algorithms
 
-The most popular pruning algorithms are OBD and OBS. Both of these algorithms are based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. They approximate the loss function L by a Taylor series. A perturbation delta theta of the parameter will change the loss function by: 
+The core idea in pruning is to find a saliency for the weight parameters and remove those with low saliency with the belief that these will influence the model least.
+
+The classical pruning algorithm was developed very early on by LeCun. The algorithm is based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. They approximate the loss function L by a Taylor series. A perturbation delta theta of the parameter will change the loss function by: 
 
 $$
 \begin{aligned}
@@ -32,6 +34,8 @@ $$
 & \Delta \mathcal{L} = \frac {1}{2}{\Delta \Theta}^{T} H \Delta \Theta
 \end{aligned}
 $$
+
+which seems a  a very good saliency metric.
 
 ### OBD
 TBD

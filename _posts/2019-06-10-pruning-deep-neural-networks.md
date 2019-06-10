@@ -54,7 +54,7 @@ Note that, OBD assumes a diagonal approximation for calculation of Hessian. In o
 
 $$
 \begin{aligned}
-\min _{q}\big[\min_{\Delta \Theta} \frac {1}{2}{\Delta \Theta}^{T} H {\Delta \Theta} & \text{s.t. } e_{q}^{T}{\Delta \Theta}+\theta_{q}^{*}=0\big]
+\min _{q}\big[\min_{\Delta \Theta} \frac {1}{2}{\Delta \Theta}^{T} H {\Delta \Theta}  &  \text{s.t. } e_{q}^{T}{\Delta \Theta}+\theta_{q}^{*}=0\big]
 \end{aligned}
 $$
 

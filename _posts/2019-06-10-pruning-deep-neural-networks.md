@@ -17,7 +17,13 @@ image: "A3C_vs_A2C.png"
 
 ## Background on Pruning Algorithms
 
-TBD
+The most popular pruning algorithms are OBD and OBS. Both of these algorithms are based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. They approximate the loss function L by a Taylor series. A perturbation delta theta of the parameter will change the loss function by: 
+
+$$
+\begin{aligned}
+& \Delta L = (\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{n}})\mathbf{\Delta \Theta}
+\end{aligned}
+$$
 
 ### OBD
 TBD

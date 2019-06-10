@@ -21,7 +21,7 @@ The most popular pruning algorithms are OBD and OBS. Both of these algorithms ar
 
 $$
 \begin{aligned}
-& \Delta \mathcal{L} =  \frac{\partial \mathcal{L}}{\partial \theta}^{T}\Delta \Theta +\frac {1}{2}{\Delta \Theta}^{T} H \Delta \Theta
+& \Delta \mathcal{L} =  \frac{\partial \mathcal{L}}{\partial \theta}^{T}\Delta \Theta +\frac {1}{2}{\Delta \Theta}^{T} H \Delta \Theta + O(||\Delta \Theta||^{3})
 \end{aligned}
 $$
 

@@ -3,7 +3,7 @@ layout: post
 comments: true
 title: "Pruning deep neural networks"
 date: 2019-06-10 12:07:00
-tags: attention rnn
+tags: deep learning
 image: "transformer.png"
 ---
 

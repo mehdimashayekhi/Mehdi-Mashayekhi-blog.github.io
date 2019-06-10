@@ -49,9 +49,9 @@ TBD
 #### K-FAC
 TBD
 #### EKFAC
-[[paper](Fast Approximate Natural Gradient Descent in a Kronecker-factored Eigenbasis)\|[code](https://github.com/wiseodd/natural-gradients)]
+[[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
 ## Pruning Using EKFAC and OBD
-[[paper](EigenDamage: Structured Pruning in the Kronecker-Factored Eigenbasis)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)]
+[[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)]
 
 
 ## Summary

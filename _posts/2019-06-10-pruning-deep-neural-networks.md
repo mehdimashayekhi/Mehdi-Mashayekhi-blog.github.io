@@ -37,9 +37,9 @@ $$
 
 which seems a  a very good saliency metric.
 
-### OBD
+### Optimal Brain Damage (OBD)
 TBD
-### OBS
+### Optimal Brain Sergeon (OBS)
 TBD
 
 

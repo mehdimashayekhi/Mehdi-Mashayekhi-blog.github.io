@@ -21,7 +21,7 @@ image: "A3C_vs_A2C.png"
 
 The core idea in pruning is to find a saliency for the weight parameters and remove those with low saliency with the belief that these will influence the model least.
 
-The classical pruning algorithm was developed very early on by LeCun. The algorithm is based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. The proposed algorithm approximate the loss function $$\mathcal{L}$$ by a Taylor series. A perturbation $$\Delta \Theta$$ of the parameter will change the loss function by: 
+The classical pruning algorithm was developed very early on by Lecun. The algorithm is based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. The proposed algorithm approximate the loss function $$\mathcal{L}$$ by a Taylor series. A perturbation $$\Delta \Theta$$ of the parameter will change the loss function by: 
 
 $$
 \begin{aligned}
@@ -40,7 +40,7 @@ $$
 which seems a  a very good saliency metric.
 
 #### Optimal Brain Damage (OBD)
-TBD
+Because computing the full Hessian in deep networks is intractable, the Hessian matrix $$H$$ is approximated by a diagonal matrix in OBD. If we prune a weight $$\theta_{q}$$, then the corresponding change in weights as well as the loss are:
 #### Optimal Brain Sergeon (OBS)
 TBD
 

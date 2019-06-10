@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title: "Pruning Deep neural Networks"
+title: "Pruning Deep Neural Networks"
 date: 2019-06-10 12:07:00
 tags: review
 image: "A3C_vs_A2C.png"

@@ -9,11 +9,6 @@ image: "transformer.png"
 
 > Deep neural networks are usually over-parametrized which leads to high computational cost and memory overhead at inference time. In this post we are going to review some background and recent pruning algorithms.
 
-<!--more-->
-
-<span style="color: #286ee0;">[Updated on 2018-10-28: Add [Pointer Network](#pointer-network) and the [link](https://github.com/lilianweng/transformer-tensorflow) to my implementation of Transformer.]</span><br/>
-<span style="color: #286ee0;">[Updated on 2018-11-06: Add a [link](https://github.com/lilianweng/transformer-tensorflow) to the implementation of Transformer model.]</span><br/>
-<span style="color: #286ee0;">[Updated on 2018-11-18: Add [Neural Turing Machines](#neural-turing-machines).]</span>
 
 {: class="table-of-content"}
 * TOC

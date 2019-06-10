@@ -9,6 +9,7 @@ image: "A3C_vs_A2C.png"
 
 > Deep neural networks are usually over-parametrized which leads to high computational cost and memory overhead at inference time. In this post we are going to review some background and recent pruning algorithms.
 
+<!--more-->
 
 {: class="table-of-content"}
 * TOC

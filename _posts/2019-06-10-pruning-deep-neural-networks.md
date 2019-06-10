@@ -21,7 +21,7 @@ The most popular pruning algorithms are OBD and OBS. Both of these algorithms ar
 
 $$
 \begin{aligned}
-& \Delta L = (\frac{\mathbf{\partial{L}}\mathbf{\partial{\Delta \Theta}}^\top}{\sqrt{n}})\mathbf{\Delta \Theta}
+& \Delta L =  (\frac{\mathbf{\partial{L}}\ \mathbf{\partial{\Delta \Theta}}^\top})\mathbf{\Delta \Theta}
 \end{aligned}
 $$
 

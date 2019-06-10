@@ -44,13 +44,13 @@ TBD
 #### Optimal Brain Sergeon (OBS)
 TBD
 
-### Curvature approximation
+### Curvature Approximation
 TBD
 #### K-FAC
 TBD
 #### EKFAC
 TBD
-## Pruning Using EKFAC 
+## Pruning Using EKFAC and OBD
 TBD
 
 

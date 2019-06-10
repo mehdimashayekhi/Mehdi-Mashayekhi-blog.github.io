@@ -51,7 +51,12 @@ $$
 Note that, OBD assumes a diagonal approximation for calculation of Hessian. In other words, it assumes all the weights are uncorrelated, such that removing one, will not affect the others.
 
 #### Optimal Brain Sergeon (OBS)
-TBD
+
+$$
+\begin{aligned}
+\min _{q}{\min_{\Delta \Theta} \frac {1}{2}({\Delta \Theta}^{T}) H {\Delta \Theta}
+\end{aligned}
+$$
 
 ### Curvature Approximation
 TBD

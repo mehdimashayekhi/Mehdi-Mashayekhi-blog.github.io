@@ -41,9 +41,10 @@ which seems a  a very good saliency metric.
 
 #### Optimal Brain Damage (OBD)
 Because computing the full Hessian in deep networks is intractable, the Hessian matrix $$H$$ is approximated by a diagonal matrix in OBD. If we prune a weight $$\theta_{q}$$, then the corresponding change in weights as well as the loss are:
+
 $$
 \begin{aligned}
-& {\Delta \Theta}_{q} =-\theta_{q}^{*} and {\Delta \mathcal{L}}_{OBD} = \frac {1}{2}{\theta_{q}}^{*} H_{qq}
+& {\Delta \Theta}_{q} =-\theta_{q}^{*}  and  {\Delta \mathcal{L}}_{OBD} = \frac {1}{2}{\theta_{q}}^{*} H_{qq}
 \end{aligned}
 $$
 #### Optimal Brain Sergeon (OBS)

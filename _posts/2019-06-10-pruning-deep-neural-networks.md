@@ -1,13 +1,13 @@
 ---
 layout: post
 comments: true
-title: "Attention? Attention!"
-date: 2018-06-24 11:07:00
+title: "Pruning deep neural networks"
+date: 2019-06-10 12:07:00
 tags: attention rnn
 image: "transformer.png"
 ---
 
-> Attention has been a fairly popular concept and a useful tool in the deep learning community in recent years. In this post, we are gonna look into how attention was invented, and various attention mechanisms and models, such as transformer and SNAIL.
+> Deep neural networks are usually over-parametrized which leads to high computational cost and memory overhead at inference time. In this post we are going to review some background and recent pruning algorithms.
 
 <!--more-->
 

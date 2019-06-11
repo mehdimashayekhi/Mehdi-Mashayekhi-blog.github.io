@@ -76,7 +76,7 @@ As you saw for pruning, we need to calculate/approximate the Hessian. We can use
 $$
 \begin{aligned}
 & H = \mathbb{E}\Big[ J_{f}^{T} H_{l} J_{f} + \underbrace{\sum_{j=1}^m [\nabla_z \mathcal{L}(y,z) \vert_{z = f(x, \theta)} ]_{j} H _{[f_{j}]}}_{\approx 0}\Big] \\
-= \mathbb{E}\Big[ J_{f}^{T} H_{l} J_{f}\Big]= G
+&= \mathbb{E}\Big[ J_{f}^{T} H_{l} J_{f}\Big]= G
 \end{aligned}
 $$
 

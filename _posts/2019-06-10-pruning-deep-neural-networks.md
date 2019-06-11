@@ -89,11 +89,11 @@ $$
 \end{aligned}
 $$
 
-#### K-FAC
-TBD
-#### EKFAC
 [[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
-## Pruning Using EKFAC and OBD
+## Extending OBD and OBS to Structured Pruning
+TBD
+## EigenDamage: Structured Pruning in a KFE
+TBD
 [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)]
 
 

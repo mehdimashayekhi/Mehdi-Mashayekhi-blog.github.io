@@ -89,11 +89,16 @@ $$
 \end{aligned}
 $$
 
-#### K-FAC
-TBD
-#### EKFAC
+#### A block-wise Kronecker-factored (K-FAC) Fisher Approximation
+Martens & Grosse (2015) proposed an approximation to the Fisher as a Kronecker product F ≈ A ⊗ B which involves two smaller matrices.
+
+Specifically for a layer $$l$$ that receives input $$h$$ of size $$d_{in}$$ and computes linear pre-activations $$a = W^{T}h $$ of size $$d_{out}$$ followed by some non-linear activation, and let the backpropagated gradient on a be  $$\leq \delta = \frac{\partial \mathcal{l}}{\partial a}$$. 
+
 [[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
-## Pruning Using EKFAC and OBD
+## Extending OBD and OBS to Structured Pruning
+TBD
+## EigenDamage: Structured Pruning in a KFE
+TBD
 [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)]
 
 

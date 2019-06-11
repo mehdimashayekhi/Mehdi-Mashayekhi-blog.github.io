@@ -92,7 +92,7 @@ $$
 #### A block-wise Kronecker-factored (K-FAC) Fisher Approximation
 Martens & Grosse [[paper](https://arxiv.org/pdf/1503.05671.pdf)] proposed an approximation to the Fisher as a Kronecker product F ≈ A ⊗ B which involves two smaller matrices. Specifically for a layer $$l$$ that receives input $$h$$ of size $$d_{in}$$ and computes linear pre-activations $$a = W^{T}h $$ of size $$d_{out}$$ followed by some non-linear activation, let the backpropagated gradient on $$a$$ be  $$\delta = \frac{\partial \mathcal{l}}{\partial a}$$. The gradients on parameter $$\theta^{l} = W$$ will be $$\Delta_{W}=\frac{\partial \mathcal{l}}{\partial W}=vec(h\partial^{T})$$.
 
-The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \nabla_W \nabla_W^{T} \Big]$$ will use $$A= \mathbb{E}\big[hh^T\big]$$ and use $$B= \mathbb{E}\big[\delta \delta ^T\big]$$
+The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \nabla_W \nabla_W^{T} \Big]$$ will use $$A= \mathbb{E}\big[hh^T\big]$$ and use $$B= \mathbb{E}\big[\delta \delta ^T\big]$$ which have matrices of size $$d_{in}*d_{in}$$, and $$d_{out}*d_{out}$$ respectively, whereas the Full $$F$$ would be of size $$d_{in}d_{out}* d_{in}d_{out}$$. Using Kronecker approximation, approximate entries of $$F^{l}$$ as follows: $$F_{ij,I’j’}^{l} = \mathbb{E}\Big[ \nabla_W_{ij} \nabla_\W_{I’j’}^{T} \Big] = $$
 
 [[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
 ## Extending OBD and OBS to Structured Pruning

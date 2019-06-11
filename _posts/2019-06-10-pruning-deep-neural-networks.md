@@ -73,6 +73,12 @@ $$
 ### Curvature Approximation
 As you saw for pruning, we need to calculate/approximate the Hessian. We can use Fisher matrix to approximate Hessian. Assume the function $$z = f(x, \theta)$$ is parametrized by $$\theta$$, and the loss function is $$\mathcal{L}(y,z)=- \log p(y \vert z)$$. Then the Hessian $$H$$ at a local minimum is equivalent to generalized Gauss-Newton matrix $$G$$:
 
+$$
+\begin{aligned}
+& H = \mathbb{E}\Big[ J_{f}^{T} H_{l} J_{f}\Big]
+\end{aligned}
+$$
+
 Also Fisher (to be precise “empirical Fisher”) and generalized Gauss-Newton matrix are also identical. As a result we can approximate $$H$$ with Fisher. Empirical Fisher is defined as follow: 
 
 #### K-FAC

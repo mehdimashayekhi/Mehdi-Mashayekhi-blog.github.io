@@ -90,7 +90,7 @@ $$
 $$
 
 #### A block-wise Kronecker-factored (K-FAC) Fisher Approximation
-Martens & Grosse [[paper](https://arxiv.org/pdf/1503.05671.pdf)] proposed an approximation to the Fisher as a Kronecker product F ≈ A ⊗ B which involves two smaller matrices. Specifically for a layer $$l$$ that receives input $$h$$ of size $$d_{in}$$ and computes linear pre-activations $$a = W^{T}h $$ of size $$d_{out}$$ followed by some non-linear activation, and let the backpropagated gradient on a be  $$\delta = \frac{\partial \mathcal{l}}{\partial a}$$. 
+Martens & Grosse [[paper](https://arxiv.org/pdf/1503.05671.pdf)] proposed an approximation to the Fisher as a Kronecker product F ≈ A ⊗ B which involves two smaller matrices. Specifically for a layer $$l$$ that receives input $$h$$ of size $$d_{in}$$ and computes linear pre-activations $$a = W^{T}h $$ of size $$d_{out}$$ followed by some non-linear activation, let the backpropagated gradient on a be  $$\delta = \frac{\partial \mathcal{l}}{\partial a}$$. 
 
 [[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
 ## Extending OBD and OBS to Structured Pruning

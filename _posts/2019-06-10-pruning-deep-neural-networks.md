@@ -90,9 +90,7 @@ $$
 $$
 
 #### A block-wise Kronecker-factored (K-FAC) Fisher Approximation
-Martens & Grosse (2015) proposed an approximation to the Fisher as a Kronecker product F ≈ A ⊗ B which involves two smaller matrices.
-
-Specifically for a layer $$l$$ that receives input $$h$$ of size $$d_{in}$$ and computes linear pre-activations $$a = W^{T}h $$ of size $$d_{out}$$ followed by some non-linear activation, and let the backpropagated gradient on a be  $$\leq \delta = \frac{\partial \mathcal{l}}{\partial a}$$. 
+Martens & Grosse [[paper](https://arxiv.org/pdf/1503.05671.pdf)] proposed an approximation to the Fisher as a Kronecker product F ≈ A ⊗ B which involves two smaller matrices. Specifically for a layer $$l$$ that receives input $$h$$ of size $$d_{in}$$ and computes linear pre-activations $$a = W^{T}h $$ of size $$d_{out}$$ followed by some non-linear activation, and let the backpropagated gradient on a be  $$\delta = \frac{\partial \mathcal{l}}{\partial a}$$. 
 
 [[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
 ## Extending OBD and OBS to Structured Pruning
@@ -116,3 +114,7 @@ TBD
 [3] Thomas George, et al. ["Fast Approximate Natural Gradient Descent in a Kronecker-factored Eigenbasis."](https://arxiv.org/pdf/1806.03884.pdf). 2018.
 
 [4] Chaoqi Wang, et al. ["EigenDamage: Structured Pruning in the Kronecker-Factored Eigenbasis."](https://arxiv.org/pdf/1905.05934.pdf). 2019.
+
+[5] James Martens and Roger Grosse ["Optimizing Neural Networks with Kronecker-factored Approximate Curvature"](https://arxiv.org/pdf/1503.05671.pdf). 2016.
+
+

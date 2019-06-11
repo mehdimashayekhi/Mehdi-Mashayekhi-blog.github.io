@@ -52,7 +52,9 @@ Note that, OBD assumes a diagonal approximation for calculation of Hessian. In o
 
 #### Optimal Brain Sergeon (OBS)
 
-OBS was developed by Hassibi et.al, and it shares the same basic approach as OBD, in which, it trains a network to local minimum in error (w star) and then prunes a weight that leads to the smallest increase in the training error. The main difference between OBD and OBS is, OBS relaxes the diagonal approximation of the Hessian (i.e., uses full hessian), and it not only prune a single weight, but it takes into account the correlation between weights, and updates the rest of weights to compensate. 
+OBS was developed by Hassibi et.al, and it shares the same basic approach as OBD, in which, it trains a network to local minimum in error (w star) and then prunes a weight that leads to the smallest increase in the training error. The main difference between OBD and OBS is, OBS relaxes the diagonal approximation of the Hessian (i.e., uses full hessian), and it not only prune a single weight, but it takes into account the correlation between weights, and updates the rest of weights to compensate.
+
+In OBS, the importance of each weight is calculated by solving the following constrained optimization problem:
 
 $$
 \begin{aligned}

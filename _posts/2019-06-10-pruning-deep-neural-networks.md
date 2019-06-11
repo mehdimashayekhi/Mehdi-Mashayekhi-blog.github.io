@@ -70,7 +70,7 @@ $$
 \end{aligned}
 $$
 
-### Hessian Approximation
+### Hessian Approximation Using Fisher
 As you saw for pruning, we need to calculate/approximate the Hessian. We can use Fisher matrix to approximate Hessian. Assume the function $$z = f(x, \theta)$$ is parametrized by $$\theta$$, and the loss function is $$\mathcal{L}(y,z)=- \log p(y \vert z)$$. Then the Hessian $$H$$ at a local minimum is equivalent to generalized Gauss-Newton matrix $$G$$:
 
 $$

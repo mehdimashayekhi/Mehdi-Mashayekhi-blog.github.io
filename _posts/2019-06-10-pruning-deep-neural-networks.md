@@ -71,7 +71,7 @@ $$
 $$
 
 ### Curvature Approximation
-TBD
+As you saw for pruning, we need to calculate/approximate the Hessian. We can use Fisher matrix to approximate Hessian. Assume we have a dataset $$D_{train}$$ containing (input, target) examples (x,y), and a neural network $$f_{\theta}(x)$$ with parameter vector $$\theta$$.
 #### K-FAC
 TBD
 #### EKFAC

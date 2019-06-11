@@ -80,7 +80,13 @@ $$
 \end{aligned}
 $$
 
-Also Fisher (to be precise “empirical Fisher”) and generalized Gauss-Newton matrix are also identical. As a result we can approximate $$H$$ with Fisher. Empirical Fisher is defined as follow: 
+Also Fisher (to be precise “empirical Fisher”) and generalized Gauss-Newton matrix are also identical. As a result we can approximate $$H$$ with Fisher. 
+Assume we have a dataset $$D_{train}$$ containing (input, target) examples (x,y), and a neural network $$f_{\theta}(x)$$ with parameter vector $$\theta$$. Then Empirical Fisher is defined as follow:
+$$
+\begin{aligned}
+& F = \mathbb{E}_{(x,y)\in D_{train} }\Big[ \nabla_\theta \nabla_\theta^{T} \Big]
+\end{aligned}
+$$
 
 #### K-FAC
 TBD

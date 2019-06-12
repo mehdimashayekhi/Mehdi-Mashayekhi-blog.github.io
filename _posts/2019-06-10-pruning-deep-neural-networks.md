@@ -90,9 +90,9 @@ $$
 $$
 
 #### A block-wise Kronecker-factored (K-FAC) Fisher Approximation
-Martens & Grosse [[paper](https://arxiv.org/pdf/1503.05671.pdf)] proposed an approximation to the Fisher as a Kronecker product F ≈ S ⊗ A which involves two smaller matrices. Specifically for a layer $$l$$ that receives input $$a$$ and computes linear pre-activations $$s = W^{T}a $$, followed by some non-linear activation, let the backpropagated gradient on $$s$$ be  $$\delta = \frac{\partial \mathcal{l}}{\partial s}$$. The gradients on parameter $$\theta^{l} = W$$ will be $$\Delta_{W}=\frac{\partial \mathcal{l}}{\partial W}=vec(a\delta^{T})$$.
+Martens & Grosse [[paper](https://arxiv.org/pdf/1503.05671.pdf)] proposed an approximation to the Fisher as a Kronecker product F ≈ S ⊗ A which involves two smaller matrices. Specifically for a layer that receives input $$a$$ and computes linear pre-activations $$s = W^{T}a $$, followed by some non-linear activation, let the backpropagated gradient on $$s$$ be  $$\delta = \frac{\partial \mathcal{l}}{\partial s}$$. The gradients on parameter $$\theta = W$$ will be $$\Delta_{W}=\frac{\partial \mathcal{l}}{\partial W}=vec(a\delta^{T})$$.
 
-The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \nabla_W \nabla_W^{T} \Big]$$ will use $$A= \mathbb{E}\big[aa^T\big]$$ and use $$S= \mathbb{E}\big[\delta \delta ^T\big]$$. Using this Kronecker-factored approximation, approximate entries of $$F^{l}$$ as follows: $$F^{l} = \mathbb{E}\Big[ \nabla_{W}\nabla_{W}^{T} \Big] =\mathbb{E}\Big[(\delta\delta^T)((aa^{T})\Big]\approx \mathbb{E}\Big[(\delta\delta^T)\Big]\mathbb{E}\Big[(aa^{T})\Big]=S \otimes A$$
+The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \nabla_W \nabla_W^{T} \Big]$$ will use $$A= \mathbb{E}\big[aa^T\big]$$ and use $$S= \mathbb{E}\big[\delta \delta ^T\big]$$. Using this Kronecker-factored approximation, approximate entries of $$F^{l}$$ as follows: $$F = \mathbb{E}\Big[ \nabla_{W}\nabla_{W}^{T} \Big] =\mathbb{E}\Big[(\delta\delta^T)(aa^{T})\Big]\approx \mathbb{E}\Big[(\delta\delta^T)\Big]\mathbb{E}\Big[(aa^{T})\Big]=S \otimes A$$
 
 [[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
 ## Extending OBD and OBS to Structured Pruning

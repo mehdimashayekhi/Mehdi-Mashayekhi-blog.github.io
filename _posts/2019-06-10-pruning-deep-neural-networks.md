@@ -116,7 +116,7 @@ tbdss
 
 $$
 \begin{aligned}
-& \Delta \Theta =-\frac {S^-1 e_{i}\theta_{i}^{*}}{[{S^{-1}]}_{ii}} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {(\theta_i^*)^{T}A\theta_{i}^{*}}{[{S^{-1}]}_{ii}}
+& \Delta \Theta =-\frac {S^{-1} e_{i}\theta_{i}^{*}}{[{S^{-1}]}_{ii}} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {(\theta_i^*)^{T}A\theta_{i}^{*}}{[{S^{-1}]}_{ii}}
 \end{aligned}
 $$
 

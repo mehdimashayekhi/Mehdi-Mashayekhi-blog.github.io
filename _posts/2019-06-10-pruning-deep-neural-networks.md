@@ -96,7 +96,7 @@ The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \na
 
 [[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
 ## Extending OBD and OBS to Structured Pruning
-If we replace $$H$$ with $$H$$ in OBD we will get: 
+If we replace $$H$$ with $$F$$ in OBD we will get: 
 
 $$
 \begin{aligned}
@@ -104,7 +104,7 @@ $$
 \end{aligned}
 $$
 
-and 
+Using K-FAC we can compute the change in weight as well as the importance in the following way:
 
 $$
 \begin{aligned}
@@ -112,7 +112,7 @@ $$
 \end{aligned}
 $$
 
-tbdss
+Similarly for OBS we can compute the change in weight as well as importance in the following way:
 
 $$
 \begin{aligned}

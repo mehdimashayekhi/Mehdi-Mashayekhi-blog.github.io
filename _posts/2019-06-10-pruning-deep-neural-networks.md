@@ -96,7 +96,19 @@ The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \na
 
 [[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
 ## Extending OBD and OBS to Structured Pruning
-TBD
+$$
+\begin{aligned}
+& {\Delta \Theta}_{q} =-\theta_{q}^{*}  &  {\Delta \mathcal{L}}_{OBD} = \frac {1}{2}({\theta_{q}}^{*})^{2} H_{qq}
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+& \Delta \Theta =-\frac {\theta_{q}^{*}}{H_{qq}^{-1}}H^{-1} e_{q} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {(\theta_{q}^{*})^{2}}{H_{qq}^{-1}}
+\end{aligned}
+$$
+
+
 ## EigenDamage: Structured Pruning in a KFE
 TBD
 [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)]

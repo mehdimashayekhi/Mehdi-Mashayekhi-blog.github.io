@@ -100,7 +100,6 @@ tbd
 
 $$
 \begin{aligned}
-
 &{\Delta \mathcal{L}}_{OBD} = \frac {1}{2}{{\theta_{i}}^{*}}^{T} F(i) {\theta_{i}}^{*}
 \end{aligned}
 $$

@@ -100,7 +100,7 @@ tbdS
 
 $$
 \begin{aligned}
-& {\Delta \mathcal{L}}_{OBD} = \frac {1}{2} {\theta_{i}^{*}}^{T} F(i) {\theta_{i}}^{*}
+& {\Delta \mathcal{L}}_{i} = \frac {1}{2} {\theta_{i}^{*}}^{T} F(i) {\theta_{i}}^{*}
 \end{aligned}
 $$
 
@@ -108,7 +108,7 @@ and
 
 $$
 \begin{aligned}
-& {\Delta \Theta}_{q} =-\theta_{i}^{*}  &  {\Delta \mathcal{L}}_{i} = \frac {1}{2} S_{ii} {\theta_{i}^{*}}^{T} A {\theta_{i}}^{*}
+& {\Delta \Theta}_{i} =-\theta_{i}^{*}  &  {\Delta \mathcal{L}}_{i} = \frac {1}{2} S_{ii} {\theta_{i}^{*}}^{T} A {\theta_{i}}^{*}
 \end{aligned}
 $$
 

@@ -104,6 +104,14 @@ $$
 \end{aligned}
 $$
 
+and 
+
+$$
+\begin{aligned}
+& {\Delta \Theta}_{q} =-\theta_{q}^{*}  &  {\Delta \mathcal{L}}_{OBD} = \frac {1}{2}({\theta_{q}}^{*})^{2} H_{qq}
+\end{aligned}
+$$
+
 tbd
 
 $$
@@ -111,6 +119,8 @@ $$
 & \Delta \Theta =-\frac {\theta_{q}^{*}}{H_{qq}^{-1}}H^{-1} e_{q} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {(\theta_{q}^{*})^{2}}{H_{qq}^{-1}}
 \end{aligned}
 $$
+
+
 
 
 ## EigenDamage: Structured Pruning in a KFE

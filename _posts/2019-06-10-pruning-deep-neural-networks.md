@@ -97,6 +97,7 @@ The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \na
 [[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
 ## Extending OBD and OBS to Structured Pruning
 tbd
+
 $$
 \begin{aligned}
 & {\Delta \Theta}_{q} =-\theta_{q}^{*}  &  {\Delta \mathcal{L}}_{OBD} = \frac {1}{2}({\theta_{q}}^{*})^{2} H_{qq}

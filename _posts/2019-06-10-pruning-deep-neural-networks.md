@@ -112,11 +112,11 @@ $$
 \end{aligned}
 $$
 
-tbd
+tbdss
 
 $$
 \begin{aligned}
-& \Delta \Theta =-\frac {\theta_{q}^{*}}{H_{qq}^{-1}}H^{-1} e_{q} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {{\theta_{i}^{*}}^{T} A {\theta_{i}}^{*}}{[{S^{-1}]}_{ii}}
+& \Delta \Theta =-\frac {\theta_{q}^{*}}{H_{qq}^{-1}}H^{-1} e_{q} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {{\theta_{i}^{*}}^{T} A {\theta_{i}}^{*}}{{S^-1}_{ii}}
 \end{aligned}
 $$
 

@@ -94,7 +94,7 @@ Martens & Grosse [[paper](https://arxiv.org/pdf/1503.05671.pdf)] proposed an app
 
 The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \nabla_W \nabla_W^{T} \Big]$$ will use $$A= \mathbb{E}\big[aa^T\big]$$ and use $$S= \mathbb{E}\big[\delta \delta ^T\big]$$. Using this Kronecker-factored approximation, approximate entries of $$F^{l}$$ as follows: $$F = \mathbb{E}\Big[ \nabla_{W}\nabla_{W}^{T} \Big] =\mathbb{E}\Big[(\delta\delta^T)(aa^{T})\Big]\approx \mathbb{E}\Big[(\delta\delta^T)\Big]\mathbb{E}\Big[(aa^{T})\Big]=S \otimes A$$
 
-[[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
+
 ## Extending OBD and OBS to Structured Pruning
 If we replace $$H$$ with $$F$$ in OBD we will get: 
 
@@ -123,8 +123,11 @@ $$
 
 
 
-## EigenDamage: Structured Pruning in a KFE
-TBD
+## EigenDamage: Structured Pruning in a Eigenvalue-corrected Kronecker Factorization (EKFAC)
+Thomas George, et al. [[paper](https://arxiv.org/pdf/1806.03884.pdf)] proposed Eigenvalue-corrected Kronecker Factorization (EKFAC), which is a provably better approximation of the Fisher Information Matrix than KFAC. 
+
+[[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
+
 [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)]
 
 

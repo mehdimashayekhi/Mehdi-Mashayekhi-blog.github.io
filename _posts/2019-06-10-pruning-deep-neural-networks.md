@@ -100,7 +100,7 @@ tbd
 
 $$
 \begin{aligned}
-& {\Delta \mathcal{L}}_{OBD} = \frac {1}{2}({\theta_{q}}^{*})^{2} F(i) {\theta_{i}}^{*}
+& {\Delta \mathcal{L}}_{OBD} = \frac {1}{2}({\theta_{q}}^{*}) F(i) {\theta_{i}}^{*}
 \end{aligned}
 $$
 

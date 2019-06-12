@@ -116,7 +116,7 @@ tbdss
 
 $$
 \begin{aligned}
-& \Delta \Theta =-\frac {\theta_{q}^{*}}{H_{qq}^{-1}}H^{-1} e_{q} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {a}{H_{qq}^{-1}}
+& \Delta \Theta =-\frac {\theta_{q}^{*}}{H_{qq}^{-1}}H^{-1} e_{q} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {{\theta_{i}^{*}}^{T}}{H_{qq}^{-1}}
 \end{aligned}
 $$
 

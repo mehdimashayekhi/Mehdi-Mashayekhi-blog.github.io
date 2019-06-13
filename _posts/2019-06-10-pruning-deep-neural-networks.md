@@ -21,7 +21,7 @@ image: "A3C_vs_A2C.png"
 
 The core idea in pruning is to find a saliency for the weight parameters and remove those with low saliency with the belief that these will influence the model least.
 
-The classical pruning algorithm was developed very early on by Lecun. The algorithm is based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. The proposed algorithm approximate the loss function $$\mathcal{L}$$ by a Taylor series. A perturbation $$\Delta \theta$$ of the parameter will change the loss function by: 
+The classical pruning algorithm was developed very early on by Lecun [Lecun, 1990](http://yann.lecun.com/exdb/publis/pdf/lecun-90b.pdf). The algorithm is based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. The proposed algorithm approximate the loss function $$\mathcal{L}$$ by a Taylor series. A perturbation $$\Delta \theta$$ of the parameter will change the loss function by: 
 
 $$
 \begin{aligned}
@@ -29,7 +29,7 @@ $$
 \end{aligned}
 $$
 
-Where $$H$$ is the Hessian matrix. Usually pruning is done when the model is trained and the parameter vector is then at local minimum of $$\mathcal{L}$$, and the first term of the right hand side of above equation can be neglected. The quadratic approximation also assume that the loss function is nearly quadratic, so that the last term can be neglected. So we end up with: 
+Where $$H$$ is the Hessian matrix. Usually pruning is done when the model is trained and the parameter vector is then at local minimum of $$\mathcal{L}$$. So the first term of the right hand side of above equation can be neglected. The quadratic approximation also assume that the loss function is nearly quadratic, so that the last term can be neglected. So we end up with: 
 
 $$
 \begin{aligned}
@@ -48,7 +48,7 @@ $$
 \end{aligned}
 $$
 
-Note that, OBD assumes a diagonal approximation for calculation of Hessian. In other words, it assumes all the weights are uncorrelated, such that removing one, will not affect the others.
+Note that, OBD assumes a diagonal approximation for calculation of Hessian and assumes all the weights are uncorrelated, such that removing one, will not affect the others.
 
 #### Optimal Brain Sergeon (OBS)
 

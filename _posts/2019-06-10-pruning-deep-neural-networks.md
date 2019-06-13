@@ -95,7 +95,7 @@ Martens & Grosse [[paper](https://arxiv.org/pdf/1503.05671.pdf)] proposed an app
 The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \nabla_W \nabla_W^{T} \Big]$$ will use $$A= \mathbb{E}\big[aa^T\big]$$ and use $$S= \mathbb{E}\big[\delta \delta ^T\big]$$. Using this Kronecker-factored approximation, approximate entries of $$F^{l}$$ as follows: $$F = \mathbb{E}\Big[ \nabla_{W}\nabla_{W}^{T} \Big] =\mathbb{E}\Big[(\delta\delta^T)(aa^{T})\Big]\approx \mathbb{E}\Big[(\delta\delta^T)\Big]\mathbb{E}\Big[(aa^{T})\Big]=S \otimes A$$
 
 
-## Extending OBD and OBS to Structured Pruning
+## Extending OBD and OBS to Structured Pruning Using K-FAC
 If we replace $$H$$ with $$F$$ in OBD we will get: 
 
 $$

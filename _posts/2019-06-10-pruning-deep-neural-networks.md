@@ -58,7 +58,7 @@ In OBS, the importance of each weight is calculated by solving the following con
 
 $$
 \begin{aligned}
-\min _{q}\big[\min_{\Delta \theta} \frac {1}{2}{\Delta \theta}^{T} H {\Delta \theta}  &  \text{s.t. } e_{q}^{T}{\Delta \theta}+\theta_{q}^{*}=0\big]
+\min _{q}\big[\min_{\Delta \theta} \frac {1}{2}({\Delta \theta}^{T} H {\Delta \theta})  &  \text{s.t. } e_{q}^{T}{\Delta \theta}+\theta_{q}^{*}=0\big]
 \end{aligned}
 $$
 

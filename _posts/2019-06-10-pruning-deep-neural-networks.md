@@ -62,7 +62,7 @@ $$
 \end{aligned}
 $$
 
-Solving above equation yields the optimal weight change and the corresponding change in error:
+Where $$e_{q}$$ is the unit selecting vector whose q-th element is 1 and 0 otherwise. Solving above equation yields the optimal weight change and the corresponding change in error:
 
 $$
 \begin{aligned}

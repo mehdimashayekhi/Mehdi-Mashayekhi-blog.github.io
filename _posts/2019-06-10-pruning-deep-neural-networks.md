@@ -58,7 +58,7 @@ In OBS, the importance of each weight is calculated by solving the following con
 
 $$
 \begin{aligned}
-\min _{q}\big[\min_{\Delta \theta} \frac {1}{2}{\Delta \theta}^{T} H {\Delta \theta}  &  \text{s.t. } e_{q}^{T}{\Delta \theta}+\theta_{q}^{*}=0\big]
+\min _{q}\big[\min_{\Delta \theta} \frac {1}{2}({\Delta \theta}^{T} H {\Delta \theta})  &  \text{s.t. } e_{q}^{T}{\Delta \theta}+\theta_{q}^{*}=0\big]
 \end{aligned}
 $$
 
@@ -140,10 +140,6 @@ Where $$Q$$ and $$\Lambda$$ are eigenvectors and eigenvalues. As you can see it 
 *Fig. 1. Structured Pruning in the Kronecker-Factored Eigenbasis. (Image source: [Chaoqi Wang, et al, 2019](https://arxiv.org/pdf/1905.05934.pdf))*
 
 Multiplying weight vector $$W$$ by $$ (Q_{S} \otimes Q_{A})^{T} $$, we get matrix  $$W’$$. Fisher matrix of  $$W’$$ is diagonal (if the assumption of K-FAC are satisfied). So, it makes sense to use classical pruning algorithms like OBD or OBS in this space. 
-
-## Summary
-
-TBD
 
 
 ## References

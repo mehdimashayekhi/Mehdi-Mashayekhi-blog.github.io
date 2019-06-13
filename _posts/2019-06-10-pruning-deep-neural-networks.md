@@ -52,7 +52,7 @@ Note that, OBD assumes a diagonal approximation for calculation of Hessian. In o
 
 #### Optimal Brain Sergeon (OBS)
 
-OBS was developed by Hassibi et.al, and it shares the same basic approach as OBD, in which, it trains a network to local minimum in error (w star) and then prunes a weight that leads to the smallest increase in the training error. The main difference between OBD and OBS is, OBS relaxes the diagonal approximation of the Hessian (i.e., uses full hessian), and it not only prune a single weight, but it takes into account the correlation between weights, and updates the rest of weights to compensate.
+OBS was developed by Hassibi et.al, and it shares the same basic approach as OBD, in which, it trains a network to local minimum in error (w star) and then prunes a weight that leads to the smallest increase in the training error. The main difference between OBD and OBS is, it not only prunes a single weight, but it takes into account the correlation between weights, and updates the rest of weights to compensate.
 
 In OBS, the importance of each weight is calculated by solving the following constrained optimization problem:
 
@@ -136,7 +136,7 @@ $$
 Where $$Q$$ and $$\Lambda$$ are eigenvectors and eigenvalues. As you can see it has three components, and it can be interpreted as three stages (each component defines a stage). Intuitively the role of the first and third stages (components) is to rotate to the KFE space. Chaoqi Wang, et al. [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)] used the same idea and applied it for pruning. Figure 1 shows this pruning procedure.
 
 ![OPTIONS]({{ '/assets/images/eigen_damage.png' | relative_url }})
-{: class="center" style="width: 50%;"}
+{: class="center" style="width: 45%;"}
 *Fig. 1. Structured Pruning in the Kronecker-Factored Eigenbasis. (Image source: [Chaoqi Wang, et al, 2019](https://arxiv.org/pdf/1905.05934.pdf))*
 
 Multiplying weight vector $$W$$ by $$ (Q_{S} \otimes Q_{A})^{T} $$, we get matrix  $$W’$$. Fisher matrix of  $$W’$$ is diagonal (if the assumption of K-FAC are satisfied). So, it makes sense to use classical pruning algorithms like OBD or OBS in this space. 

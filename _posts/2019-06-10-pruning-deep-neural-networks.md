@@ -21,11 +21,11 @@ image: "A3C_vs_A2C.png"
 
 The core idea in pruning is to find a saliency for the weight parameters and remove those with low saliency with the belief that these will influence the model least.
 
-The classical pruning algorithm was developed very early on by Lecun. The algorithm is based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. The proposed algorithm approximate the loss function $$\mathcal{L}$$ by a Taylor series. A perturbation $$\Delta \Theta$$ of the parameter will change the loss function by: 
+The classical pruning algorithm was developed very early on by Lecun. The algorithm is based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. The proposed algorithm approximate the loss function $$\mathcal{L}$$ by a Taylor series. A perturbation $$\Delta \theta$$ of the parameter will change the loss function by: 
 
 $$
 \begin{aligned}
-& \Delta \mathcal{L} =  \frac{\partial \mathcal{L}}{\partial \theta}^{T}\Delta \Theta +\frac {1}{2}{\Delta \Theta}^{T} H \Delta \Theta + O(||\Delta \Theta||^{3})
+& \Delta \mathcal{L} =  \frac{\partial \mathcal{L}}{\partial \theta}^{T}\Delta \theta +\frac {1}{2}{\Delta \theta}^{T} H \Delta \theta + O(||\Delta \theta||^{3})
 \end{aligned}
 $$
 
@@ -33,7 +33,7 @@ Where $$H$$ is the Hessian matrix. Usually pruning is done when the model is tra
 
 $$
 \begin{aligned}
-& \Delta \mathcal{L} = \frac {1}{2}{\Delta \Theta}^{T} H \Delta \Theta
+& \Delta \mathcal{L} = \frac {1}{2}{\Delta \theta}^{T} H \Delta \theta
 \end{aligned}
 $$
 
@@ -44,7 +44,7 @@ Because computing the full Hessian in deep networks is intractable, the Hessian 
 
 $$
 \begin{aligned}
-& {\Delta \Theta}_{q} =-\theta_{q}^{*}  &  {\Delta \mathcal{L}}_{OBD} = \frac {1}{2}({\theta_{q}}^{*})^{2} H_{qq}
+& {\Delta \theta}_{q} =-\theta_{q}^{*}  &  {\Delta \mathcal{L}}_{OBD} = \frac {1}{2}({\theta_{q}}^{*})^{2} H_{qq}
 \end{aligned}
 $$
 
@@ -58,7 +58,7 @@ In OBS, the importance of each weight is calculated by solving the following con
 
 $$
 \begin{aligned}
-\min _{q}\big[\min_{\Delta \Theta} \frac {1}{2}{\Delta \Theta}^{T} H {\Delta \Theta}  &  \text{s.t. } e_{q}^{T}{\Delta \Theta}+\theta_{q}^{*}=0\big]
+\min _{q}\big[\min_{\Delta \theta} \frac {1}{2}{\Delta \theta}^{T} H {\Delta \theta}  &  \text{s.t. } e_{q}^{T}{\Delta \theta}+\theta_{q}^{*}=0\big]
 \end{aligned}
 $$
 
@@ -66,7 +66,7 @@ Solving above equation yields the optimal weight change and the corresponding ch
 
 $$
 \begin{aligned}
-& \Delta \Theta =-\frac {\theta_{q}^{*}}{H_{qq}^{-1}}H^{-1} e_{q} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {(\theta_{q}^{*})^{2}}{H_{qq}^{-1}}
+& \Delta \theta =-\frac {\theta_{q}^{*}}{H_{qq}^{-1}}H^{-1} e_{q} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {(\theta_{q}^{*})^{2}}{H_{qq}^{-1}}
 \end{aligned}
 $$
 
@@ -108,7 +108,7 @@ Using K-FAC we can compute the change in weight as well as the importance in the
 
 $$
 \begin{aligned}
-& {\Delta \Theta}_{i} =-\theta_{i}^{*}  &  {\Delta \mathcal{L}}_{i} = \frac {1}{2} S_{ii} {\theta_{i}^{*}}^{T} A {\theta_{i}}^{*}
+& {\Delta \theta}_{i} =-\theta_{i}^{*}  &  {\Delta \mathcal{L}}_{i} = \frac {1}{2} S_{ii} {\theta_{i}^{*}}^{T} A {\theta_{i}}^{*}
 \end{aligned}
 $$
 
@@ -116,7 +116,7 @@ Similarly for OBS we can compute the change in weight as well as importance in t
 
 $$
 \begin{aligned}
-& \Delta \Theta =-\frac {S^{-1} e_{i}\otimes\theta_{i}^{*}}{[{S^{-1}]}_{ii}} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {(\theta_i^*)^{T}A\theta_{i}^{*}}{[{S^{-1}]}_{ii}}
+& \Delta \theta =-\frac {S^{-1} e_{i}\otimes\theta_{i}^{*}}{[{S^{-1}]}_{ii}} &  {\Delta \mathcal{L}}_{OBS} = \frac {1}{2}\frac {(\theta_i^*)^{T}A\theta_{i}^{*}}{[{S^{-1}]}_{ii}}
 \end{aligned}
 $$
 

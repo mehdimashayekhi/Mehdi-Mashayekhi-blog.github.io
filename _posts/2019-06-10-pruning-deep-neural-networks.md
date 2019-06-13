@@ -125,8 +125,17 @@ $$
 
 ## EigenDamage: Structured Pruning in a Eigenvalue-corrected Kronecker Factorization (EKFAC)
 Thomas George, et al. [[paper](https://arxiv.org/pdf/1806.03884.pdf)] proposed Eigenvalue-corrected Kronecker Factorization (EKFAC), which is a provably better approximation of the Fisher Information Matrix than KFAC. 
+The idea is to use eigendecomposition of  matrices $$A$$ and $$S$$ to get the Fisher matrix as shown below:
 
-[[paper](https://arxiv.org/pdf/1806.03884.pdf)\|[code](https://github.com/wiseodd/natural-gradients)]
+$$
+\begin{aligned}
+& F = (Q_{S} \otimes Q_{A})(\Lambda_{S} \otimes \Lambda_{A})(Q_{S} \otimes Q_{A})^{T}
+\end{aligned}
+$$
+
+Where $$Q$$ and $$\Lambda$$ are eigenvectors and eigenvalues. As you can see it has three components, and it can be interpreted as three stages (each component define a stage). 
+
+
 
 [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)]
 

@@ -139,6 +139,8 @@ Where $$Q$$ and $$\Lambda$$ are eigenvectors and eigenvalues. As you can see it 
 {: class="center" style="width: 50%;"}
 *Fig. 1. Structured Pruning in the Kronecker-Factored Eigenbasis. (Image source: [Chaoqi Wang, et al, 2019](https://arxiv.org/pdf/1905.05934.pdf))*
 
+Multiplying weight vector $$W$$ by $$ (Q_{S} \otimes Q_{A})^{T} $$, we get matrix  $$W’$$. Fisher matrix of  $$W’$$ is diagonal (if the assumption of K-FAC are satisfied). So, it makes sense to use classical pruning algorithms like OBD or OBS in this space. 
+
 ## Summary
 
 TBD

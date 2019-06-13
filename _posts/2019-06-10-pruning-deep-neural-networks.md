@@ -124,7 +124,7 @@ $$
 
 
 ## EigenDamage: Structured Pruning in a Eigenvalue-corrected Kronecker Factorization (EKFAC)
-Thomas George, et al. [[paper](https://arxiv.org/pdf/1806.03884.pdf)] proposed Eigenvalue-corrected Kronecker Factorization (EKFAC), which is a provably better approximation of the Fisher Information Matrix than KFAC. 
+[Thomas George, et al, 2018 ](https://arxiv.org/pdf/1806.03884.pdf)proposed Eigenvalue-corrected Kronecker Factorization (EKFAC), which is a provably better approximation of the Fisher Information Matrix than KFAC. 
 The idea is to use eigendecomposition of  matrices $$A$$ and $$S$$ to get the Fisher matrix as shown below:
 
 $$

@@ -20,8 +20,9 @@ image: "A3C_vs_A2C.png"
 ### Classical Pruning Algorithms
 
 The core idea in pruning is to find a saliency for the weight parameters and remove those with low saliency with the belief that these will influence the model least.
+Simplest approach is magnitude- based pruning, where weights with small magnitudes are pruned. However, a small magnitude does not necessarily mean unimportance if the input neuron has a large expected value, a small weight could still have a large consequence on its output neuron. As a consequence, magnitude- based pruning might remove critical parameters, or preserve insignificant ones.  The better approach is to use Hessian matrix as a principled pruning criterion, as it characterizes the local curvature of the training loss. 
 
-The classical pruning algorithm was developed very early on by Lecun [Lecun, 1990](http://yann.lecun.com/exdb/publis/pdf/lecun-90b.pdf). The algorithm is based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. The proposed algorithm approximate the loss function $$\mathcal{L}$$ by a Taylor series. A perturbation $$\Delta \theta$$ of the parameter will change the loss function by: 
+The classical pruning algorithm based on Hessian was developed very early on by Lecun [Lecun, 1990](http://yann.lecun.com/exdb/publis/pdf/lecun-90b.pdf). The algorithm is based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. The proposed algorithm approximate the loss function $$\mathcal{L}$$ by a Taylor series. A perturbation $$\Delta \theta$$ of the parameter will change the loss function by: 
 
 $$
 \begin{aligned}

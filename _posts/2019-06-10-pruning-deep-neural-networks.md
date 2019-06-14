@@ -7,7 +7,7 @@ tags: review
 image: "A3C_vs_A2C.png"
 ---
 
-> Deep neural networks are usually over-parametrized which leads to high computational cost and memory overhead at inference time. In this post we are going to review some classical and recent pruning algorithms.
+> Deep neural networks are usually over-parametrized. As a result, modern architectures need substantial memory storage and intensive computation at inference time. This is problematic in applications that need to run on small embedded systems or that need low-latency to make safety-critical decisions.  There are two lines of research to tack this issue. One is to quantize the parameters using lower precision, thus encoding the network with fewer bits. The other line of research is to use pruning techniques which aim to remove redundant connections. In this post we are going to review some classical and recent pruning algorithms.
 
 <!--more-->
 

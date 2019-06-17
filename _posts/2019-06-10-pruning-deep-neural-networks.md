@@ -30,7 +30,7 @@ $$
 \end{aligned}
 $$
 
-Where $$H$$ is the Hessian matrix (i.e., $$\frac{\partial^2 \mathcal{L}}{\partial \theta^2} $$ ). Usually pruning is done when the model is trained and the parameter vector is then at local minimum of $$\mathcal{L}$$. So the first term of the right hand side of above equation can be neglected. The quadratic approximation also assume that the loss function is nearly quadratic, so that the last term can be neglected. So we end up with: 
+Where $$H$$ is the Hessian matrix (i.e., $$\frac{\partial^2 \mathcal{L}}{\partial \theta^2} $$ ). Usually pruning is done when the model is trained and the parameter vector is then at local minimum of $$\mathcal{L}$$ (In other words most of the pruning algorithms follow the pipeline of [train ->prune -> retrain]). So the first term of the right hand side of above equation can be neglected. The quadratic approximation also assume that the loss function is nearly quadratic, so that the last term can be neglected. So we end up with: 
 
 $$
 \begin{aligned}

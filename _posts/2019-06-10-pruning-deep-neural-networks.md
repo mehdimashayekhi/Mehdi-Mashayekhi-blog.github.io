@@ -92,7 +92,7 @@ $$
 \end{aligned}
 $$
 
-#### A block-wise Kronecker-factored (K-FAC) Fisher Approximation
+#### A Block-wise Kronecker-factored (K-FAC) Fisher Approximation
 [Martens & Grosse,2016 ](https://arxiv.org/pdf/1503.05671.pdf)proposed an approximation to the Fisher as a Kronecker product F ≈ S ⊗ A which involves two smaller matrices. Specifically for a layer that receives input $$a$$ and computes linear pre-activations $$s = W^{T}a $$, followed by some non-linear activation, let the backpropagated gradient on $$s$$ be  $$\delta = \frac{\partial \mathcal{l}}{\partial s}$$. The gradients on parameter $$\theta = W$$ will be $$\Delta_{W}=\frac{\partial \mathcal{l}}{\partial W}=vec(a\delta^{T})$$.
 
 The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \nabla_W \nabla_W^{T} \Big]$$ will use $$A= \mathbb{E}\big[aa^T\big]$$ and use $$S= \mathbb{E}\big[\delta \delta ^T\big]$$. Using this Kronecker-factored approximation, we will get: $$F = \mathbb{E}\Big[ \nabla_{W}\nabla_{W}^{T} \Big] =\mathbb{E}\Big[(\delta\delta^T)(aa^{T})\Big]\approx \mathbb{E}\Big[(\delta\delta^T)\Big]\mathbb{E}\Big[(aa^{T})\Big]=S \otimes A$$

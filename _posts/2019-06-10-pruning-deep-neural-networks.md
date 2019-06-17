@@ -7,7 +7,7 @@ tags: review
 image: "A3C_vs_A2C.png"
 ---
 
-> Deep neural networks are usually over-parametrized. As a result, modern architectures need substantial memory storage and intensive computation at inference time. This is problematic in applications that need to run on small embedded systems or that need low-latency to make safety-critical decisions. There are mainly three lines of research to tackle this issue. One is to quantize the parameters using lower precision, thus encoding the network with fewer bits. Another line of research is to apply knowledge distillation in which the idea is to train a compact neural network with distilled knowledge of a large model . The other line of research is to use pruning techniques which aim to remove redundant connections. In this post we are going to review some classical and a recent extension of classical pruning algorithms.
+> Deep neural networks are usually over-parametrized. As a result, modern architectures need substantial memory storage and intensive computation at inference time. This is problematic in applications that need to run on small embedded systems or that need low-latency to make safety-critical decisions. There are mainly three lines of research to tackle this issue. One is to quantize the parameters using lower precision, thus encoding the network with fewer bits. Another line of research is to apply knowledge distillation in which the idea is to train a compact neural network with distilled knowledge of a large model . The other line of research is to use pruning techniques which aim to remove redundant connections. In this post we are going to review some classical pruning algorithms, and a more recent extensions of them.
 
 <!--more-->
 

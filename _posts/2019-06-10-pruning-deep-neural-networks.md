@@ -140,7 +140,7 @@ $$
 \end{aligned}
 $$
 
-Where $$Q$$ and $$\Lambda$$ are eigenvectors and eigenvalues. As you can see it has three components, and it can be interpreted as three stages (each component defines a stage). Intuitively the role of the first and third stages (components) is to rotate to the KFE space. Chaoqi Wang, et al. [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)] used the same idea and applied it for pruning. Figure 1 shows this pruning procedure.
+Where $$Q$$ and $$\Lambda$$ are eigenvectors and eigenvalues. As you can see it has three components, and it can be interpreted as three stages (each component defines a stage). Intuitively the role of the first and third stages (components) is to rotate to the KFE space. Chaoqi Wang, et al. [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)] used the same idea and applied it for pruning. Figure 2 shows this pruning procedure.
 
 ![OPTIONS]({{ '/assets/images/eigen_damage.png' | relative_url }})
 {: class="center" style="width: 45%;"}

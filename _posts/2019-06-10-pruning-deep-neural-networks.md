@@ -7,7 +7,7 @@ tags: review
 image: "A3C_vs_A2C.png"
 ---
 
-> Deep neural networks are usually over-parametrized. As a result, modern architectures need substantial memory storage and intensive computation at inference time. This is problematic in applications that need to run on small embedded systems or that need low-latency to make safety-critical decisions. There are mainly three lines of research to tackle this issue. One is to quantize the parameters using lower precision, thus encoding the network with fewer bits. Another line of research is to apply knowledge distillation in which the idea is to train a compact neural network with distilled knowledge of a large model . The other line of research is to use pruning techniques which aim to remove redundant connections. In this post we are going to review some classical pruning algorithms, and a more recent extensions of them.
+> Deep neural networks are usually over-parametrized. As a result, modern architectures need substantial memory storage and intensive computation at inference time. This is problematic in applications that need to run on small embedded systems or that need low-latency to make safety-critical decisions. There are mainly three lines of research to tackle this issue. One is to quantize the parameters using lower precision, thus encoding the network with fewer bits. Another line of research is to apply knowledge distillation in which the idea is to train a compact neural network with distilled knowledge of a large model . The other line of research is to use pruning techniques which aim to remove redundant connections. In this post we are going to review some classical and a recent extension of classical pruning algorithms.
 
 <!--more-->
 
@@ -30,7 +30,7 @@ $$
 \end{aligned}
 $$
 
-Where $$H$$ is the Hessian matrix (i.e., $$\frac{\partial^2 \mathcal{L}}{\partial \theta^2} $$ ). Usually pruning is done when the model is trained and the parameter vector is then at local minimum of $$\mathcal{L}$$ (in other words, most of the pruning algorithms follow the pipeline of [train ->prune -> retrain]). So the first term of the right hand side of above equation can be neglected. The quadratic approximation also assume that the loss function is nearly quadratic, so that the last term can be neglected. So we end up with: 
+Where $$H$$ is the Hessian matrix (i.e., $$\frac{\partial^2 \mathcal{L}}{\partial \theta^2} $$ ). Usually pruning is done when the model is trained and the parameter vector is then at local minimum of $$\mathcal{L}$$. In other words, most of the pruning algorithms follow the pipeline of [train ->prune -> retrain] as shown in Fig. 1. So, the first term of the right hand side of above equation can be neglected. The quadratic approximation also assume that the loss function is nearly quadratic, so that the last term can be neglected. So we end up with: 
 
 $$
 \begin{aligned}
@@ -39,6 +39,10 @@ $$
 $$
 
 which seems a  a very good saliency metric.
+
+![OPTIONS]({{ '/assets/images/prunning_pipline.png' | relative_url }})
+{: class="center" style="width: 45%;"}
+*Fig. 1. Pruning Pipeline. (Image source: [Song Han, et al., 2015](https://arxiv.org/pdf/1506.02626.pdf))*
 
 #### Optimal Brain Damage (OBD)
 Because computing the full Hessian in deep networks is intractable, the Hessian matrix $$H$$ is approximated by a diagonal matrix in OBD. If we prune a weight $$\theta_{q}$$, then the corresponding change in weights as well as the loss are:
@@ -94,13 +98,13 @@ $$
 
 
 #### A Block-wise Kronecker-factored (K-FAC) Fisher Approximation
-[Martens & Grosse, 2016](https://arxiv.org/pdf/1503.05671.pdf) proposed an approximation to the Fisher as a Kronecker product F ≈ S ⊗ A which involves two smaller matrices. Specifically for a layer that receives input $$a$$ and computes linear pre-activations $$s = W^{T}a $$, followed by some non-linear activation (Fig. 1), let the backpropagated gradient on $$s$$ be  $$\delta = \frac{\partial \mathcal{l}}{\partial s}$$. The gradients on parameter $$\theta = W$$ will be $$\Delta_{W}=\frac{\partial \mathcal{l}}{\partial W}=vec(a\delta^{T})$$.
+[Martens & Grosse, 2016](https://arxiv.org/pdf/1503.05671.pdf) proposed an approximation to the Fisher as a Kronecker product F ≈ S ⊗ A which involves two smaller matrices. Specifically for a layer that receives input $$a$$ and computes linear pre-activations $$s = W^{T}a $$, followed by some non-linear activation (Fig. 2), let the backpropagated gradient on $$s$$ be  $$\delta = \frac{\partial \mathcal{l}}{\partial s}$$. The gradients on parameter $$\theta = W$$ will be $$\Delta_{W}=\frac{\partial \mathcal{l}}{\partial W}=vec(a\delta^{T})$$.
 
 The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \nabla_W \nabla_W^{T} \Big]$$ will use $$A= \mathbb{E}\big[aa^T\big]$$ and use $$S= \mathbb{E}\big[\delta \delta ^T\big]$$. Using this Kronecker-factored approximation, we will get: $$F = \mathbb{E}\Big[ \nabla_{W}\nabla_{W}^{T} \Big] =\mathbb{E}\Big[(\delta\delta^T)(aa^{T})\Big]\approx \mathbb{E}\Big[(\delta\delta^T)\Big]\mathbb{E}\Big[(aa^{T})\Big]=S \otimes A$$
 
 ![OPTIONS]({{ '/assets/images/standard_feed_forward_neural.png' | relative_url }})
 {: class="center" style="width: 45%;"}
-*Fig. 1. A depiction of a standard feed-forward neural network for l = 2 layres. (Image source: [Martens & Grosse, 2016](https://arxiv.org/pdf/1503.05671.pdff))*
+*Fig. 2. A depiction of a standard feed-forward neural network for l = 2 layres. (Image source: [Martens & Grosse, 2016](https://arxiv.org/pdf/1503.05671.pdff))*
 
 ## Extending OBD and OBS to Structured Pruning Using K-FAC
 If we replace $$H$$ with $$F$$ in OBD we will get: 
@@ -140,11 +144,11 @@ $$
 \end{aligned}
 $$
 
-Where $$Q$$ and $$\Lambda$$ are eigenvectors and eigenvalues. As you can see it has three components, and it can be interpreted as three stages (each component defines a stage). Intuitively the role of the first and third stages (components) is to rotate to the KFE space. Chaoqi Wang, et al. [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)] used the same idea and applied it for pruning. Figure 2 shows this pruning procedure.
+Where $$Q$$ and $$\Lambda$$ are eigenvectors and eigenvalues. As you can see it has three components, and it can be interpreted as three stages (each component defines a stage). Intuitively the role of the first and third stages (components) is to rotate to the KFE space. Chaoqi Wang, et al. [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)] used the same idea and applied it for pruning. Fig. 3 shows this pruning procedure.
 
 ![OPTIONS]({{ '/assets/images/eigen_damage.png' | relative_url }})
 {: class="center" style="width: 45%;"}
-*Fig. 2. Structured Pruning in the Kronecker-Factored Eigenbasis. (Image source: [Chaoqi Wang, et al, 2019](https://arxiv.org/pdf/1905.05934.pdf))*
+*Fig. 3. Structured Pruning in the Kronecker-Factored Eigenbasis. (Image source: [Chaoqi Wang, et al, 2019](https://arxiv.org/pdf/1905.05934.pdf))*
 
 Multiplying weight vector $$W$$ by $$ (Q_{S} \otimes Q_{A})^{T} $$, we get matrix  $$W’$$. Fisher matrix of  $$W’$$ is diagonal (if the assumption of K-FAC are satisfied). So, it makes sense to use classical pruning algorithms like OBD or OBS in this space. 
 
@@ -160,3 +164,5 @@ Multiplying weight vector $$W$$ by $$ (Q_{S} \otimes Q_{A})^{T} $$, we get matri
 [4] Chaoqi Wang, et al. ["EigenDamage: Structured Pruning in the Kronecker-Factored Eigenbasis."](https://arxiv.org/pdf/1905.05934.pdf). 2019.
 
 [5] James Martens and Roger Grosse ["Optimizing Neural Networks with Kronecker-factored Approximate Curvature"](https://arxiv.org/pdf/1503.05671.pdf). 2016.
+
+[5] Song Han, et al. ["Learning both Weights and Connections for Efficient Neural Networks"](https://arxiv.org/pdf/1506.02626.pdf). 2015.

@@ -41,7 +41,7 @@ $$
 which seems a  a very good saliency metric.
 
 ![OPTIONS]({{ '/assets/images/prunning_pipline.png' | relative_url }})
-{: class="center" style="width: 80%;"}
+{: class="center" style="width: 90%;"}
 *Fig. 1. Pruning Pipeline. (Image source: [Song Han, et al., 2015](https://arxiv.org/pdf/1506.02626.pdf))*
 
 #### Optimal Brain Damage (OBD)

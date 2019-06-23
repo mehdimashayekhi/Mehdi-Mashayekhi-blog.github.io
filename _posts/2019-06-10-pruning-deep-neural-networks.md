@@ -96,7 +96,7 @@ Assume we have a dataset $$D_{train}$$ containing (input, target) examples (x,y)
 
 $$
 \begin{aligned}
-& F = \mathbb{E}_{x \in D_{train}, y \sim {p_{\theta}(y|x)} }\Big[ \nabla_\theta \nabla_\theta^{T} \Big]
+& F = \mathbb{E}_{x \in D_{train}, y \sim {f_{\theta}(y|x)} }\Big[ \nabla_\theta \nabla_\theta^{T} \Big]
 \end{aligned}
 $$
 

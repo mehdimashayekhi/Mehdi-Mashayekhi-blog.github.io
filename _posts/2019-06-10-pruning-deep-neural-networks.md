@@ -87,7 +87,7 @@ $$
 \end{aligned}
 $$
 
-Note that for the expectation is under the data distribution (i.e., (x,y)).  
+Note that the expectation is under the data distribution (i.e., (x,y)).  
 
 Also Fisher and generalized Gauss-Newton matrix are also identical. 
 There is a slight difference that, when calculating Fisher, the expectation is under the model distribution. However, Since modern neural networks typically have strong model capacities, we can assume those two distributions are close for a well-trained model. 
@@ -96,7 +96,7 @@ Assume we have a dataset $$D_{train}$$ containing (input, target) examples (x,y)
 
 $$
 \begin{aligned}
-& F = \mathbb{E}_{x \in D_{train} y \sim {p_{\theta}} }\Big[ \nabla_\theta \nabla_\theta^{T} \Big]
+& F = \mathbb{E}_{x \in D_{train}, y \sim {p_{\theta}(y|x)} }\Big[ \nabla_\theta \nabla_\theta^{T} \Big]
 \end{aligned}
 $$
 

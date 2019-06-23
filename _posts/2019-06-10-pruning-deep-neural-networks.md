@@ -87,12 +87,16 @@ $$
 \end{aligned}
 $$
 
-Also Fisher (to be precise “empirical Fisher”) and generalized Gauss-Newton matrix are also identical. As a result we can approximate $$H$$ with Fisher. 
-Assume we have a dataset $$D_{train}$$ containing (input, target) examples (x,y), and a neural network $$f_{\theta}(x)$$ with parameter vector $$\theta$$. Then Empirical Fisher is defined as follow:
+Note that for the expectation is under the data distribution (i.e., (x,y)).  
+
+Also Fisher and generalized Gauss-Newton matrix are also identical. 
+There is a slight difference that, when calculating Fisher, the expectation is under the model distribution. However, Since modern neural networks typically have strong model capacities, we can assume those two distributions are close for a well-trained model. 
+As a result we can approximate $$H$$ with Fisher. 
+Assume we have a dataset $$D_{train}$$ containing (input, target) examples (x,y), and a neural network $$f_{\theta}(x)$$ with parameter vector $$\theta$$. Then, Fisher matrix is defined as follow:
 
 $$
 \begin{aligned}
-& F = \mathbb{E}_{(x,y)\in D_{train} }\Big[ \nabla_\theta \nabla_\theta^{T} \Big]
+& F = \mathbb{E}_{x \in D_{train} y \sim {p_{\theta}} }\Big[ \nabla_\theta \nabla_\theta^{T} \Big]
 \end{aligned}
 $$
 

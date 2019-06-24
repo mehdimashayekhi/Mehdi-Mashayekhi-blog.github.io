@@ -102,13 +102,19 @@ $$
 
 
 #### A Block-wise Kronecker-factored (K-FAC) Fisher Approximation
-[Martens & Grosse, 2016](https://arxiv.org/pdf/1503.05671.pdf) proposed an approximation to the Fisher as a Kronecker product F ≈ S ⊗ A which involves two smaller matrices. Specifically for a layer that receives input $$a$$ and computes linear pre-activations $$s = W^{T}a $$, followed by some non-linear activation (Fig. 2), let the backpropagated gradient on $$s$$ be  $$\delta = \frac{\partial \mathcal{l}}{\partial s}$$. The gradients on parameter $$\theta = W$$ will be $$\Delta_{W}=\frac{\partial \mathcal{l}}{\partial W}=vec(a\delta^{T})$$.
+[Martens & Grosse, 2016](https://arxiv.org/pdf/1503.05671.pdf) proposed an approximation to the Fisher as a Kronecker product F ≈ S ⊗ A which involves two smaller matrices as shown in Fig. 2. 
+
+![OPTIONS]({{ '/assets/images/k-fac.png' | relative_url }})
+{: class="center" style="width: 60%;"}
+*Fig. 2. Fisher Approximation using K-FAC.
+
+Specifically for a layer that receives input $$a$$ and computes linear pre-activations $$s = W^{T}a $$, followed by some non-linear activation (Fig. 3), let the backpropagated gradient on $$s$$ be  $$\delta = \frac{\partial \mathcal{l}}{\partial s}$$. The gradients on parameter $$\theta = W$$ will be $$\Delta_{W}=\frac{\partial \mathcal{l}}{\partial W}=vec(a\delta^{T})$$.
 
 The Kronecker factored approximation of corresponding $$ F = \mathbb{E}\Big[ \nabla_W \nabla_W^{T} \Big]$$ will use $$A= \mathbb{E}\big[aa^T\big]$$ and use $$S= \mathbb{E}\big[\delta \delta ^T\big]$$. Using this Kronecker-factored approximation, we will get: $$F = \mathbb{E}\Big[ \nabla_{W}\nabla_{W}^{T} \Big] =\mathbb{E}\Big[(\delta\delta^T)(aa^{T})\Big]\approx \mathbb{E}\Big[(\delta\delta^T)\Big]\mathbb{E}\Big[(aa^{T})\Big]=S \otimes A$$
 
 ![OPTIONS]({{ '/assets/images/standard_feed_forward_neural.png' | relative_url }})
 {: class="center" style="width: 45%;"}
-*Fig. 2. A depiction of a standard feed-forward neural network for l = 2 layres. (Image source: [Martens & Grosse, 2016](https://arxiv.org/pdf/1503.05671.pdff))*
+*Fig. 3. A depiction of a standard feed-forward neural network for l = 2 layres. (Image source: [Martens & Grosse, 2016](https://arxiv.org/pdf/1503.05671.pdff))*
 
 ## Extending OBD and OBS to Structured Pruning Using K-FAC
 If we replace $$H$$ with $$F$$ in OBD we will get: 
@@ -148,11 +154,11 @@ $$
 \end{aligned}
 $$
 
-Where $$Q$$ and $$\Lambda$$ are eigenvectors and eigenvalues. As you can see it has three components, and it can be interpreted as three stages (each component defines a stage). Intuitively the role of the first and third stages (components) is to rotate to the KFE space. Chaoqi Wang, et al. [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)] used the same idea and applied it for pruning. Fig. 3 shows this pruning procedure.
+Where $$Q$$ and $$\Lambda$$ are eigenvectors and eigenvalues. As you can see it has three components, and it can be interpreted as three stages (each component defines a stage). Intuitively the role of the first and third stages (components) is to rotate to the KFE space. Chaoqi Wang, et al. [[paper](https://arxiv.org/pdf/1905.05934.pdf)\|[code](https://github.com/alecwangcq/EigenDamage-Pytorch)] used the same idea and applied it for pruning. Fig. 4 shows this pruning procedure.
 
 ![OPTIONS]({{ '/assets/images/eigen_damage.png' | relative_url }})
 {: class="center" style="width: 45%;"}
-*Fig. 3. Structured Pruning in the Kronecker-Factored Eigenbasis. (Image source: [Chaoqi Wang, et al, 2019](https://arxiv.org/pdf/1905.05934.pdf))*
+*Fig. 4. Structured Pruning in the Kronecker-Factored Eigenbasis. (Image source: [Chaoqi Wang, et al, 2019](https://arxiv.org/pdf/1905.05934.pdf))*
 
 Multiplying weight vector $$W$$ by $$ (Q_{S} \otimes Q_{A})^{T} $$, we get matrix  $$W’$$. Fisher matrix of  $$W’$$ is diagonal (if the assumption of K-FAC are satisfied). So, it makes sense to use classical pruning algorithms like OBD or OBS in this space. 
 

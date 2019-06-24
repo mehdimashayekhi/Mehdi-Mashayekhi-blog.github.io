@@ -105,7 +105,7 @@ $$
 [Martens & Grosse, 2016](https://arxiv.org/pdf/1503.05671.pdf) proposed an approximation to the Fisher as a Kronecker product F ≈ S ⊗ A which involves two smaller matrices as shown in Fig. 2. 
 
 ![OPTIONS]({{ '/assets/images/k-fac.png' | relative_url }})
-{: class="center" style="width: 60%;"}
+{: class="center" style="width: 90%;"}
 *Fig. 2. Fisher Approximation using K-FAC.
 
 Specifically for a layer that receives input $$a$$ and computes linear pre-activations $$s = W^{T}a $$, followed by some non-linear activation (Fig. 3), let the backpropagated gradient on $$s$$ be  $$\delta = \frac{\partial \mathcal{l}}{\partial s}$$. The gradients on parameter $$\theta = W$$ will be $$\Delta_{W}=\frac{\partial \mathcal{l}}{\partial W}=vec(a\delta^{T})$$.

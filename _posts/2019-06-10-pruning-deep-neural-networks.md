@@ -19,8 +19,13 @@ image: "A3C_vs_A2C.png"
 
 ### Classical Pruning Algorithms
 
-The core idea in pruning is to find a saliency for the weight parameters and remove those with low saliency with the belief that these will influence the model least.
-Simplest approach is magnitude- based pruning, where weights with small magnitudes are pruned. However, a small magnitude does not necessarily mean unimportance if the input neuron has a large expected value, a small weight could still have a large consequence on its output neuron. As a consequence, magnitude- based pruning might remove critical parameters, or preserve insignificant ones.  The better approach is to use Hessian matrix as a principled pruning criterion, as it characterizes the local curvature of the training loss. 
+#### Magnitude-based Pruning
+The core idea in pruning is to find a saliency for the weight parameters and remove those with low saliency with the belief that these will influence the model least. Usually pruning is done when the model is trained and the parameter vector is then at local minimum of $$\mathcal{L}$$. In other words, most of the pruning algorithms follow the pipeline of [train ->prune -> retrain] as shown in Fig. 1.
+
+Simplest approach is magnitude- based pruning, where weights with small magnitudes are pruned. However, a small magnitude does not necessarily mean unimportance if the input neuron has a large expected value, a small weight could still have a large consequence on its output neuron. As a consequence, magnitude- based pruning might remove critical parameters, or preserve insignificant ones.
+
+#### Hessian-based Pruning
+The better approach is to use Hessian matrix as a principled pruning criterion, as it characterizes the local curvature of the training loss. 
 
 The classical pruning algorithm based on Hessian was developed very early on by Lecun [Lecun, 1990](http://yann.lecun.com/exdb/publis/pdf/lecun-90b.pdf). The algorithm is based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. The proposed algorithm approximate the loss function $$\mathcal{L}$$ by a Taylor series. A perturbation $$\Delta \theta$$ of the parameter will change the loss function by: 
 
@@ -30,7 +35,7 @@ $$
 \end{aligned}
 $$
 
-Where $$H$$ is the Hessian matrix (i.e., $$\frac{\partial^2 \mathcal{L}}{\partial \theta^2} $$ ). Usually pruning is done when the model is trained and the parameter vector is then at local minimum of $$\mathcal{L}$$. In other words, most of the pruning algorithms follow the pipeline of [train ->prune -> retrain] as shown in Fig. 1. So, the first term of the right hand side of above equation can be neglected. The quadratic approximation also assume that the loss function is nearly quadratic, so that the last term can be neglected. So we end up with: 
+Where $$H$$ is the Hessian matrix (i.e., $$\frac{\partial^2 \mathcal{L}}{\partial \theta^2} $$ ). Since the parameter vector is at its local minimum (remember that the model is fully trained before pruning), so, the first term of the right hand side of above equation can be neglected. The quadratic approximation also assume that the loss function is nearly quadratic, so that the last term can be neglected. So we end up with: 
 
 $$
 \begin{aligned}
@@ -40,9 +45,6 @@ $$
 
 which seems a  a very good saliency metric.
 
-![OPTIONS]({{ '/assets/images/prunning_pipline.png' | relative_url }})
-{: class="center" style="width: 95%;"}
-*Fig. 1. Pruning Pipeline. (Image source: [Song Han, et al., 2015](https://arxiv.org/pdf/1506.02626.pdf))*
 
 #### Optimal Brain Damage (OBD)
 Because computing the full Hessian in deep networks is intractable, the Hessian matrix $$H$$ is approximated by a diagonal matrix in OBD. If we prune a weight $$\theta_{q}$$, then the corresponding change in weights as well as the loss are:

@@ -82,7 +82,7 @@ $$
 
 In other words OBS aims to find an index q, such that when altering $$\theta_{q}$$ from its original value to zero, the change in training loss $$\Delta \mathcal{L}$$ is minimized. 
 
-### Hessian Approximation Using Fisher
+#### Hessian Approximation Using Fisher
 As you saw for pruning, we need to calculate/approximate the Hessian. We can use Fisher matrix to approximate Hessian. Assume the function $$z = f(x, \theta)$$ is parametrized by $$\theta$$, and the loss function is $$\mathcal{L}(y,z)=- \log p(y \vert z)$$. Then the Hessian $$H$$ at a local minimum is equivalent to generalized Gauss-Newton matrix $$G$$:
 
 $$

@@ -18,11 +18,14 @@ image: "A3C_vs_A2C.png"
 ## Background 
 
 ### Classical Pruning Algorithms
-
-#### Magnitude-based Pruning
 The core idea in pruning is to find a saliency for the weight parameters and remove those with low saliency with the belief that these will influence the model least. Usually pruning is done when the model is trained and the parameter vector is then at local minimum of $$\mathcal{L}$$. In other words, most of the pruning algorithms follow the pipeline of [train ->prune -> retrain] as shown in Fig. 1.
 
-Simplest approach is magnitude- based pruning, where weights with small magnitudes are pruned. However, a small magnitude does not necessarily mean unimportance if the input neuron has a large expected value, a small weight could still have a large consequence on its output neuron. As a consequence, magnitude- based pruning might remove critical parameters, or preserve insignificant ones.
+![OPTIONS]({{ '/assets/images/prunning_pipline.png' | relative_url }})
+{: class="center" style="width: 99%;"}
+*Fig. 1. Pruning Pipeline. (Image source: [Song Han, et al., 2015](https://arxiv.org/pdf/1506.02626.pdf))*
+
+#### Magnitude-based Pruning
+Simplest approach for pruning is magnitude- based method, where weights with small magnitudes are pruned. However, a small magnitude does not necessarily mean unimportance if the input neuron has a large expected value, a small weight could still have a large consequence on its output neuron. As a consequence, magnitude- based pruning might remove critical parameters, or preserve insignificant ones.
 
 #### Hessian-based Pruning
 The better approach is to use Hessian matrix as a principled pruning criterion, as it characterizes the local curvature of the training loss. 

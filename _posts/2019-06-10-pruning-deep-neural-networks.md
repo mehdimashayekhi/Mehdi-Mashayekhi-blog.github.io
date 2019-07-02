@@ -49,7 +49,7 @@ $$
 which seems a  a very good saliency metric.
 
 
-#### Optimal Brain Damage (OBD)
+##### Optimal Brain Damage (OBD)
 Because computing the full Hessian in deep networks is intractable, the Hessian matrix $$H$$ is approximated by a diagonal matrix in OBD. If we prune a weight $$\theta_{q}$$, then the corresponding change in weights as well as the loss are:
 
 $$
@@ -60,7 +60,7 @@ $$
 
 Note that, OBD assumes a diagonal approximation for calculation of Hessian and assumes all the weights are uncorrelated, such that removing one, will not affect the others.
 
-#### Optimal Brain Surgeon (OBS)
+##### Optimal Brain Surgeon (OBS)
 
 OBS was developed by [Hassibi et.al, 1990](https://papers.nips.cc/paper/749-optimal-brain-surgeon-extensions-and-performance-comparisons.pdf), and it shares the same basic approach as OBD, in which, it trains a network to local minimum in error, and then prunes a weight that leads to the smallest increase in the training error. The main difference between OBD and OBS is, it not only prunes a single weight, but it takes into account the correlation between weights, and updates the rest of weights to compensate.
 

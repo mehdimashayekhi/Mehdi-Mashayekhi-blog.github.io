@@ -24,7 +24,8 @@ The core idea in pruning is to find a saliency for the weight parameters and rem
 
 ### Magnitude-based Pruning
 Simplest approach for pruning is magnitude- based method, where weights with small magnitudes are pruned. 
-Or, in other words, this method treats the top-k largest magnitude weights as important. This method has two flavors: the first is unit pruning where units are pruned, the second is weight pruning in which individual weights are pruned.   
+Or, in other words, this method treats the top-k largest magnitude weights as important. This method has two flavors: the first is unit pruning where units are pruned, the second is weight pruning in which individual weights are pruned.
+
 However, a small magnitude does not necessarily mean unimportance if the input neuron has a large expected value, a small weight could still have a large consequence on its output neuron. As a consequence, magnitude- based pruning might remove critical parameters, or preserve insignificant ones.
 
 ### Hessian-based Pruning

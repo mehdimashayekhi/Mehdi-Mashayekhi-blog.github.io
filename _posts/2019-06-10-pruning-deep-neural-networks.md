@@ -16,18 +16,16 @@ image: "A3C_vs_A2C.png"
 {:toc}
 
 ## Background 
-
-### Classical Pruning Algorithms
 The core idea in pruning is to find a saliency for the weight parameters and remove those with low saliency with the belief that these will influence the model least. Usually pruning is done when the model is trained and the parameter vector is then at local minimum of $$\mathcal{L}$$. In other words, most of the pruning algorithms follow the pipeline of [train ->prune -> retrain] as shown in Fig. 1.
 
 ![OPTIONS]({{ '/assets/images/prunning_pipline.png' | relative_url }})
 {: class="center" style="width: 99%;"}
 *Fig. 1. Pruning Pipeline. (Image source: [Song Han, et al., 2015](https://arxiv.org/pdf/1506.02626.pdf))*
 
-#### Magnitude-based Pruning
+### Magnitude-based Pruning
 Simplest approach for pruning is magnitude- based method, where weights with small magnitudes are pruned. However, a small magnitude does not necessarily mean unimportance if the input neuron has a large expected value, a small weight could still have a large consequence on its output neuron. As a consequence, magnitude- based pruning might remove critical parameters, or preserve insignificant ones.
 
-#### Hessian-based Pruning
+### Hessian-based Pruning
 The better approach is to use Hessian matrix as a principled pruning criterion, as it characterizes the local curvature of the training loss. 
 
 The classical pruning algorithm based on Hessian was developed very early on by Lecun [Lecun, 1990](http://yann.lecun.com/exdb/publis/pdf/lecun-90b.pdf). The algorithm is based on constructing a local model of the loss function and analytically predict the effect of perturbing the parameter vectors. The proposed algorithm approximate the loss function $$\mathcal{L}$$ by a Taylor series. A perturbation $$\Delta \theta$$ of the parameter will change the loss function by: 
@@ -49,7 +47,7 @@ $$
 which seems a  a very good saliency metric.
 
 
-##### Optimal Brain Damage (OBD)
+#### Optimal Brain Damage (OBD)
 Because computing the full Hessian in deep networks is intractable, the Hessian matrix $$H$$ is approximated by a diagonal matrix in OBD. If we prune a weight $$\theta_{q}$$, then the corresponding change in weights as well as the loss are:
 
 $$
@@ -60,7 +58,7 @@ $$
 
 Note that, OBD assumes a diagonal approximation for calculation of Hessian and assumes all the weights are uncorrelated, such that removing one, will not affect the others.
 
-##### Optimal Brain Surgeon (OBS)
+#### Optimal Brain Surgeon (OBS)
 
 OBS was developed by [Hassibi et.al, 1990](https://papers.nips.cc/paper/749-optimal-brain-surgeon-extensions-and-performance-comparisons.pdf), and it shares the same basic approach as OBD, in which, it trains a network to local minimum in error, and then prunes a weight that leads to the smallest increase in the training error. The main difference between OBD and OBS is, it not only prunes a single weight, but it takes into account the correlation between weights, and updates the rest of weights to compensate.
 
@@ -82,7 +80,7 @@ $$
 
 In other words OBS aims to find an index q, such that when altering $$\theta_{q}$$ from its original value to zero, the change in training loss $$\Delta \mathcal{L}$$ is minimized. 
 
-#### Hessian Approximation Using Fisher
+### Hessian Approximation Using Fisher
 As you saw for pruning, we need to calculate/approximate the Hessian. We can use Fisher matrix to approximate Hessian. Assume the function $$z = f(x, \theta)$$ is parametrized by $$\theta$$, and the loss function is $$\mathcal{L}(y,z)=- \log p(y \vert z)$$. Then the Hessian $$H$$ at a local minimum is equivalent to generalized Gauss-Newton matrix $$G$$:
 
 $$
@@ -106,7 +104,7 @@ $$
 $$
 
 
-#### A Block-wise Kronecker-factored (K-FAC) Fisher Approximation
+### A Block-wise Kronecker-factored (K-FAC) Fisher Approximation
 [Martens & Grosse, 2016](https://arxiv.org/pdf/1503.05671.pdf) proposed an approximation to the Fisher as a Kronecker product F ≈ S ⊗ A which involves two smaller matrices as shown in Fig. 2. 
 
 ![OPTIONS]({{ '/assets/images/k-fac.png' | relative_url }})

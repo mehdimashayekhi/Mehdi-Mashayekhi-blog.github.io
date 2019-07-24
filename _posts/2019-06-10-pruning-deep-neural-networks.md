@@ -172,6 +172,16 @@ Where $$Q$$ and $$\Lambda$$ are eigenvectors and eigenvalues. As you can see it 
 
 Multiplying weight vector $$W$$ by $$ (Q_{S} \otimes Q_{A})^{T} $$, we get matrix  $$W’$$. Fisher matrix of  $$W’$$ is diagonal (if the assumption of K-FAC are satisfied). So, it makes sense to use classical pruning algorithms like OBD or OBS in this space. 
 
+Cited as:
+```
+@article{mashayekhi2019pruning,
+  title   = "Pruning Deep Neural Networks",
+  author  = "Mashayekhi, Mehdi",
+  journal = " https://mehdimashayekhi.github.io/mehdi-mashayekhi-blog.github.io/ ",
+  year    = "2019",
+  url     = " https://mehdimashayekhi.github.io/mehdi-mashayekhi-blog.github.io/2019/06/10/pruning-deep-neural-networks.html "
+}
+```
 
 ## References
 

@@ -245,6 +245,18 @@ TBD
 *If you notice mistakes and errors in this post, please don't hesitate to contact me at [mehdi dot mashayekhi dot 65 at gmail dot com]*
 
 
+---
+Cited as:
+```
+@article{mashayekhi2019option,
+  title   = "Hierarchical Reinforcement Learning",
+  author  = "Mashayekhi, Mehdi",
+  journal = " https://mehdimashayekhi.github.io/mehdi-mashayekhi-blog.github.io/ ",
+  year    = "2019",
+  url     = " https://mehdimashayekhi.github.io/mehdi-mashayekhi-blog.github.io/2019/05/23/hierarchical-reinforcement-learning.html"
+}
+```
+
 
 ## References
 

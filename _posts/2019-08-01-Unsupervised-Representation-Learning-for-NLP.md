@@ -22,7 +22,7 @@ TBD
 
 $$
 \begin{aligned}
-& \max_{\theta} \log p_\theta(\mathbf{x}) = \sum_{t=1}^{T} \log p_\theta(x_t\mid \mathbf{x}_{<t})=  \frac{\partial \mathcal{L}}{\partial \theta}^{T}\Delta \theta +\frac {1}{2}{\Delta \theta}^{T} H \Delta \theta + O(||\Delta \theta||^{3})
+& \max_{\theta} \log p_\theta(\mathbf{x}) = \sum_{t=1}^{T} \log p_\theta(x_t\mid \mathbf{x}_{<t})= \frac{\exp(\mathbf{h}_{t-1}^\top g(\mathbf{x}_i))}{\sum_{j=1}^k \exp(\mathbf{h}_{t-1}^\top g(\mathbf{x}_j))}
 \end{aligned}
 $$
 

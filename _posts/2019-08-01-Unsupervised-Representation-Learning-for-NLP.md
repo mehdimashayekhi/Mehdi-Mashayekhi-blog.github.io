@@ -22,7 +22,7 @@ TBD
 
 $$
 \begin{aligned}
-& \sum_{t=1}^{T} \log p_\theta}(x_t\mid x_{<t})=  \frac{\partial \mathcal{L}}{\partial \theta}^{T}\Delta \theta +\frac {1}{2}{\Delta \theta}^{T} H \Delta \theta + O(||\Delta \theta||^{3})
+& \sum_{t=1}^{T} \log p_\theta(x_t\mid x_{<t})=  \frac{\partial \mathcal{L}}{\partial \theta}^{T}\Delta \theta +\frac {1}{2}{\Delta \theta}^{T} H \Delta \theta + O(||\Delta \theta||^{3})
 \end{aligned}
 $$
 

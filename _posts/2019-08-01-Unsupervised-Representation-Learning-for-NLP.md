@@ -45,6 +45,18 @@ TBD
 *If you notice mistakes and errors in this post, please don't hesitate to contact me at [mehdi dot mashayekhi dot 65 at gmail dot com]*
 
 
+---
+Cited as:
+```
+@article{mashayekhi2019LM,
+  title   = " Unsupervised Representation Learning for NLP",
+  author  = "Mashayekhi, Mehdi",
+  journal = " https://mehdimashayekhi.github.io/mehdi-mashayekhi-blog.github.io/ ",
+  year    = "2019",
+  url     = " https://mehdimashayekhi.github.io/mehdi-mashayekhi-blog.github.io/2019/08/01/Unsupervised-Representation-Learning-for-NLP.html"
+}
+```
+
 
 ## References
 

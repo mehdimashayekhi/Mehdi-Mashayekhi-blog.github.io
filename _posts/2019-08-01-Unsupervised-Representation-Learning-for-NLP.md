@@ -21,7 +21,9 @@ image: "A3C_vs_A2C.png"
 TBD
 
 $$
-\mathcal{L}_\text{LM} = -\sum_{i} \log p(x_i\mid x_{i-k}, \dots, x_{i-1})
+\begin{aligned}
+& \Delta \mathcal{L} =  \frac{\partial \mathcal{L}}{\partial \theta}^{T}\Delta \theta +\frac {1}{2}{\Delta \theta}^{T} H \Delta \theta + O(||\Delta \theta||^{3})
+\end{aligned}
 $$
 
 

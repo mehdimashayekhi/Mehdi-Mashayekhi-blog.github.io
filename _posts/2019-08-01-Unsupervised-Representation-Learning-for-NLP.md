@@ -30,15 +30,13 @@ TBD
 TBD
 
 ## Modeling Multiple Segments
-TBD
-
 ## Code Snippets 
 TBD
 ### Data Creation
 TBD
 ### Modeling
 TBD
-#### Training
+### Training
 TBD
 
 

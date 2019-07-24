@@ -17,8 +17,16 @@ image: "A3C_vs_A2C.png"
 {:toc}
 
 
-## Language Modeling Background
+## Background
 TBD
+#### Autoregressive Language Modeling
+$$
+\begin{aligned}
+& \max_{\theta} \log p_\theta(\mathbf{x}) = \sum_{t=1}^{T} \log p_\theta(x_t\mid \mathbf{x}_{<t})= \sum_{t=1}^{T} \log  \frac{\exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x_t))}{\sum_{x'} \exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x'))}
+\end{aligned}
+$$
+
+#### Autoencoding
 
 $$
 \begin{aligned}

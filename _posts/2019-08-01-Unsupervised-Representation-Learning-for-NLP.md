@@ -21,9 +21,7 @@ image: "A3C_vs_A2C.png"
 TBD
 
 $$
-    \begin{aligned}
-    \sum_{t=1}^{T} \log p_\theta}(x_t\mid x_{<t},)&= \text{softmax}(\mathbf{h}_{t-1}^\top g(\mathbf{x}_i)) = \frac{\exp(\mathbf{h}_{t-1}^\top g(\mathbf{x}_i))}{\sum_{j=1}^k \exp(\mathbf{h}_{t-1}^\top g(\mathbf{x}_j))}
-    \end{aligned}
+\sum_{t=1}^{T} \log p_\theta}(x_t\mid x_{<t},)&= \text{softmax}(\mathbf{h}_{t-1}^\top g(\mathbf{x}_i)) = \frac{\exp(\mathbf{h}_{t-1}^\top g(\mathbf{x}_i))}{\sum_{j=1}^k \exp(\mathbf{h}_{t-1}^\top g(\mathbf{x}_j))}
 $$
 
 

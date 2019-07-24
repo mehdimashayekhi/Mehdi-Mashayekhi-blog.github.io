@@ -21,7 +21,7 @@ image: "A3C_vs_A2C.png"
 TBD
 
 $$
-\sum_{t=1}^{T} \log p1_\theta}(x_t\mid x_{<t})= SS
+\mathcal{L}_\text{LM} = -\sum_{i} \log p(x_i\mid x_{i-k}, \dots, x_{i-1})
 $$
 
 

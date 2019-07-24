@@ -22,7 +22,7 @@ TBD
 
 $$
 \begin{aligned}
-& \max_{\theta} \log p_\theta(\mathbf{x}) = \sum_{t=1}^{T} \log p_\theta(x_t\mid \mathbf{x}_{<t})= \sum_{t=1}^{T} \log  \frac{\exp(\mathbf{h}_{t-1}^\top e(x_t))}{\sum_{j=1}^k \exp(\mathbf{h}_{t-1}^\top e(x^'))}
+& \max_{\theta} \log p_\theta(\mathbf{x}) = \sum_{t=1}^{T} \log p_\theta(x_t\mid \mathbf{x}_{<t})= \sum_{t=1}^{T} \log  \frac{\exp(\mathbf{h}_{t-1}^\top e(x_t))}{\sum_{j=1}^k \exp(\mathbf{h}_{t-1}^\top e(x_t))}
 \end{aligned}
 $$
 

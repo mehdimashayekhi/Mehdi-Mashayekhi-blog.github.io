@@ -23,9 +23,25 @@ Recently there has been a significant progress in regards to unsupervised repres
 AR language modeling estimates the probability distribution of a text corpus with an autoregressive model. Specifically, given a text sequence $$\mathbf{x} = (x_1, \dots, x_T)$$,  AR language
 modeling factorizes the likelihood into a forward product $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{<t})$$ or a backward one $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{>t})$$.
 
+AR language modeling maximizes the likelihood under the following forward autoregressive factorization:
+
+$$
+\begin{aligned}
+& \max_{\theta} \log p_\theta(\mathbf{x}) = \sum_{t=1}^{T} \log p_\theta(x_t\mid \mathbf{x}_{<t})= \sum_{t=1}^{T} \log  \frac{\exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x_t))}{\sum_{x'} \exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x'))}
+\end{aligned}
+$$
+
 There has been some attempts for bidirectional AR language modeling such as [ELMo](https://arxiv.org/abs/1802.05365). ElLMo simply concatenated the left-to-right and right-to-left information, meaning that the representation couldn’t take advantage of both left and right contexts simultaneously.
 
 In contrast, AE based pretraining does not perform density estimation, but it works towards reconstructing the original data from corrupted input. BERT is a notable example of AE. BERT replaces language modeling with a modified objective called “masked language modeling”. In this model, words in a sentence are randomly erased and replaced with a special token `[MASK]` with some small probability. Then, the model is trained to recover the erased tokens.  As density estimation is not part of the objective, BERT can utilize bidirectional contexts for reconstruction which also closes the bidirectional information gap in AR language modeling and improves performance.
+
+BERT optimizes the following objective by reconstructing the masked tokens from the corrupted input: 
+
+$$
+\begin{aligned}
+& \max_{\theta} \log p_\theta(\mathbf{\bar{x}} \mid \hat{\mathbf{x}}) \approx \sum_{t=1}^{T} m_{t} \log p_\theta(x_t\mid \mathbf{\hat{x}})= \sum_{t=1}^{T} m_{t} \log  \frac{\exp({H_{\theta}(\mathbf{\hat{x}}_{t})}^\top e(x_t))}{\sum_{x'} \exp({H_{\theta}(\mathbf{\hat{x}}_{t})}^\top e(x'))}
+\end{aligned}
+$$
 
 Even though BERT achieves better performance than pretraining approaches that are based on autoregressive language modeling, there are two main issues with BERT. One is discrepancy between pretraining and fine tuning, since the `[MASK]` tokens are absent during fine tuning. Second is, BERT assumes the predicted tokens are independent of each other given the unmasked tokens.
 
@@ -38,27 +54,6 @@ Considering these pros and cons of AR and AE, the researchers from CMU and Googl
 5. Because the factorization order is arbitrary and the target is ambiguous, a new reformulation of the Transformer-XL model is needed to eliminate the ambiguity. 
 
 In the following we will go over the details of the XLNet model and its implementation. 
-
-
-
-## AR vs BERT
-
-AR language modeling maximizes the likelihood under the following forward autoregressive factorization:
-
-$$
-\begin{aligned}
-& \max_{\theta} \log p_\theta(\mathbf{x}) = \sum_{t=1}^{T} \log p_\theta(x_t\mid \mathbf{x}_{<t})= \sum_{t=1}^{T} \log  \frac{\exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x_t))}{\sum_{x'} \exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x'))}
-\end{aligned}
-$$
-
-BERT optimizes the following objective by reconstructing the masked tokens from the corrupted input: 
-
-$$
-\begin{aligned}
-& \max_{\theta} \log p_\theta(\mathbf{\bar{x}} \mid \hat{\mathbf{x}}) \approx \sum_{t=1}^{T} m_{t} \log p_\theta(x_t\mid \mathbf{\hat{x}})= \sum_{t=1}^{T} m_{t} \log  \frac{\exp({H_{\theta}(\mathbf{\hat{x}}_{t})}^\top e(x_t))}{\sum_{x'} \exp({H_{\theta}(\mathbf{\hat{x}}_{t})}^\top e(x'))}
-\end{aligned}
-$$
-
 
 ## Optimization Objective: Permutation Language Modeling
 TBD

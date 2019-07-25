@@ -37,7 +37,7 @@ There has been some attempts for bidirectional AR language modeling such as [ELM
 
 In contrast, AE based pretraining does not perform density estimation, but it works towards reconstructing the original data from corrupted input. BERT is a notable example of AE. BERT replaces language modeling with a modified objective called “masked language modeling”. In this model, words in a sentence are randomly erased and replaced with a special token `[MASK]` with some small probability. Then, the model is trained to recover the erased tokens.  As density estimation is not part of the objective, BERT can utilize bidirectional contexts for reconstruction which also closes the bidirectional information gap in AR language modeling and improves performance.
 
-Given the input $$x$$ and the corrupted input $$\hat{x}$$, and the masked tokens $$\bar{x}$$, BERT optimizes the following objective by reconstructing the masked tokens from the corrupted input: 
+Given the input $$\mathbf{x}$$ and the corrupted input $$\hat{\mathbf{x}}$$, and the masked tokens $$\bar{\mathbf{x}}$$, BERT optimizes the following objective by reconstructing the masked tokens from the corrupted input: 
 
 $$
 \begin{aligned}

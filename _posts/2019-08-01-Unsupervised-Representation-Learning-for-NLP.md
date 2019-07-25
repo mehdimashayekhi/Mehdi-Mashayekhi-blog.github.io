@@ -63,7 +63,8 @@ $$
 $$
 ### Two-Stream Self-Attention
 TBD
-$$g_{z_t}^{(m)} \leftarrow Attention + \alpha \gamma^t G_t \nabla_\theta \ln \pi_\theta(A_t \vert S_t)$$
+$$g_{z_t}^{(m)} \leftarrow Attention \Big(\mathbf{Q} = g_{z_t}^{(m-1)}, \mathbf{KV}=h_{z_{<t}}^{(m-1); \theta \Big)$$
+
 $$h_{z_t}^{(m)} \leftarrow Attention + \alpha \gamma^t G_t \nabla_\theta \ln \pi_\theta(A_t \vert S_t)$$
 ### Partial Prediction
 TBD

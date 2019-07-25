@@ -18,7 +18,7 @@ image: "A3C_vs_A2C.png"
 
 
 ## Background
-TBD
+Forward product $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{<t})$$
 #### Autoregressive Language Modeling
 $$
 \begin{aligned}

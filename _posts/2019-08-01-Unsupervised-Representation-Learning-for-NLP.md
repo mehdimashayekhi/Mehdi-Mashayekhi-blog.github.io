@@ -45,7 +45,7 @@ $$
 \end{aligned}
 $$
 
-where $$m_{t} = 1$$ indicates $$x_t$$ is masked, and $$H_{\theta}$$ is a Transformer that maps a length-T text sequence $$x$$ into a sequence of hidden vectors $$Hθ(x) = [H_{\theta}(\mathbf{\hat{x}}_{1}), \dots, H_{\theta}(\mathbf{\hat{x}}_{T}) ]$$. 
+where $$m_{t} = 1$$ indicates $$x_t$$ is masked, and $$H_{\theta}$$ is a Transformer that maps a length-T text sequence $$x$$ into a sequence of hidden vectors $$H_{\theta}(\mathbf{{x}}) = [H_{\theta}(\mathbf{{x}}_{1}), \dots, H_{\theta}(\mathbf{{x}}_{T}) ]$$. 
 
 Even though BERT achieves better performance than pretraining approaches that are based on autoregressive language modeling, there are two main issues with BERT. One is discrepancy between pretraining and fine tuning, since the `[MASK]` tokens are absent during fine tuning. Second is, BERT assumes the predicted tokens are independent of each other given the unmasked tokens.
 

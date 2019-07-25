@@ -56,6 +56,12 @@ TBD
 {: class="center" style="width: 90%;"}
 *Fig. 2. (a): Content stream attention, which is the same as the standard self-attention. (b): Query stream attention, which does not have access information about the content $$x_{z_t}$$ . (c): Overview of the permutation language modeling training with two-stream attention. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
 
+$$
+\begin{aligned}
+&  p_\theta(x_t\mid \mathbf{x}_{<t})= \sum_{t=1}^{T}  \frac{\exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x_t))}{\sum_{x'} \exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x'))}
+\end{aligned}
+$$
+
 ## Incorporating Ideas from Transformer-XL
 TBD
 

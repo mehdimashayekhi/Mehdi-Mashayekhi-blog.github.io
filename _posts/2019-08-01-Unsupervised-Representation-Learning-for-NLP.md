@@ -73,7 +73,7 @@ TBD
 
 $$
 \begin{aligned}
-& \max_{\theta}  \mathbb{E}_{z \sim {Z_T} }\Big[\log p_\theta(x_{z_t}\mid \mathbf{x}_{z<t}) \Big] = \mathbb{E}_{z \sim {Z_T} }\Big[\sum_{t=1}^{T} \log p_\theta(x_{z_t}\mid \mathbf{x}_{z<t})\Big]
+& \max_{\theta}  \mathbb{E}_{z \sim {Z_T} }\Big[\log p_\theta(x_{z>c}\mid \mathbf{x}_{z\leq{c}}) \Big] = \mathbb{E}_{z \sim {Z_T} }\Big[\sum_{t=1}^{T} \logp_\theta(x_{z>c}\mid \mathbf{x}_{z\leq{c}})\Big]
 \end{aligned}
 $$
 

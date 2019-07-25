@@ -73,7 +73,8 @@ $$
 $$
 
 ## Architecture: Two-Stream Self-Attention for Target-Aware Representations
-TBD
+
+Let $$Z_T $$ be the set of all possible permutations of the length-T index sequence [1, 2, . . . , T ]. And let $$z_t $$ and $$\mathbf{z}<t $$ to denote the t-th element and the first t−1 elements of a permutation $$ \mathbf{z}< \in Z_T $$z ∈ ZT . Then, XLNet proposes the following permutation language modeling objective: 
 
 ![OPTIONS]({{ '/assets/images/Two-Stream-Self-Attention.png' | relative_url }})
 {: class="center" style="width: 90%;"}

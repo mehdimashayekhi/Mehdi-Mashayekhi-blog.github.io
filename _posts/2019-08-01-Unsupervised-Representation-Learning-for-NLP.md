@@ -18,7 +18,8 @@ image: "A3C_vs_A2C.png"
 
 
 ## Background
-Forward product $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{<t})$$
+Given a text sequence $$\mathbf{x} = (x_1, \dots, x_T)$$,  AR language
+modeling factorizes the likelihood into a forward product $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{<t})$$ or a backward one $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{>t})$$.
 #### Autoregressive Language Modeling
 $$
 \begin{aligned}

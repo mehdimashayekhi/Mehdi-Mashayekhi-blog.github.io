@@ -39,14 +39,14 @@ $$
 TBD
 
 ![OPTIONS]({{ '/assets/images/permutation_example.png' | relative_url }})
-{: class="center" style="width: 95%;"}
+{: class="center" style="width: 80%;"}
 *Fig. 1. Illustration of the permutation language modeling objective for predicting x3 given the same input sequence x but with different factorization orders. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
 
 ## Architecture: Two-Stream Self-Attention for Target-Aware Representations
 TBD
 
 ![OPTIONS]({{ '/assets/images/Two-Stream-Self-Attention.png' | relative_url }})
-{: class="center" style="width: 80%;"}
+{: class="center" style="width: 90%;"}
 *Fig. 2. (a): Content stream attention, which is the same as the standard self-attention. (b): Query stream attention, which does not have access information about the content $$x_{z_t}$$ . (c): Overview of the permutation language modeling training with two-stream attention. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
 
 ## Incorporating Ideas from Transformer-XL

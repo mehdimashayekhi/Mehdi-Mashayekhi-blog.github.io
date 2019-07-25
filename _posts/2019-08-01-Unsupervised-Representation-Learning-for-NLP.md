@@ -18,16 +18,18 @@ image: "A3C_vs_A2C.png"
 
 
 ## Background
-Given a text sequence $$\mathbf{x} = (x_1, \dots, x_T)$$,  AR language
+Recently there has been a significant progress in regards to unsupervised representation learning in the domain of natural language processing such as OpenAI-GPT, BERT. Among different unsupervised pre-training objectives, autoregressive (AR) language modeling and autoencoding (AE) have been the two most successful pre-training objectives. 
+AR language modeling estimates the probability distribution of a text corpus with an autoregressive model. Specifically, given a text sequence $$\mathbf{x} = (x_1, \dots, x_T)$$,  AR language
 modeling factorizes the likelihood into a forward product $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{<t})$$ or a backward one $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{>t})$$.
-#### Autoregressive Language Modeling
+
+XXXXXXXX
 $$
 \begin{aligned}
 & \max_{\theta} \log p_\theta(\mathbf{x}) = \sum_{t=1}^{T} \log p_\theta(x_t\mid \mathbf{x}_{<t})= \sum_{t=1}^{T} \log  \frac{\exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x_t))}{\sum_{x'} \exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x'))}
 \end{aligned}
 $$
 
-#### Autoencoding
+XXXXXXXXXXXX
 
 $$
 \begin{aligned}

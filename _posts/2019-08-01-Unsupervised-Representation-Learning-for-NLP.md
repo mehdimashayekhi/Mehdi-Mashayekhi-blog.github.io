@@ -20,10 +20,10 @@ image: "A3C_vs_A2C.png"
 ## Background
 Recently there has been a significant progress in regards to unsupervised representation learning in the domain of natural language processing such as [OpenAI GPT](https://blog.openai.com/language-unsupervised/), and [BERT](https://arxiv.org/abs/1810.04805). Among different unsupervised pre-training objectives, autoregressive (**AR**) language modeling and autoencoding (**AE**) have been the two most successful pre-training objectives. 
 
-AR language modeling estimates the probability distribution of a text corpus with an autoregressive model. Specifically, given a text sequence $$\mathbf{x} = (x_1, \dots, x_T)$$,  AR language
+AR language modeling estimates the probability distribution of a text corpus with an autoregressive model. Given a text sequence $$\mathbf{x} = (x_1, \dots, x_T)$$,  AR language
 modeling factorizes the likelihood into a forward product $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{<t})$$ or a backward one $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{>t})$$.
 
-AR language modeling maximizes the likelihood under the following forward autoregressive factorization:
+Specifically, AR language modeling maximizes the likelihood under the following forward autoregressive factorization:
 
 $$
 \begin{aligned}
@@ -49,15 +49,15 @@ where $$m_{t} = 1$$ indicates $$x_t$$ is masked, and $$H_{\theta}$$ is a Transfo
 
 Even though BERT achieves better performance than pretraining approaches that are based on autoregressive language modeling, there are two main issues with BERT. One is discrepancy between pretraining and fine tuning, since the `[MASK]` tokens are absent during fine tuning. Second is, BERT assumes the predicted tokens are independent of each other given the unmasked tokens, this is the reason to have $$\approx$$ in the above equation.
 
-Considering these pros and cons of AR and AE, the researchers from CMU and Google proposed [XLNet](https://arxiv.org/pdf/1906.08237.pdf), a generalized autoregressive pretraining method that leverages the best these two modeling. More specifically, XLNet offers the following advantages: 
+Considering these pros and cons of AR and AE, the researchers from CMU and Google proposed [XLNet](https://arxiv.org/pdf/1906.08237.pdf), a generalized autoregressive pretraining method that leverages the best of these two modeling. More specifically, XLNet offers the following advantages: 
 
-1. Enables learning bidirectional contexts by simply maximizing the expected likelihood over **all possible permutations of the factorization order**. In contrast to a fixed forward or backward factorization. As a result, in expectation, each position learns to utilize contextual information from all positions, i.e., and captures bidirectional context. 
+1. Enables learning bidirectional contexts by simply maximizing the expected likelihood over **all possible permutations of the factorization order**. In contrast to a fixed forward or backward factorization. As a result, in expectation, each position learns to utilize contextual information from all positions, and captures bidirectional context. 
 2. Since it does not rely on data corruption, it does not suffer from the pretrain-finetune discrepancy
 3. Eliminating the independence assumption, since the autoregressive objective provides a natural way to use the product rule for factorizing the joint probability of the predicted tokens. 
 4. Incorporating ideas from Transformer-XL including Segment-level Recurrence, and Relative Positional Encodings.
 5. Because the factorization order is arbitrary and the target is ambiguous, a new reformulation of the Transformer-XL model is needed to eliminate the ambiguity. 
 
-In the following we will go over the details of the XLNet model and its implementation. 
+In the following we will go over the details of the XLNet model and its implementation details. 
 
 ## Optimization Objective: Permutation Language Modeling
 TBD

@@ -58,7 +58,7 @@ TBD
 
 $$
 \begin{aligned}
-&  p_\theta(x_t\mid \mathbf{x}_{<t})= \sum_{t=1}^{T}  \frac{\exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x_t))}{\sum_{x'} \exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x'))}
+&  p_\theta(x_t\mid \mathbf{x}_{<t})= \frac{\exp({e(x_t)^\top g_{\theta}(\mathbf{x}_{z<t})} )}{\sum_{x'} \exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x'))}
 \end{aligned}
 $$
 

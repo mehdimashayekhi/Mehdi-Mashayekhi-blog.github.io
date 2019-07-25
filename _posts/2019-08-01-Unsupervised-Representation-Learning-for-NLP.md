@@ -61,6 +61,10 @@ $$
 &  p_\theta(X_{z_t}=x\mid \mathbf{x}_{z<t})= \frac{\exp({e(x)^\top g_{\theta}(\mathbf{x}_{\mathbf{z}<t},z_t)} )}{\sum_{x'} \exp({e(x)^\top g_{\theta}(\mathbf{x}_{\mathbf{z}<t},z_t)})}
 \end{aligned}
 $$
+### Two-Stream Self-Attention
+TBD
+### Partial Prediction
+TBD
 
 ## Incorporating Ideas from Transformer-XL
 TBD

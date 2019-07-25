@@ -64,9 +64,9 @@ $$
 ### Two-Stream Self-Attention
 TBD
 
-$$g_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=g_{z_t}^{(m-1)},\mathbf{KV})$$
+$$g_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=g_{z_t}^{(m-1)},\mathbf{KV}=h_{z_t}^{(m)})$$
 
-$$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},,\mathbf{KV})$$
+$$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},,\mathbf{KV}=h_{z_t}^{(m)})$$
 
 $$g_{z_t}^{(m)} \leftarrow Attention (\mathbf{Q} = g_{z_t}^{(m-1)}, \mathbf{KV}=h_{z_{<t}}^{(m-1); \theta)$$
 ### Partial Prediction

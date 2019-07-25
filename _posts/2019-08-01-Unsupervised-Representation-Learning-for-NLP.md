@@ -68,6 +68,8 @@ TBD
 
 ## Incorporating Ideas from Transformer-XL
 TBD
+### Segment-level Recurrence
+### Relative Positional Encodings
 
 ## Modeling Multiple Segments
 ## Code Snippets 

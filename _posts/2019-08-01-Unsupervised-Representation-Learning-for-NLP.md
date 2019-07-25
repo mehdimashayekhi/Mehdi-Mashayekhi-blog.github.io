@@ -18,9 +18,7 @@ image: "A3C_vs_A2C.png"
 
 
 ## Background
-Recently there has been a significant progress in regards to unsupervised representation learning in the domain of natural language processing such as [OpenAI GPT](https://blog.openai.com/language-unsupervised/), and [BERT](https://arxiv.org/abs/1810.04805). 
-
-Among different unsupervised pre-training objectives, autoregressive (AR) language modeling and autoencoding (AE) have been the two most successful pre-training objectives. 
+Recently there has been a significant progress in regards to unsupervised representation learning in the domain of natural language processing such as [OpenAI GPT](https://blog.openai.com/language-unsupervised/), and [BERT](https://arxiv.org/abs/1810.04805). Among different unsupervised pre-training objectives, autoregressive (AR) language modeling and autoencoding (AE) have been the two most successful pre-training objectives. 
 
 AR language modeling estimates the probability distribution of a text corpus with an autoregressive model. Specifically, given a text sequence $$\mathbf{x} = (x_1, \dots, x_T)$$,  AR language
 modeling factorizes the likelihood into a forward product $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{<t})$$ or a backward one $$p(\mathbf{x}) = \prod_{t=1}^T p(x_{t}\mid \mathbf{x}_{>t})$$.

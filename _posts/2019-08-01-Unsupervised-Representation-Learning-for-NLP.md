@@ -42,6 +42,12 @@ TBD
 {: class="center" style="width: 80%;"}
 *Fig. 1. Illustration of the permutation language modeling objective for predicting x3 given the same input sequence x but with different factorization orders. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
 
+$$
+\begin{aligned}
+& \max_{\theta}  \sum_{t=1}^{T} \log p_\theta(x_{z_t}\mid \mathbf{x}_{z<t})
+\end{aligned}
+$$
+
 ## Architecture: Two-Stream Self-Attention for Target-Aware Representations
 TBD
 

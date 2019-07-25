@@ -76,15 +76,16 @@ $$
 
 Let $$Z_T $$ be the set of all possible permutations of the length-T index sequence [1, 2, . . . , T ]. And let $$z_t $$ and $$\mathbf{z}<t $$ to denote the t-th element and the first t−1 elements of a permutation $$ \mathbf{z}< \in Z_T $$z ∈ ZT . Then, XLNet proposes the following permutation language modeling objective: 
 
-![OPTIONS]({{ '/assets/images/Two-Stream-Self-Attention.png' | relative_url }})
-{: class="center" style="width: 90%;"}
-*Fig. 2. (a): Content stream attention, which is the same as the standard self-attention. (b): Query stream attention, which does not have access information about the content $$x_{z_t}$$ . (c): Overview of the permutation language modeling training with two-stream attention. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
-
 $$
 \begin{aligned}
 &  p_\theta(X_{z_t}=x\mid \mathbf{x}_{z<t})= \frac{\exp({e(x)^\top g_{\theta}(\mathbf{x}_{\mathbf{z}<t},z_t)} )}{\sum_{x'} \exp({e(x)^\top g_{\theta}(\mathbf{x}_{\mathbf{z}<t},z_t)})}
 \end{aligned}
 $$
+
+![OPTIONS]({{ '/assets/images/Two-Stream-Self-Attention.png' | relative_url }})
+{: class="center" style="width: 90%;"}
+*Fig. 2. (a): Content stream attention, which is the same as the standard self-attention. (b): Query stream attention, which does not have access information about the content $$x_{z_t}$$ . (c): Overview of the permutation language modeling training with two-stream attention. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
+
 ### Two-Stream Self-Attention
 TBD
 

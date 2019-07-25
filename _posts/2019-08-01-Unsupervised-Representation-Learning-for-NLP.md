@@ -69,6 +69,9 @@ TBD
 ## Incorporating Ideas from Transformer-XL
 TBD
 ### Segment-level Recurrence
+![OPTIONS]({{ '/assets/images/Transformer-XL-segment-level recurrence.png' | relative_url }})
+{: class="center" style="width: 90%;"}
+*Fig. 3. (a): Transformer-XL with segment-level recurrence. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1901.02860.pdf))*
 ### Relative Positional Encodings
 
 ## Modeling Multiple Segments

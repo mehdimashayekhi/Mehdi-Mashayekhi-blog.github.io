@@ -63,7 +63,8 @@ $$
 $$
 ### Two-Stream Self-Attention
 TBD
-$$g_{z_t}^{(m)} \leftarrow Attention()$$
+
+$$g_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=g_{z_t}^{(m-1)})$$
 
 $$h_{z_t}^{(m)} \leftarrow Attention + \alpha \gamma^t G_t \nabla_\theta \ln \pi_\theta(A_t \vert S_t)$$
 

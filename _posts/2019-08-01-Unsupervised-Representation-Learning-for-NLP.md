@@ -36,18 +36,21 @@ Considering these pros and cons of AR and AE, the researchers from CMU and Googl
 3. Eliminating the independence assumption, since the autoregressive objective provides a natural way to use the product rule for factorizing the joint probability of the predicted tokens. 
 4. Incorporating ideas from Transformer-XL including Segment-level Recurrence, and Relative Positional Encodings.
 5. Because the factorization order is arbitrary and the target is ambiguous, a new reformulation of the Transformer-XL model is needed to eliminate the ambiguity. 
+
 In the following we will go over the details of the XLNet model and its implementation. 
 
 
 
-XXXXXXXX
-$$
+## AR vs BERT
+
+AR language modeling maximizes the likelihood under the following forward autoregressive factorization:
+
 \begin{aligned}
 & \max_{\theta} \log p_\theta(\mathbf{x}) = \sum_{t=1}^{T} \log p_\theta(x_t\mid \mathbf{x}_{<t})= \sum_{t=1}^{T} \log  \frac{\exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x_t))}{\sum_{x'} \exp({h_{\theta}(\mathbf{x}_{1:t-1})}^\top e(x'))}
 \end{aligned}
 $$
 
-XXXXXXXXXXXX
+BERT optimizes the following objective by reconstructing the masked tokens from the corrupted input: 
 
 $$
 \begin{aligned}

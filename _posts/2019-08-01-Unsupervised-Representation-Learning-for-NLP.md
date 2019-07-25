@@ -68,7 +68,6 @@ $$g_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=g_{z_t}^{(m-1)},\mathbf{KV}=h_{z
 
 $$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},,\mathbf{KV}=h_{z<t}^{(m-1)}; \theta)$$
 
-$$g_{z_t}^{(m)} \leftarrow Attention (\mathbf{Q} = g_{z_t}^{(m-1)}, \mathbf{KV}=h_{z_{<t}}^{(m-1); \theta)$$
 ### Partial Prediction
 TBD
 

@@ -44,7 +44,7 @@ TBD
 
 $$
 \begin{aligned}
-& \max_{\theta}  \mathbb{E}_{z \sim {Z_{t} }\Big[\sum_{t=1}^{T} \log p_\theta(x_{z_t}\mid \mathbf{x}_{z<t})\Big]
+& \max_{\theta}  \mathbb{E}_{x \in D_{train}, y \sim {f_{\theta}(y|x)} }\Big[\sum_{t=1}^{T} \log p_\theta(x_{z_t}\mid \mathbf{x}_{z<t})\Big]
 \end{aligned}
 $$
 

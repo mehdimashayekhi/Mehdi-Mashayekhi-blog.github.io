@@ -71,6 +71,12 @@ $$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},,\mathbf{KV}=h_{
 ### Partial Prediction
 TBD
 
+$$
+\begin{aligned}
+& \max_{\theta}  \mathbb{E}_{z \sim {Z_T} }\Big[\log p_\theta(x_{z_t}\mid \mathbf{x}_{z<t}) \Big] = \mathbb{E}_{z \sim {Z_T} }\Big[\sum_{t=1}^{T} \log p_\theta(x_{z_t}\mid \mathbf{x}_{z<t})\Big]
+\end{aligned}
+$$
+
 ## Incorporating Ideas from Transformer-XL
 TBD
 ### Segment-level Recurrence

@@ -31,7 +31,7 @@ $$
 \end{aligned}
 $$
 
-AR language modeling is only trained to encode a uni-directional forward or backward context, and is not effective at modeling deep bidirectional contexts. But, most language understanding tasks typically need bidirectional context information. As a result, there is a gap between AR language modeling and effective pretraining. 
+Where $${h_{\theta}(\mathbf{x}_{1:t-1})}$$ is a context representation created by neural models such as [Transformer](https://arxiv.org/pdf/1706.03762.pdf), and $$e(x)$$ denotes the embedding of $$x$$. As you can see, AR language modeling is only trained to encode a uni-directional forward or backward context, and is not effective at modeling deep bidirectional contexts. But, most language understanding tasks typically need bidirectional context information. As a result, there is a gap between AR language modeling and effective pretraining. 
 
 There has been some attempts for bidirectional AR language modeling such as [ELMo](https://arxiv.org/abs/1802.05365). ElLMo simply concatenated the left-to-right and right-to-left information, meaning that the representation couldn’t take advantage of both left and right contexts simultaneously.
 

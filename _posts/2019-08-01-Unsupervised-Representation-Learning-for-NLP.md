@@ -61,7 +61,7 @@ In the following we will go over the details of the XLNet model and its implemen
 
 ## Optimization Objective: Permutation Language Modeling
 
-Let $$Z_T $$ be the set of all possible permutations of the length-T index sequence [1, 2, . . . , T ]. And let $$z_t $$ and $$\mathbf{z}<t $$ to denote the t-th element and the first t−1 elements of a permutation $$ \mathbf{z}< \in Z_T $$z ∈ ZT . Then, XLNet proposes the following permutation language modeling objective: 
+Let $$Z_T $$ be the set of all possible permutations of the length-T index sequence [1, 2, . . . , T ]. And let $$z_t $$ and $$\mathbf{z}_{<t} $$ to denote the t-th element and the first t−1 elements of a permutation $$ \mathbf{z}< \in Z_T $$. Then, XLNet proposes the following permutation language modeling objective: 
 
 $$
 \begin{aligned}
@@ -69,7 +69,7 @@ $$
 \end{aligned}
 $$
 
-Fig. 1, shows an example of predicting token x3 given the same input sequence x but under different factorization orders. For example under the factorization order [3 -> 2 -> 4 -> 1], token $x_3$ does not have any context to attend (except the previous memories).
+Fig. 1, shows an example of predicting token x3 given the same input sequence x but under different factorization orders. For example under the factorization order [3 -> 2 -> 4 -> 1], token $$x_3$$ does not have any context to attend (except the previous memories).
 
 ![OPTIONS]({{ '/assets/images/permutation_example.png' | relative_url }})
 {: class="center" style="width: 80%;"}

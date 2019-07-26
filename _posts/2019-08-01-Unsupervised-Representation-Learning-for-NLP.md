@@ -80,7 +80,7 @@ $$
 \begin{aligned}
 & \jmath_{BERT} = \log p(New | is a city)+\log p(York | is a city)\\
 
-& \jmath_{XLNet} = \log p(New | is a city)+\log p(York |\color{red}{New} is a city)
+& \jmath_{XLNet} = \log p(New | is \ a \ city)+\log p(York |\color{red}{New} is a city)
 
 \end{aligned}
 $$

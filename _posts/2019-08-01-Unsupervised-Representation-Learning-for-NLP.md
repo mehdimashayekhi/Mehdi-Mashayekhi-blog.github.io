@@ -60,11 +60,8 @@ Considering these pros and cons of AR and AE, the researchers from CMU and Googl
 In the following we will go over the details of the XLNet model and its implementation details. 
 
 ## Optimization Objective: Permutation Language Modeling
-TBD
 
-![OPTIONS]({{ '/assets/images/permutation_example.png' | relative_url }})
-{: class="center" style="width: 80%;"}
-*Fig. 1. Illustration of the permutation language modeling objective for predicting x3 given the same input sequence x but with different factorization orders. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
+Let $$Z_T $$ be the set of all possible permutations of the length-T index sequence [1, 2, . . . , T ]. And let $$z_t $$ and $$\mathbf{z}<t $$ to denote the t-th element and the first t−1 elements of a permutation $$ \mathbf{z}< \in Z_T $$z ∈ ZT . Then, XLNet proposes the following permutation language modeling objective: 
 
 $$
 \begin{aligned}
@@ -72,9 +69,12 @@ $$
 \end{aligned}
 $$
 
-## Architecture: Two-Stream Self-Attention for Target-Aware Representations
+![OPTIONS]({{ '/assets/images/permutation_example.png' | relative_url }})
+{: class="center" style="width: 80%;"}
+*Fig. 1. Illustration of the permutation language modeling objective for predicting x3 given the same input sequence x but with different factorization orders. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
 
-Let $$Z_T $$ be the set of all possible permutations of the length-T index sequence [1, 2, . . . , T ]. And let $$z_t $$ and $$\mathbf{z}<t $$ to denote the t-th element and the first t−1 elements of a permutation $$ \mathbf{z}< \in Z_T $$z ∈ ZT . Then, XLNet proposes the following permutation language modeling objective: 
+
+## Architecture: Two-Stream Self-Attention for Target-Aware Representations
 
 $$
 \begin{aligned}

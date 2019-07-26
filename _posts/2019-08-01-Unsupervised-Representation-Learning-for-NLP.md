@@ -74,7 +74,7 @@ $$
 {: class="center" style="width: 80%;"}
 *Fig. 1. Illustration of the permutation language modeling objective for predicting x3 given the same input sequence x but with different factorization orders. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
 
-let’s look at an example to better understand the difference between BERT and XLNet. Consider a sentence [New, York, is, a, city ], and assume both BERT and XLNet choose the two words [New, York] as the prediction targets and maximize `log p(New York \mid is a city)`. Also assume that XLNet samples the factorization order [is, a, city, New, York]. In this case, BERT and XLNet reduce to the following objectives respectively: 
+let’s look at an example to better understand the difference between BERT and XLNet. Consider a sentence [New, York, is, a, city ], and assume both BERT and XLNet choose the two words [New, York] as the prediction targets and maximize `log p(New York | is a city)`. Also assume that XLNet samples the factorization order [is, a, city, New, York]. In this case, BERT and XLNet reduce to the following objectives respectively: 
 
 
 ## Architecture: Two-Stream Self-Attention for Target-Aware Representations

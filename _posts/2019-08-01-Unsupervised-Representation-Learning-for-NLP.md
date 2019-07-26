@@ -69,6 +69,7 @@ $$
 \end{aligned}
 $$
 
+Fig. 1, shows an example of predicting token x3 given the same input sequence x but under different factorization orders. For example under the factorization order [3 -> 2 -> 4 -> 1], token $x_3$ does not have any context to attend (except the previous memories).
 
 ![OPTIONS]({{ '/assets/images/permutation_example.png' | relative_url }})
 {: class="center" style="width: 80%;"}

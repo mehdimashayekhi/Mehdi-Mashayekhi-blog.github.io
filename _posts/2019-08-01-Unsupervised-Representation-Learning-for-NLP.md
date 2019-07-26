@@ -76,6 +76,9 @@ $$
 
 let’s look at an example to better understand the difference between BERT and XLNet. Consider a sentence [New, York, is, a, city ], and assume both BERT and XLNet choose the two words [New, York] as the prediction targets and maximize `log p(New York | is a city)`. Also assume that XLNet samples the factorization order [is, a, city, New, York]. In this case, BERT and XLNet reduce to the following objectives respectively: 
 
+$$\jmath_BERT$$ = `log p(New | is a city)`+`log p(York | is a city)`
+
+$$\jmath_XLNet$$ = `log p(New | is a city)`+`log p(York | New is a city)`
 
 ## Architecture: Two-Stream Self-Attention for Target-Aware Representations
 

@@ -78,9 +78,9 @@ let’s look at an example to better understand the difference between BERT and 
 
 $$
 \begin{aligned}
-& \jmath_{BERT = \log_p(New | is a city)+\log_p(York | is a city)\\
+& \jmath_{BERT} = \log p(New | is a city)+\log p(York | is a city)\\
 
-& \jmath_{XLNet = \log p(New | is a city)+\log_p(York |\color{red}{New} is a city)
+& \jmath_{XLNet} = \log p(New | is a city)+\log p(York |\color{red}{New} is a city)
 
 \end{aligned}
 $$

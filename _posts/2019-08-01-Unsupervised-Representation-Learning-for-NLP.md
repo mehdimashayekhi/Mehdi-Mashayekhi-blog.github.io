@@ -124,7 +124,7 @@ TBD
 *Fig. 3. Transformer-XL with segment-level recurrence. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1901.02860.pdf))*
 ### Relative Positional Encodings
 
-![OPTIONS]({{ '/assets/images/positional_encodingf.png' | relative_url }})
+![OPTIONS]({{ '/assets/images/positional_encoding.png' | relative_url }})
 {: class="center" style="width: 80%;"}
 *Fig. 4. Relative positional encoding illustration.
 

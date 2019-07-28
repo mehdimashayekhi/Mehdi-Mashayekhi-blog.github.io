@@ -140,7 +140,9 @@ TBD
 #### Relative Positional Encoding
 
 $$ PE_{(pos,2i)} = sin(\frac{pos}{10000^{\frac{2i}{d_model}}})$$\\
+
 $$ PE_{(pos,2i+1)} = cos(\frac{pos}{10000^{\frac{2i}{d_model}}})$$
+
 ```python
 def relative_positional_encoding(qlen, klen, d_model):
     freq_seq = torch.arange(0, d_model, 2.0)

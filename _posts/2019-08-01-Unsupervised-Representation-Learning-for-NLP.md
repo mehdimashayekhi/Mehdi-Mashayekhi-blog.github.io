@@ -142,28 +142,25 @@ TBD
 ```python
 class XLNet(nn.Module):
     """
-        Defines a Transformer-XL computation graph with additional
-        support for XLNet.
-
         Args:
-
-        inp_k: int32 Tensor in shape [len, bsz], the input token IDs.
-        seg_id: int32 Tensor in shape [len, bsz], the input segment IDs.
-        input_mask: float32 Tensor in shape [len, bsz], the input mask.
+        
+        inp_k: int32 Tensor in shape [seq_len, bsz], the input token IDs.
+        seg_id: int32 Tensor in shape [seq_len, bsz], the input segment IDs.
+        input_mask: float32 Tensor in shape [seq_len, bsz], the input mask.
           0 for real tokens and 1 for padding.
         mems: a list of float32 Tensors in shape [mem_len, bsz, d_model], memory
           from previous batches. The length of the list equals n_layer.
           If None, no memory is used.
-        perm_mask: float32 Tensor in shape [len, len, bsz].
+        perm_mask: float32 Tensor in shape [seq_len, seq_len, bsz].
           If perm_mask[i, j, k] = 0, i attend to j in batch k;
           if perm_mask[i, j, k] = 1, i does not attend to j in batch k.
           If None, each position attends to all the others.
-        target_mapping: float32 Tensor in shape [num_predict, len, bsz].
+        target_mapping: float32 Tensor in shape [num_predict, seq_len, bsz].
           If target_mapping[i, j, k] = 1, the i-th predict in batch k is
           on the j-th token.
           Only used during pretraining for partial prediction.
           Set to None during finetuning.
-        inp_q: float32 Tensor in shape [len, bsz].
+        inp_q: float32 Tensor in shape [seq_len, bsz].
           1 for tokens with losses and 0 for tokens without losses.
           Only used during pretraining for two-stream attention.
           Set to None during finetuning.
@@ -173,23 +170,17 @@ class XLNet(nn.Module):
         n_head: int, the number of attention heads.
         d_head: int, the dimension size of each attention head.
         d_inner: int, the hidden size in feed-forward layers.
-        ff_activation: str, "relu" or "gelu".
         n_token: int, the vocab size.
-
-        dropout: float, dropout rate.
-        dropatt: float, dropout rate on attention probabilities.
 
         mem_len: int, the number of tokens to cache.
         reuse_len: int, the number of tokens in the currect batch to be cached
           and reused in the future.
         bi_data: bool, whether to use bidirectional input pipeline.
           Usually set to True during pretraining and False during finetuning.
-        clamp_len: int, clamp all relative distances larger than clamp_len.
-          -1 means no clamping.
 
       """
-    def __init__(self, n_token, n_layer, n_head, d_head, d_inner, d_model, dropout, dropatt,
-                 attn_type, bi_data, clamp_len, same_length, reuse_len, mem_len):
+    def __init__(self, n_token, n_layer, n_head, d_head, d_inner, d_model,
+                 attn_type, bi_data, reuse_len, mem_len):
         super(XLNet, self).__init__()
 
         self.n_token = n_token
@@ -198,19 +189,12 @@ class XLNet(nn.Module):
         self.d_head = d_head
         self.d_inner = d_inner
         self.d_model = d_model
-        self.dropout = dropout
-        self.dropatt = dropatt
         self.attn_type = attn_type
         self.bi_data = bi_data
-        self.clamp_len = clamp_len
-        self.same_length = same_length
         self.reuse_len = reuse_len
         self.mem_len = mem_len
 
         self.embedding = nn.Embedding(n_token, d_model)
-        self.Dropout = nn.Dropout(p=dropout)
-        self.DropAttn = nn.Dropout(p=dropatt)
-
 
         # untie the biases in attention.
         self.r_w_bias = nn.Parameter(torch.randn(self.n_layer,

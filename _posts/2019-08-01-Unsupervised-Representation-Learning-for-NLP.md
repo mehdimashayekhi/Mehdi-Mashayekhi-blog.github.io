@@ -431,7 +431,7 @@ Here is the implementation details of the two-stream attention with a Transforme
 
 Here is the implementation details of the core relative positional attention operations. Note that the backbone of this, is the scaled Dot-Product Attention described in [Transformer](https://arxiv.org/pdf/1706.03762.pdf):
 
-$$ \text{Attention}(Q, K, V ) = \text{softmax ((Q K^\top) scale) V $$
+$$ \text{Attention}(Q, K, V) = \text{softmax}(Q K^\top) scale)V $$
 
 ```python
 def rel_attn_core(self, q_head, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat,

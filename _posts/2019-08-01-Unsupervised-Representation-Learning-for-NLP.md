@@ -352,7 +352,7 @@ def relative_positional_encoding(qlen, klen, d_model):
     return pos_emb
 ```
 
-caching hidden states into memory:
+Here we cache hidden states into memory. Note tha, as mentioned in the [Transformer-XL](https://arxiv.org/pdf/1901.02860.pdf), we stop the gradient for the memory.  
 
 ```python
 def _cache_mem(self, curr_out, prev_mem, mem_len, reuse_len=None):
@@ -370,7 +370,64 @@ def _cache_mem(self, curr_out, prev_mem, mem_len, reuse_len=None):
 
         return new_mem
 ```
-Note tha, as mentioned in the [Transformer-XL](https://arxiv.org/pdf/1901.02860.pdf), we stop the gradient for the memory. 
+
+Here is the implementation details of the two-stream attention with a Transformer-XL backbone:
+```python
+    def two_stream_rel_attn(self, h, g, r, mems, r_w_bias, r_r_bias, seg_mat, r_s_bias,
+                            seg_embed, attn_mask_h, attn_mask_g, target_mapping):
+        scale = 1 / (self.d_head ** 0.5)  # this is scaling factor in Scaled Dot-Product Attention
+
+        # content based attention score
+        if mems is not None and len(mems.size()) > 1:
+            cat = torch.cat([mems, h], dim=0)  # cat shape [(mem_len+seq_len) x bsz x d_model]
+        else:
+            cat = h  
+
+        # content-based key head
+        k_head_h = self.head_projection(cat, 'k')   # k shape [(mem_len+seq_len) x bsz x n_head x d_head]
+
+        # content-based value head
+        v_head_h = self.head_projection(cat, 'v')  # v shape [(mem_len+seq_len) x bsz x n_head x d_head]
+
+        # position-based key head
+        k_head_r = self.head_projection(r, 'r')    # r shape [(k_len+q_len+1) x 1 x n_head x d_head]
+
+        ##### h-stream
+        # content-stream query head
+        q_head_h = self.head_projection(h, 'q')   # q shape [seq_len x bsz x n_head x d_head]
+
+        # core attention ops
+        # hˆ(m)_zt = LayerNorm(h^(m-1)_zt + RelAttn(h^(m-1)_zt + [h~^(m-1), hT(m-1)_z<=t]))
+        attn_vec_h = self.rel_attn_core(
+            q_head_h, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat, r_w_bias,
+            r_r_bias, r_s_bias, attn_mask_h, scale) # [q_len x bsz x n_head x d_head]
+
+        # post processing
+        output_h = self.post_attention(h, attn_vec_h)  #[seq_len x bsz x dmodel]; seq_len or q_len
+
+        ##### g-stream
+        # query-stream query head
+        q_head_g = self.head_projection(g, 'q')  # [num_predict x bsz x n_head x d_head]
+
+        # core attention ops
+        # gˆ(m)_zt = LayerNorm(g^(m-1)_zt + RelAttn(g^(m-1)_zt + [h~^(m-1), hT(m-1)_z<=t]))
+        if target_mapping is not None:
+            q_head_g = torch.einsum('mbnd,mlb->lbnd', q_head_g, target_mapping) # [seq_len x bsz x n_head x d_head]
+            attn_vec_g = self.rel_attn_core(
+                q_head_g, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat, r_w_bias,
+                r_r_bias, r_s_bias, attn_mask_g, scale)  # only qury and att mask are different; # [q_len x bsz x n_head x d_head]
+            attn_vec_g = torch.einsum('lbnd,mlb->mbnd', attn_vec_g, target_mapping) # [num_predict x bsz x n_head x d_head]
+        else:
+            attn_vec_g = self.rel_attn_core(
+                q_head_g, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat, r_w_bias,
+                r_r_bias, r_s_bias, attn_mask_g, scale)
+
+        # post processing
+        output_g = self.post_attention(g, attn_vec_g) #[num_predict x bsz x dmodel]
+
+        return output_h, output_g
+```
+
 
 ### Training
 TBD

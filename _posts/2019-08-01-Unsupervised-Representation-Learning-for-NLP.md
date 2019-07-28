@@ -137,6 +137,24 @@ TBD
 TBD
 ### Modeling
 TBD
+#### Relative Positional Encoding
+
+$$ PE_{(pos,2i)} = sin(\frac{pos}{10000})$$
+
+```python
+def storeTransition(self, state, reward, next_state):
+sin(pos/100002i/dmodel)
+    # Add reward discounted by current discounting factor
+    self.cumulative_reward += (self.gamma ** self.k) * reward
+    self.k += 1 # Increment k after
+
+    # If current option terminates at next state
+    if self.current_option.beta[next_state] == 1:
+        # Update N, R and P tables
+        self.updateModels(reward, next_state)
+        # Reset current option to None
+        self.resetCurrentOption()
+```
 ### Training
 TBD
 

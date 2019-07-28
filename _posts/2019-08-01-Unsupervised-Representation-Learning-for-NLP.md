@@ -137,8 +137,8 @@ TBD
 TBD
 ### Modeling
 TBD
+
 #### XLNet Model
-##### Model Initialization
 ```python
 class XLNet(nn.Module):
     """
@@ -249,7 +249,7 @@ class XLNet(nn.Module):
         self.softmax_b = nn.Parameter(torch.zeros(self.n_token))
     
 ```
-##### Forward pass of the XLNet Model
+
 ```python
     def forward(self, inp_k, seg_id, input_mask, mems, perm_mask, target_mapping, inp_q):
         new_mems = []

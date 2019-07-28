@@ -242,54 +242,24 @@ class XLNet(nn.Module):
 ```python
     def forward(self, inp_k, seg_id, input_mask, mems, perm_mask, target_mapping, inp_q):
         new_mems = []
-
-        bsz = inp_k.shape[1]
-        qlen = inp_k.shape[0]
-        mlen = mems[0].size(0) if mems is not None else 0
+        qlen = inp_k.shape[0] # qlen=seq_len
         klen = mlen + qlen
 
-        ##### Attention mask
-        # causal attention mask
-        if self.attn_type == 'uni':
-            attn_mask = self._create_mask(qlen, mlen, torch.int64, self.same_length)
-            attn_mask = attn_mask[:, :, None, None]
-        elif self.attn_type == 'bi':
-            attn_mask = None
-        else:
-            raise ValueError('Unsupported attention type: {}'.format(self.attn_type))
-
         # data mask: input mask & perm mask
-        if input_mask is not None and perm_mask is not None:
-            data_mask = input_mask[None] + perm_mask
-        elif input_mask is not None and perm_mask is None:
-            data_mask = input_mask[None]
-        elif input_mask is None and perm_mask is not None:
-            data_mask = perm_mask
-        else:
-            data_mask = None
+        data_mask = perm_mask
 
-        if data_mask is not None:
-            # all mems can be attended to
-            mems_mask = torch.zeros([data_mask.shape[0], mlen, bsz],   # shape: [seq_len,mem_len,bsz]
+        # all mems can be attended to
+        mems_mask = torch.zeros([data_mask.shape[0], mlen, bsz],   # shape: [seq_len,mem_len,bsz]
                                  dtype=torch.float32)
-            data_mask = torch.cat([mems_mask, data_mask], dim=1)   # shape: [seq_len, mem_len+seq_len, bsz ] 
-            if attn_mask is None:
-                attn_mask = data_mask[:, :, :, None] # shape: [seq_len, mem_len+seq_len, bsz,1 ] 
-            else:
-                attn_mask += data_mask[:, :, :, None]
+        data_mask = torch.cat([mems_mask, data_mask], dim=1)   # shape: [seq_len, mem_len+seq_len, bsz ] 
+        attn_mask = data_mask[:, :, :, None] # shape: [seq_len, mem_len+seq_len, bsz,1 ]
 
-        if attn_mask is not None:
-            attn_mask = attn_mask.gt(0).type(torch.float32)   # element wise comparison with zero; basically finding out where to attend
-
-        if attn_mask is not None:
-            non_tgt_mask = -torch.eye(qlen, dtype=torch.float32) # [qlen, qlen]
-            non_tgt_mask = torch.cat([torch.zeros([qlen, mlen], dtype=torch.float32), # [qlen, klen]  (qlen+mlen=klen ?)
+        non_tgt_mask = -torch.eye(qlen, dtype=torch.float32) # [qlen, qlen]
+        non_tgt_mask = torch.cat([torch.zeros([qlen, mlen], dtype=torch.float32), # [qlen, klen]  (qlen+mlen=klen)
                                         non_tgt_mask],
                                         dim=-1)
-            non_tgt_mask = (attn_mask +
-                            non_tgt_mask[:, :, None, None]).gt(0).type(dtype=torch.float32)   # can attend to itself because of -eye
-        else:
-            non_tgt_mask = None
+        non_tgt_mask = (attn_mask +
+                            non_tgt_mask[:, :, None, None]).gt(0).type(dtype=torch.float32)   # query token can attend to itself because of -eye
 
         # As mentioned in the paper the first layer query stream is initialized with a trainable vector, i.e. g^(0)_i = w
         # while the content stream is set to the corresponding word embedding, i.e. h(0) = e(xi).

@@ -369,6 +369,7 @@ def relative_positional_encoding(qlen, klen, d_model):
 caching hidden states into memory:
 
 ```python
+    def _cache_mem(self, curr_out, prev_mem, mem_len, reuse_len=None):
         with torch.no_grad():
             if mem_len is None or mem_len == 0:
                 return None

@@ -139,7 +139,7 @@ TBD
 TBD
 #### Relative Positional Encoding
 
-$$ PE_{(pos,2i)} = sin(\frac{pos}{10000})$$
+$$ PE_{(pos,2i)} = sin(\frac{pos}{10000^{\frac{2i}{d_model}}})$$ [source](https://arxiv.org/pdf/1706.03762.pdf)
 
 ```python
 def storeTransition(self, state, reward, next_state):

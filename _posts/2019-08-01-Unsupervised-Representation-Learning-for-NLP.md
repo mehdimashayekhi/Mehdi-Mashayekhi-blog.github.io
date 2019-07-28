@@ -348,7 +348,7 @@ class XLNet(nn.Module):
         return logits, new_mems
 ```
 
-Relative Positional Encoding
+Similar to this [paper](https://arxiv.org/pdf/1706.03762.pdf), we use sine and cosine functions of different frequencies, to get the positional encoding:
 
 $$ PE_{(pos,2i)} = sin(\frac{pos}{10000^{\frac{2i}{d_model}}})$$
 

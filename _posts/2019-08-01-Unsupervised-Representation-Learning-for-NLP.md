@@ -137,6 +137,271 @@ TBD
 TBD
 ### Modeling
 TBD
+#### XLNet Model
+##### Model Initialization
+```python
+class XLNet(nn.Module):
+    """
+        Defines a Transformer-XL computation graph with additional
+        support for XLNet.
+
+        Args:
+
+        inp_k: int32 Tensor in shape [len, bsz], the input token IDs.
+        seg_id: int32 Tensor in shape [len, bsz], the input segment IDs.
+        input_mask: float32 Tensor in shape [len, bsz], the input mask.
+          0 for real tokens and 1 for padding.
+        mems: a list of float32 Tensors in shape [mem_len, bsz, d_model], memory
+          from previous batches. The length of the list equals n_layer.
+          If None, no memory is used.
+        perm_mask: float32 Tensor in shape [len, len, bsz].
+          If perm_mask[i, j, k] = 0, i attend to j in batch k;
+          if perm_mask[i, j, k] = 1, i does not attend to j in batch k.
+          If None, each position attends to all the others.
+        target_mapping: float32 Tensor in shape [num_predict, len, bsz].
+          If target_mapping[i, j, k] = 1, the i-th predict in batch k is
+          on the j-th token.
+          Only used during pretraining for partial prediction.
+          Set to None during finetuning.
+        inp_q: float32 Tensor in shape [len, bsz].
+          1 for tokens with losses and 0 for tokens without losses.
+          Only used during pretraining for two-stream attention.
+          Set to None during finetuning.
+
+        n_layer: int, the number of layers.
+        d_model: int, the hidden size.
+        n_head: int, the number of attention heads.
+        d_head: int, the dimension size of each attention head.
+        d_inner: int, the hidden size in feed-forward layers.
+        ff_activation: str, "relu" or "gelu".
+        n_token: int, the vocab size.
+
+        dropout: float, dropout rate.
+        dropatt: float, dropout rate on attention probabilities.
+
+        mem_len: int, the number of tokens to cache.
+        reuse_len: int, the number of tokens in the currect batch to be cached
+          and reused in the future.
+        bi_data: bool, whether to use bidirectional input pipeline.
+          Usually set to True during pretraining and False during finetuning.
+        clamp_len: int, clamp all relative distances larger than clamp_len.
+          -1 means no clamping.
+
+      """
+    def __init__(self, n_token, n_layer, n_head, d_head, d_inner, d_model, dropout, dropatt,
+                 attn_type, bi_data, clamp_len, same_length, reuse_len, mem_len):
+        super(XLNet, self).__init__()
+
+        self.n_token = n_token
+        self.n_layer = n_layer
+        self.n_head = n_head
+        self.d_head = d_head
+        self.d_inner = d_inner
+        self.d_model = d_model
+        self.dropout = dropout
+        self.dropatt = dropatt
+        self.attn_type = attn_type
+        self.bi_data = bi_data
+        self.clamp_len = clamp_len
+        self.same_length = same_length
+        self.reuse_len = reuse_len
+        self.mem_len = mem_len
+
+        self.embedding = nn.Embedding(n_token, d_model)
+        self.Dropout = nn.Dropout(p=dropout)
+        self.DropAttn = nn.Dropout(p=dropatt)
+
+
+        # untie the biases in attention.
+        self.r_w_bias = nn.Parameter(torch.randn(self.n_layer,
+                                                  self.n_head,self.d_head))
+        self.r_r_bias = nn.Parameter(torch.randn(self.n_layer,
+                                                  self.n_head, self.d_head))
+
+        ##### Segment embedding
+        self.r_s_bias = nn.Parameter(torch.randn(self.n_layer,
+                                                  self.n_head,self.d_head))
+        self.seg_embed = nn.Parameter(torch.randn(self.n_layer, 2,
+                                                   self.n_head, self.d_head))
+
+        self.mask_emb = nn.Parameter(torch.randn(1, 1, d_model))
+
+        # post-attention projection (back to `d_model`)
+        self.proj_o = nn.Parameter(torch.randn(self.d_model,
+                                                self.n_head, self.d_head))
+
+        #### Project hidden states to a specific head with a 4D-shape.
+        self.q_proj_weight = nn.Parameter(torch.randn(self.d_model,
+                                                       self.n_head, self.d_head))
+        self.k_proj_weight = nn.Parameter(torch.randn(self.d_model,
+                                                       self.n_head, self.d_head))
+        self.v_proj_weight = nn.Parameter(torch.randn(self.d_model,
+                                                       self.n_head, self.d_head))
+        self.r_proj_weight = nn.Parameter(torch.randn(self.d_model,
+                                                       self.n_head, self.d_head))
+
+        self.layer_norm = nn.LayerNorm(d_model)
+
+        self.conv1 = nn.Linear(d_model, d_inner)
+        self.conv2 = nn.Linear(d_inner, d_model)
+        self.relu = nn.ReLU(inplace=True)
+
+        self.softmax_b = nn.Parameter(torch.zeros(self.n_token))
+    
+```
+##### Forward pass of the XLNet Model
+```python
+    def forward(self, inp_k, seg_id, input_mask, mems, perm_mask, target_mapping, inp_q):
+        new_mems = []
+
+        bsz = inp_k.shape[1]
+        qlen = inp_k.shape[0]
+        mlen = mems[0].size(0) if mems is not None else 0
+        klen = mlen + qlen
+
+        ##### Attention mask
+        # causal attention mask
+        if self.attn_type == 'uni':
+            attn_mask = self._create_mask(qlen, mlen, torch.int64, self.same_length)
+            attn_mask = attn_mask[:, :, None, None]
+        elif self.attn_type == 'bi':
+            attn_mask = None
+        else:
+            raise ValueError('Unsupported attention type: {}'.format(self.attn_type))
+
+        # data mask: input mask & perm mask
+        if input_mask is not None and perm_mask is not None:
+            data_mask = input_mask[None] + perm_mask
+        elif input_mask is not None and perm_mask is None:
+            data_mask = input_mask[None]
+        elif input_mask is None and perm_mask is not None:
+            data_mask = perm_mask
+        else:
+            data_mask = None
+
+        if data_mask is not None:
+            # all mems can be attended to
+            mems_mask = torch.zeros([data_mask.shape[0], mlen, bsz],   # shape: [seq_len,mem_len,bsz]
+                                 dtype=torch.float32)
+            data_mask = torch.cat([mems_mask, data_mask], dim=1)   # shape: [seq_len, mem_len+seq_len, bsz ] 
+            if attn_mask is None:
+                attn_mask = data_mask[:, :, :, None] # shape: [seq_len, mem_len+seq_len, bsz,1 ] 
+            else:
+                attn_mask += data_mask[:, :, :, None]
+
+        if attn_mask is not None:
+            attn_mask = attn_mask.gt(0).type(torch.float32)   # element wise comparison with zero; basically finding out where to attend
+
+        if attn_mask is not None:
+            non_tgt_mask = -torch.eye(qlen, dtype=torch.float32) # [qlen, qlen]
+            non_tgt_mask = torch.cat([torch.zeros([qlen, mlen], dtype=torch.float32), # [qlen, klen]  (qlen+mlen=klen ?)
+                                        non_tgt_mask],
+                                        dim=-1)
+            non_tgt_mask = (attn_mask +
+                            non_tgt_mask[:, :, None, None]).gt(0).type(dtype=torch.float32)   # can attend to itself because of -eye
+        else:
+            non_tgt_mask = None
+
+        # As mentioned in the paper the first layer query stream is initialized with a trainable vector, i.e. g^(0)_i = w
+        # while the content stream is set to the corresponding word embedding, i.e. h(0) = e(xi).
+
+        ##### Word embedding
+        lookup_table = self.embedding
+        word_emb_k = lookup_table(input_mask)
+
+        if inp_q is not None:
+            if target_mapping is not None:
+                word_emb_q = self.mask_emb.repeat(target_mapping.shape[0], bsz, 1)
+            else:
+                inp_q_ext = inp_q[:, :, None]
+                word_emb_q = inp_q_ext * self.mask_emb + (1 - inp_q_ext) * word_emb_k
+
+        #### Figure 2(a), Content Stream(Original Attention), h^(0)_t = e(x_i) = e(inp_k)
+        output_h = self.Dropout(word_emb_k) #[seq_len x bsz x dmodel]
+        if inp_q is not None:
+            #### Query Stream, g^(0)_t = w
+            #### the first layer query stream is initialized with a trainable vector
+            output_g = self.Dropout(word_emb_q)
+
+        ##### Segment embedding
+        # paper
+        # Given a pair of positions i and j in the sequence, if
+        # i and j are from the same segment
+        if seg_id is not None:
+            # Convert `seg_id` to one-hot `seg_mat`
+            mem_pad = torch.zeros([mlen, bsz], dtype=torch.int32)
+            cat_ids = torch.cat([mem_pad, seg_id], dim=0)
+
+            # `1` indicates not in the same segment [qlen x klen x bsz]
+            seg_mat = (~torch.eq(seg_id[:, None], cat_ids[None, :])).type(torch.long)
+            seg_mat = torch.eye(2, dtype=torch.float32)[seg_mat] # [qlen x klen x bsz x 2] one hot
+        else:
+            seg_mat = None
+
+        ##### Positional encoding
+        pos_emb = self.relative_positional_encoding(
+            qlen, klen, self.d_model, self.clamp_len, self.attn_type, self.bi_data,
+            bsz=bsz, dtype=torch.float32)
+        pos_emb = self.Dropout(pos_emb)  #[(klen+qlen+1) x 1 x d_model]
+
+        ##### Attention layers
+        if mems is None:
+            mems = [None] * self.n_layer
+
+        for i in range(self.n_layer):
+            # cache new mems
+            new_mems.append(self._cache_mem(output_h, mems[i], self.mem_len, self.reuse_len))
+
+            # segment bias
+            if seg_id is None:
+                r_s_bias_i = None
+                seg_embed_i = None
+            else:
+                r_s_bias_i = self.r_s_bias[i]
+                seg_embed_i = self.seg_embed[i]
+
+            # output_h, output_g SHAPES  =  #[seq_len x bsz x dmodel] ;#[num_predict x bsz x dmodel]
+
+            if inp_q is not None:
+                output_h, output_g = self.two_stream_rel_attn(
+                    h=output_h, # [seq_len x bsz x d_model]
+                    g=output_g,  # [num_predict x bsz x d_model]
+                    r=pos_emb,   #[(klen+qlen+1) x 1 x d_model]
+                    r_w_bias= self.r_w_bias[i], #[n_layer x n_head x d_head]
+                    r_r_bias= self.r_r_bias[i], #[n_layer x n_head x d_head]
+                    seg_mat=seg_mat, # [qlen x klen x bsz x 2] one hot
+                    r_s_bias=r_s_bias_i, #[n_layer x n_head x d_head]
+                    seg_embed=seg_embed_i, #[2 x n_head x d_head]
+                    attn_mask_h=non_tgt_mask, #[seq_len, mem_len+q_len, bsz,1 ]  query can attend to itself
+                    attn_mask_g=attn_mask,    # [seq_len, mem_len+q_len, bsz,1 ]  can not attend to itself
+                    mems=mems[i],             # [mem_len x bsz x d_model]
+                    target_mapping=target_mapping) # [num_predict, seq_len, 1(=bsz)]
+            else:
+                output_h = self.rel_multihead_attn(
+                    h=output_h,
+                    r=pos_emb,
+                    r_w_bias=self.r_w_bias[i],
+                    r_r_bias=self.r_r_bias[i],
+                    seg_mat=seg_mat,
+                    r_s_bias=r_s_bias_i,
+                    seg_embed=seg_embed_i,
+                    attn_mask=non_tgt_mask,
+                    mems=mems[i])
+
+            if inp_q is not None:
+                output_g = self.positionwise_ffn(inp=output_g) # [num_predict x bsz x d_inner]
+
+            output_h = self.positionwise_ffn(inp=output_h) # [seq_len x bsz x d_inner]
+
+        if inp_q is not None:
+            output = self.Dropout(output_g)
+        else:
+            output = self.Dropout(output_h)
+
+        logits = torch.einsum('ibd,nd->ibn', output, lookup_table.weight) + self.softmax_b # [num_predict x bsz x n_token]
+
+        return logits, new_mems
+```
 #### Relative Positional Encoding
 
 $$ PE_{(pos,2i)} = sin(\frac{pos}{10000^{\frac{2i}{d_model}}})$$

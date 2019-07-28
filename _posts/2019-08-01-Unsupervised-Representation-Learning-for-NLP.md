@@ -270,22 +270,18 @@ class XLNet(nn.Module):
         output_h = self.Dropout(word_emb_k) #[seq_len x bsz x dmodel]
         #### Query Stream, g^(0)_t = w
         #### the first layer query stream is initialized with a trainable vector
-        output_g = self.Dropout(word_emb_q)
+        output_g = self.Dropout(word_emb_q) # shape [num_predict x bsz * d_model]
 
         ##### Segment embedding
         # paper
-        # Given a pair of positions i and j in the sequence, if
-        # i and j are from the same segment
-        if seg_id is not None:
-            # Convert `seg_id` to one-hot `seg_mat`
-            mem_pad = torch.zeros([mlen, bsz], dtype=torch.int32)
-            cat_ids = torch.cat([mem_pad, seg_id], dim=0)
-
-            # `1` indicates not in the same segment [qlen x klen x bsz]
-            seg_mat = (~torch.eq(seg_id[:, None], cat_ids[None, :])).type(torch.long)
-            seg_mat = torch.eye(2, dtype=torch.float32)[seg_mat] # [qlen x klen x bsz x 2] one hot
-        else:
-            seg_mat = None
+        # Given a pair of positions i and j in the sequence, if i and j are from the same segment
+        # `1` indicates not in the same segment
+        # Convert `seg_id` to one-hot `seg_mat`
+        mem_pad = torch.zeros([mlen, bsz], dtype=torch.int32)
+        cat_ids = torch.cat([mem_pad, seg_id], dim=0) # shape [klen x bsz]
+        #compare every element of one row of seg_id with all the elements in all rows of cat_ids
+        seg_mat = (~torch.eq(seg_id[:, None], cat_ids[None, :])).type(torch.long)
+        seg_mat = torch.eye(2, dtype=torch.float32)[seg_mat] # [qlen x klen x bsz x 2] one hot
 
         ##### Positional encoding
         pos_emb = self.relative_positional_encoding(

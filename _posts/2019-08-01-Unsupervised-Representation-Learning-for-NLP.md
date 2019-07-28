@@ -263,21 +263,14 @@ class XLNet(nn.Module):
 
         ##### Word embedding
         lookup_table = self.embedding
-        word_emb_k = lookup_table(input_mask)
-
-        if inp_q is not None:
-            if target_mapping is not None:
-                word_emb_q = self.mask_emb.repeat(target_mapping.shape[0], bsz, 1)
-            else:
-                inp_q_ext = inp_q[:, :, None]
-                word_emb_q = inp_q_ext * self.mask_emb + (1 - inp_q_ext) * word_emb_k
+        word_emb_k = lookup_table(input_mask) # shape [seq_len x bsz * d_model]
+        word_emb_q = self.mask_emb.repeat(target_mapping.shape[0], bsz, 1) # shape [num_predict x bsz * d_model]
 
         #### Figure 2(a), Content Stream(Original Attention), h^(0)_t = e(x_i) = e(inp_k)
         output_h = self.Dropout(word_emb_k) #[seq_len x bsz x dmodel]
-        if inp_q is not None:
-            #### Query Stream, g^(0)_t = w
-            #### the first layer query stream is initialized with a trainable vector
-            output_g = self.Dropout(word_emb_q)
+        #### Query Stream, g^(0)_t = w
+        #### the first layer query stream is initialized with a trainable vector
+        output_g = self.Dropout(word_emb_q)
 
         ##### Segment embedding
         # paper

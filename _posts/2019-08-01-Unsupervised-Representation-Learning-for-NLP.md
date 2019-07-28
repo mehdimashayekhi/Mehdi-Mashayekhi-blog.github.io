@@ -144,6 +144,9 @@ TBD
 TBD
 
 #### XLNet Model
+
+Here is how we initialize the model:
+
 ```python
 class XLNet(nn.Module):
     """
@@ -238,6 +241,7 @@ class XLNet(nn.Module):
         self.softmax_b = nn.Parameter(torch.zeros(self.n_token))
     
 ```
+Here is the forward pass of the tensorflow model:
 
 ```python
     def forward(self, inp_k, seg_id, input_mask, mems, perm_mask, target_mapping, inp_q):

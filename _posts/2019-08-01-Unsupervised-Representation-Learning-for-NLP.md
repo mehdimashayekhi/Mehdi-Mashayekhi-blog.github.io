@@ -249,17 +249,14 @@ class XLNet(nn.Module):
         data_mask = perm_mask
 
         # all mems can be attended to
-        mems_mask = torch.zeros([data_mask.shape[0], mlen, bsz],   # shape: [seq_len,mem_len,bsz]
-                                 dtype=torch.float32)
+        mems_mask = torch.zeros([data_mask.shape[0], mlen, bsz],dtype=torch.float32)   # shape: [seq_len,mem_len,bsz]
+                                 
         data_mask = torch.cat([mems_mask, data_mask], dim=1)   # shape: [seq_len, mem_len+seq_len, bsz ] 
         attn_mask = data_mask[:, :, :, None] # shape: [seq_len, mem_len+seq_len, bsz,1 ]
 
         non_tgt_mask = -torch.eye(qlen, dtype=torch.float32) # [qlen, qlen]
-        non_tgt_mask = torch.cat([torch.zeros([qlen, mlen], dtype=torch.float32), # [qlen, klen]  (qlen+mlen=klen)
-                                        non_tgt_mask],
-                                        dim=-1)
-        non_tgt_mask = (attn_mask +
-                            non_tgt_mask[:, :, None, None]).gt(0).type(dtype=torch.float32)   # query token can attend to itself because of -eye
+        non_tgt_mask = torch.cat([torch.zeros([qlen, mlen], dtype=torch.float32),non_tgt_mask],dim=-1) # [qlen, klen]                               
+        non_tgt_mask = (attn_mask + non_tgt_mask[:, :, None, None]).gt(0).type(dtype=torch.float32)   # query token can attend to itself because of -eye
 
         # As mentioned in the paper the first layer query stream is initialized with a trainable vector, i.e. g^(0)_i = w
         # while the content stream is set to the corresponding word embedding, i.e. h(0) = e(xi).

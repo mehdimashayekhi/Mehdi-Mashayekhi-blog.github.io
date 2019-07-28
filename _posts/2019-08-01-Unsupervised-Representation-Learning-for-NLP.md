@@ -298,12 +298,8 @@ class XLNet(nn.Module):
             new_mems.append(self._cache_mem(output_h, mems[i], self.mem_len, self.reuse_len))
 
             # segment bias
-            if seg_id is None:
-                r_s_bias_i = None
-                seg_embed_i = None
-            else:
-                r_s_bias_i = self.r_s_bias[i]
-                seg_embed_i = self.seg_embed[i]
+            r_s_bias_i = self.r_s_bias[i]
+            seg_embed_i = self.seg_embed[i]
 
             # output_h, output_g SHAPES  =  #[seq_len x bsz x dmodel] ;#[num_predict x bsz x dmodel]
 

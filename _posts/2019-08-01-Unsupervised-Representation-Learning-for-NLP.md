@@ -287,7 +287,7 @@ class XLNet(nn.Module):
         pos_emb = self.relative_positional_encoding(
             qlen, klen, self.d_model, self.clamp_len, self.attn_type, self.bi_data,
             bsz=bsz, dtype=torch.float32)
-        pos_emb = self.Dropout(pos_emb)  #[(klen+qlen+1) x 1 x d_model]
+        pos_emb = self.Dropout(pos_emb)  #[(klen+qlen) x 1 x d_model]
 
         ##### Attention layers
         if mems is None:
@@ -347,7 +347,8 @@ class XLNet(nn.Module):
 
         return logits, new_mems
 ```
-#### Relative Positional Encoding
+
+Relative Positional Encoding
 
 $$ PE_{(pos,2i)} = sin(\frac{pos}{10000^{\frac{2i}{d_model}}})$$
 
@@ -362,6 +363,7 @@ def relative_positional_encoding(qlen, klen, d_model):
     sinusoid_inp = torch.einsum('i,d->id', pos_seq, inv_freq) # shape [(klen+qlen) x 1 x d_model/2]
     pos_emb = torch.cat([torch.sin(sinusoid_inp), torch.cos(sinusoid_inp)], dim=-1) # shape [(klen+qlen) x d_model]
     pos_emb = pos_emb[:, None, :] # shape [(klen+qlen) x 1 x d_model]
+    return pos_emb
 ```
 ### Training
 TBD

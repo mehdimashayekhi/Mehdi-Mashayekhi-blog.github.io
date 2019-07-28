@@ -142,18 +142,14 @@ TBD
 $$ PE_{(pos,2i)} = sin(\frac{pos}{10000^{\frac{2i}{d_model}}})$$
 
 ```python
-def storeTransition(self, state, reward, next_state):
-sin(pos/100002i/dmodel)
-    # Add reward discounted by current discounting factor
-    self.cumulative_reward += (self.gamma ** self.k) * reward
-    self.k += 1 # Increment k after
-
-    # If current option terminates at next state
-    if self.current_option.beta[next_state] == 1:
-        # Update N, R and P tables
-        self.updateModels(reward, next_state)
-        # Reset current option to None
-        self.resetCurrentOption()
+def relative_positional_encoding(qlen, klen, d_model):
+    freq_seq = torch.arange(0, d_model, 2.0)
+    inv_freq = 1 / (10000 ** (freq_seq / d_model))
+    beg, end = klen - 1, -1 # note that klen = mlen + qlen
+    pos_seq = torch.arange(beg, end, -1.0)
+    sinusoid_inp = torch.einsum('i,d->id', pos_seq, inv_freq)
+    pos_emb = torch.cat([torch.sin(sinusoid_inp), torch.cos(sinusoid_inp)], dim=-1)
+    pos_emb = pos_emb[:, None, :] # shape [(klen+qlen) x 1 x d_model]
 ```
 ### Training
 TBD

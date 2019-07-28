@@ -147,8 +147,8 @@ def relative_positional_encoding(qlen, klen, d_model):
     inv_freq = 1 / (10000 ** (freq_seq / d_model))
     beg, end = klen - 1, -1 # note that klen = mlen + qlen
     pos_seq = torch.arange(beg, end, -1.0)
-    sinusoid_inp = torch.einsum('i,d->id', pos_seq, inv_freq)
-    pos_emb = torch.cat([torch.sin(sinusoid_inp), torch.cos(sinusoid_inp)], dim=-1)
+    sinusoid_inp = torch.einsum('i,d->id', pos_seq, inv_freq) # shape [(klen+qlen) x 1 x d_model/2]
+    pos_emb = torch.cat([torch.sin(sinusoid_inp), torch.cos(sinusoid_inp)], dim=-1) # shape [(klen+qlen) x d_model]
     pos_emb = pos_emb[:, None, :] # shape [(klen+qlen) x 1 x d_model]
 ```
 ### Training

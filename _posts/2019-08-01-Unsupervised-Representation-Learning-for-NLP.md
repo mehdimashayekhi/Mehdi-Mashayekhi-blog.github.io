@@ -372,6 +372,7 @@ def _cache_mem(self, curr_out, prev_mem, mem_len, reuse_len=None):
 ```
 
 Here is the implementation details of the two-stream attention with a Transformer-XL backbone:
+
 ```python
     def two_stream_rel_attn(self, h, g, r, mems, r_w_bias, r_r_bias, seg_mat, r_s_bias,
                             seg_embed, attn_mask_h, attn_mask_g, target_mapping):
@@ -410,7 +411,7 @@ Here is the implementation details of the two-stream attention with a Transforme
         q_head_g = self.head_projection(g, 'q')  # [num_predict x bsz x n_head x d_head]
 
         # core attention ops
-        # gˆ(m)_zt = LayerNorm(g^(m-1)_zt + RelAttn(g^(m-1)_zt + [h~^(m-1), hT(m-1)_z<=t]))
+        # gˆ(m)_zt = LayerNorm(g^(m-1)_zt + RelAttn(g^(m-1)_zt + [h~^(m-1), hT(m-1)_z<=t]))
         if target_mapping is not None:
             q_head_g = torch.einsum('mbnd,mlb->lbnd', q_head_g, target_mapping) # [seq_len x bsz x n_head x d_head]
             attn_vec_g = self.rel_attn_core(
@@ -428,6 +429,45 @@ Here is the implementation details of the two-stream attention with a Transforme
         return output_h, output_g
 ```
 
+Here is the implementation details of the core relative positional attention operations. Note that the backbone of this, is the scaled Dot-Product Attention described in [Transformer](https://arxiv.org/pdf/1706.03762.pdf):
+
+$$ \text{Attention}(Q, K, V ) = \text{softmax ((Q K^\top) scale) V $$
+
+```python
+def rel_attn_core(self, q_head, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat,
+                  r_w_bias, r_r_bias, r_s_bias, attn_mask, scale):
+
+    """Core relative positional attention operations."""
+
+    # content based attention score
+    ac = torch.einsum('ibnd,jbnd->ijbn', q_head + r_w_bias, k_head_h) # [seq_len x (mem_len+seq_len) x bsz x n_head]
+
+    # position based attention score
+    bd = torch.einsum('ibnd,jbnd->ijbn', q_head + r_r_bias, k_head_r)  # [seq_len x (klen+q_len+1) x bsz x n_head]
+    bd = self.rel_shift(bd, klen=ac.shape[1])  #[seq_len x klen x bsz x n_head]
+
+    # segment based attention score
+    if seg_mat is None:
+        ef = 0
+    else:
+        ef = torch.einsum('ibnd,snd->ibns', q_head + r_s_bias, seg_embed) # [seq_len x bsz x n_head x 2]
+        ef = torch.einsum('ijbs,ibns->ijbn', seg_mat, ef)                 # [seq_len x k_len x bsz x n_head]
+
+    # merge attention scores and perform masking
+    attn_score = (ac + bd + ef) * scale  # [seq_len x k_len x bsz x n_head]
+    if attn_mask is not None:
+        # attn_score = attn_score * (1 - attn_mask) - 1e30 * attn_mask
+        attn_score = attn_score - 1e30 * attn_mask  # if att_mask is one; then the attn_prob becomes zero
+
+    # attention probability
+    attn_prob = F.softmax(attn_score, dim=1)
+    attn_prob = self.DropAttn(attn_prob) # [seq_len x k_len x bsz x n_head]; seq_len is equal q_len
+
+    # attention output
+    attn_vec = torch.einsum('ijbn,jbnd->ibnd', attn_prob, v_head_h) # [q_len x bsz x n_head x d_head]
+
+    return attn_vec
+```
 
 ### Training
 TBD

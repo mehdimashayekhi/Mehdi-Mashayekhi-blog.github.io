@@ -307,35 +307,21 @@ Here is the forward pass of the tensorflow model:
 
             # output_h, output_g SHAPES  =  #[seq_len x bsz x dmodel] ;#[num_predict x bsz x dmodel]
 
-            if inp_q is not None:
-                output_h, output_g = self.two_stream_rel_attn(
-                    h=output_h, # [seq_len x bsz x d_model]
-                    g=output_g,  # [num_predict x bsz x d_model]
-                    r=pos_emb,   #[(klen+qlen+1) x 1 x d_model]
-                    r_w_bias= self.r_w_bias[i], #[n_layer x n_head x d_head]
-                    r_r_bias= self.r_r_bias[i], #[n_layer x n_head x d_head]
-                    seg_mat=seg_mat, # [qlen x klen x bsz x 2] one hot
-                    r_s_bias=r_s_bias_i, #[n_layer x n_head x d_head]
-                    seg_embed=seg_embed_i, #[2 x n_head x d_head]
-                    attn_mask_h=non_tgt_mask, #[seq_len, mem_len+q_len, bsz,1 ]  query can attend to itself
-                    attn_mask_g=attn_mask,    # [seq_len, mem_len+q_len, bsz,1 ]  can not attend to itself
-                    mems=mems[i],             # [mem_len x bsz x d_model]
-                    target_mapping=target_mapping) # [num_predict, seq_len, 1(=bsz)]
-            else:
-                output_h = self.rel_multihead_attn(
-                    h=output_h,
-                    r=pos_emb,
-                    r_w_bias=self.r_w_bias[i],
-                    r_r_bias=self.r_r_bias[i],
-                    seg_mat=seg_mat,
-                    r_s_bias=r_s_bias_i,
-                    seg_embed=seg_embed_i,
-                    attn_mask=non_tgt_mask,
-                    mems=mems[i])
+            output_h, output_g = self.two_stream_rel_attn(
+                h=output_h, # [seq_len x bsz x d_model]
+                g=output_g,  # [num_predict x bsz x d_model]
+                r=pos_emb,   #[(klen+qlen+1) x 1 x d_model]
+                r_w_bias= self.r_w_bias[i], #[n_layer x n_head x d_head]
+                r_r_bias= self.r_r_bias[i], #[n_layer x n_head x d_head]
+                seg_mat=seg_mat, # [qlen x klen x bsz x 2] one hot
+                r_s_bias=r_s_bias_i, #[n_layer x n_head x d_head]
+                seg_embed=seg_embed_i, #[2 x n_head x d_head]
+                attn_mask_h=non_tgt_mask, #[seq_len, mem_len+q_len, bsz,1 ]  query can attend to itself
+                attn_mask_g=attn_mask,    # [seq_len, mem_len+q_len, bsz,1 ]  can not attend to itself
+                mems=mems[i],             # [mem_len x bsz x d_model]
+                target_mapping=target_mapping) # [num_predict, seq_len, 1(=bsz)]
 
-            if inp_q is not None:
-                output_g = self.positionwise_ffn(inp=output_g) # [num_predict x bsz x d_inner]
-
+            output_g = self.positionwise_ffn(inp=output_g) # [num_predict x bsz x d_inner]
             output_h = self.positionwise_ffn(inp=output_h) # [seq_len x bsz x d_inner]
 
         if inp_q is not None:

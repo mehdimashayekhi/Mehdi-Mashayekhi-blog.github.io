@@ -348,7 +348,7 @@ class XLNet(nn.Module):
         return logits, new_mems
 ```
 
-Similar to this [paper](https://arxiv.org/pdf/1706.03762.pdf), we use sine and cosine functions of different frequencies, to get the positional encoding:
+Similar to [Transformer](https://arxiv.org/pdf/1706.03762.pdf), we use sine and cosine functions of different frequencies, to get the positional encoding:
 
 $$ PE_{(pos,2i)} = sin(\frac{pos}{10000^{\frac{2i}{d_model}}})$$
 
@@ -365,6 +365,26 @@ def relative_positional_encoding(qlen, klen, d_model):
     pos_emb = pos_emb[:, None, :] # shape [(klen+qlen) x 1 x d_model]
     return pos_emb
 ```
+
+caching hidden states into memory:
+
+```python
+        with torch.no_grad():
+            if mem_len is None or mem_len == 0:
+                return None
+            else:
+                if reuse_len is not None and reuse_len > 0:
+                    curr_out = curr_out[:reuse_len]
+
+                if prev_mem is None:
+                    new_mem = curr_out[-mem_len:]
+                else:
+                    new_mem = torch.cat([prev_mem, curr_out], dim=0)[-mem_len:]
+
+            return new_mem
+```
+Note tha, as mentioned in the [Transformer-XL](https://arxiv.org/pdf/1901.02860.pdf), we stop the gradient for the memory. 
+
 ### Training
 TBD
 

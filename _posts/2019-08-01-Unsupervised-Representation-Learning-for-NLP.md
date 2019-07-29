@@ -503,6 +503,24 @@ def rel_shift(self, x, klen=-1):
     return x   # [seq_len x klen x bsz x n_head]
 ```
 
+Following function is `post_attention`, which does Post-attention processing. In other words, it projects last dimension back to the $$d_model$$, adds residual connection, and applies layer normalization as described earlier. 
+
+```python
+def post_attention(self, h, attn_vec, residual=True):
+    """Post-attention processing. Adding residual connection and applying LayerNorm"""
+
+    # post-attention projection (back to `d_model`)
+    attn_out = torch.einsum('ibnd,hnd->ibh', attn_vec, self.proj_o) #[seq_len x bsz x dmodel]; seq_len or q_len
+
+    attn_out = self.Dropout(attn_out)
+    if residual:
+        output = self.layer_norm(attn_out + h)
+    else:
+        output = self.layer_norm(attn_out)
+
+    return output  #[seq_len x bsz x dmodel]; seq_len or q_len
+```
+
 ### Training
 TBD
 

@@ -503,7 +503,7 @@ def rel_shift(self, x, klen=-1):
     return x   # [seq_len x klen x bsz x n_head]
 ```
 
-Following function is `post_attention`, which does Post-attention processing. In other words, it projects last dimension back to the $$d_model$$, adds residual connection, and applies layer normalization as described earlier. 
+Following function is `post_attention`, which does Post-attention processing. In other words, it projects last dimension back to the $$d_{model}$$, adds residual connection, and applies layer normalization as described earlier. 
 
 ```python
 def post_attention(self, h, attn_vec, residual=True):

@@ -376,7 +376,9 @@ Next is the implementation details of the two-stream attention with a Transforme
 {: class="center" style="width: 70%;"}
 *Fig. 5. Query, Key, and Value calculations illustrations.
 
-The next step is to calculate the relative attention score as shown in `rel_attn_core` function. And finally to apply residual function and layer normalization as shown in `post_attention` function. In summary, The `two_stream_rel_attn` implements the next $$\hat{h}$$, and $$\hat{g}$$ according to the following formulas, described in appendix A.2 of the the [paper](https://arxiv.org/pdf/1901.02860.pdf):
+The next step is to calculate the relative attention score as shown in `rel_attn_core` function. And finally to apply residual function and layer normalization as shown in `post_attention` function. 
+
+In summary, The `two_stream_rel_attn` implements the next $$\hat{h}$$, and $$\hat{g}$$ according to the following formulas, described in appendix A.2 of the the [paper](https://arxiv.org/pdf/1901.02860.pdf):
 
 
 $$\hat{h_{z_t}^{(m)}} = \text{LayerNorm}(h_{z_t}^{(m-1)} + \text{RelAttn}(h_{z_t}^{(m-1)},\big[\tilde{h}^{(m-1)}, h_{\mathbf{z}\leq{t}}^{m-1}]))$$

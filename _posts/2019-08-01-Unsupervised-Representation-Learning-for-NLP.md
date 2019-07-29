@@ -374,7 +374,7 @@ Next is the implementation details of the two-stream attention with a Transforme
 
 ![OPTIONS]({{ '/assets/images/Query_Key_Value.png' | relative_url }})
 {: class="center" style="width: 70%;"}
-*Fig. 5. Query, Key, and Value illustrations.
+*Fig. 5. Query, Key, and Value calculations illustrations.
 
 The `two_stream_rel_attn` also implements the next $$\tilde{h}$$, and $$\tilde{g}$$ according to the following formulas, described in appendix A.2 of the the [paper](https://arxiv.org/pdf/1901.02860.pdf):
 

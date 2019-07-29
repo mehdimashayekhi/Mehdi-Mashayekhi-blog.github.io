@@ -441,10 +441,14 @@ $$\hat{g_{z_t}^{(m)}} = \text{LayerNorm}(g_{z_t}^{(m-1)} + \text{RelAttn}(g_{z_t
         return output_h, output_g
 ```
 
-Here is the implementation details of the core relative positional attention operations. Note that the backbone of this, is the scaled Dot-Product Attention described in [Transformer](https://arxiv.org/pdf/1706.03762.pdf):
+Here is the implementation details of the core relative positional attention operations. Note that the backbone of this, is the scaled Dot-Product Attention described in [Transformer](https://arxiv.org/pdf/1706.03762.pdf), and shown in Fig. 6. :
 
 
 $$ \text{Attention}(Q, K, V) = \text{softmax}(\frac{Q K^\top}{\sqrt{d_k}})V $$
+
+![OPTIONS]({{ '/assets/images/ self-attention-calculation.png' | relative_url }})
+{: class="center" style="width: 90%;"}
+*Fig. 6. The self-attention calculation in matrix form. [Image source](http://jalammar.github.io/illustrated-transformer/)*
 
 ```python
 def rel_attn_core(self, q_head, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat,

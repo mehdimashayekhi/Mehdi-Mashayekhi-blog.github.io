@@ -378,7 +378,7 @@ $$\hat{h_{z_t}^{(m)}} = \text{LayerNorm}(h_{z_t}^{(m-1)} + \text{RelAttn}(h_{z_t
 $$\hat{g_{z_t}^{(m)}} = \text{LayerNorm}(g_{z_t}^{(m-1)} + \text{RelAttn}(g_{z_t}^{(m-1)},\big[\tilde{h}^{(m-1)}, h_{\mathbf{z}\leq{t}}^{m-1}]))$$
 
 ![OPTIONS]({{ '/assets/images/Query_Key_Value.png' | relative_url }})
-{: class="center" style="width: 80%;"}
+{: class="center" style="width: 70%;"}
 *Fig. 5. Query, Key, and Value illustrations.
 
 ```python

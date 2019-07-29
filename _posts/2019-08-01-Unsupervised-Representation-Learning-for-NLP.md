@@ -377,6 +377,9 @@ $$\hat{h_{z_t}^{(m)}} = \text{LayerNorm}(h_{z_t}^{(m-1)} + \text{RelAttn}(h_{z_t
 
 $$\hat{g_{z_t}^{(m)}} = \text{LayerNorm}(g_{z_t}^{(m-1)} + \text{RelAttn}(g_{z_t}^{(m-1)},\big[\tilde{h}^{(m-1)}, h_{\mathbf{z}\leq{t}}^{m-1}]))$$
 
+![OPTIONS]({{ '/assets/images/Query_Key_Value.png' | relative_url }})
+{: class="center" style="width: 90%;"}
+*Fig. 5. Query, Key, and Value illustrations.
 
 ```python
     def two_stream_rel_attn(self, h, g, r, mems, r_w_bias, r_r_bias, seg_mat, r_s_bias,

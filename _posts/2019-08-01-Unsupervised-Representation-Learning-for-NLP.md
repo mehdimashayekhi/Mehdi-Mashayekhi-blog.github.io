@@ -370,16 +370,20 @@ def _cache_mem(self, curr_out, prev_mem, mem_len, reuse_len=None):
 
         return new_mem
 ```
+Next is the implementation details of the two-stream attention with a Transformer-XL backbone. The first step is to calculate the Query, Key, and value matrices, as shown in Fig. 5. Note that,  `cat` is the concatenated matrix of memory and hidden state. 
 
-Here is the implementation details of the two-stream attention with a Transformer-XL backbone. This function implements the following formulas, described in appendix A.2 of the [paper](https://arxiv.org/pdf/1901.02860.pdf):
+![OPTIONS]({{ '/assets/images/Query_Key_Value.png' | relative_url }})
+{: class="center" style="width: 70%;"}
+*Fig. 5. Query, Key, and Value illustrations.
+
+The ` two_stream_rel_attn` also implements the next $$\tilde{h}$$, and $$\tilde{g}$$ according to the following formulas, described in appendix A.2 of the the [paper](https://arxiv.org/pdf/1901.02860.pdf):
+
 
 $$\hat{h_{z_t}^{(m)}} = \text{LayerNorm}(h_{z_t}^{(m-1)} + \text{RelAttn}(h_{z_t}^{(m-1)},\big[\tilde{h}^{(m-1)}, h_{\mathbf{z}\leq{t}}^{m-1}]))$$
 
 $$\hat{g_{z_t}^{(m)}} = \text{LayerNorm}(g_{z_t}^{(m-1)} + \text{RelAttn}(g_{z_t}^{(m-1)},\big[\tilde{h}^{(m-1)}, h_{\mathbf{z}\leq{t}}^{m-1}]))$$
 
-![OPTIONS]({{ '/assets/images/Query_Key_Value.png' | relative_url }})
-{: class="center" style="width: 70%;"}
-*Fig. 5. Query, Key, and Value illustrations.
+
 
 ```python
     def two_stream_rel_attn(self, h, g, r, mems, r_w_bias, r_r_bias, seg_mat, r_s_bias,

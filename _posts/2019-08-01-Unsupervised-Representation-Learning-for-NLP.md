@@ -474,6 +474,19 @@ def rel_attn_core(self, q_head, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat
 
     return attn_vec
 ```
+following function performs relative shift to form the relative attention score. Considering a tensor like the one shown in Fig. 4, this function captures the red slices shown in the figure. 
+
+```python
+def rel_shift(self, x, klen=-1):
+    x_size = x.shape # [seq_len x (klen+q_len) x bsz x n_head]
+
+    x = torch.reshape(x, [x_size[1], x_size[0], x_size[2], x_size[3]])
+    x = x[1:, 0:, 0:, 0:] # tf.slice(x, [1, 0, 0, 0], [-1, -1, -1, -1])
+    x = torch.reshape(x, [x_size[0], x_size[1] - 1, x_size[2], x_size[3]])
+    x = x[0:, 0:klen, 0:, 0:] # tf.slice(x, [0, 0, 0, 0], [-1, klen, -1, -1])
+
+    return x   # [seq_len x klen x bsz x n_head]
+```
 
 ### Training
 TBD

@@ -371,7 +371,7 @@ def _cache_mem(self, curr_out, prev_mem, mem_len, reuse_len=None):
         return new_mem
 ```
 
-Here is the implementation details of the two-stream attention with a Transformer-XL backbone. This function implements the following formulas, described in A.2 appendix of the paper:
+Here is the implementation details of the two-stream attention with a Transformer-XL backbone. This function implements the following formulas, described in appendix A.2 of the [paper](https://arxiv.org/pdf/1901.02860.pdf):
 
 $$\hat{h_{z_t}^{(m)}} = \text{LayerNorm}(h_{z_t}^{(m-1)} + \text{RelAttn}(h_{z_t}^{(m-1)},\big[\tilde{h}^{(m-1)}, h_{\mathbf{z}\leq{t}}^{m-1}]))$$
 

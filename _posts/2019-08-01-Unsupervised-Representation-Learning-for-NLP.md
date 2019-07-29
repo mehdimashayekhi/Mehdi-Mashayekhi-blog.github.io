@@ -97,7 +97,7 @@ $$
 $$
 
 ![OPTIONS]({{ '/assets/images/Two-Stream-Self-Attention.png' | relative_url }})
-{: class="center" style="width: 90%;"}
+{: class="center" style="width: 99%;"}
 *Fig. 2. (a): Content stream attention, which is the same as the standard self-attention. (b): Query stream attention, which does not have access information about the content $$x_{z_t}$$ . (c): Overview of the permutation language modeling training with two-stream attention. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
 
 ### Two-Stream Self-Attention

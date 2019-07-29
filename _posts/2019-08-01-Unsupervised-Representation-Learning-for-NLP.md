@@ -450,6 +450,8 @@ $$ \text{Attention}(Q, K, V) = \text{softmax}(\frac{Q K^\top}{\sqrt{d_k}})V $$
 {: class="center" style="width: 90%;"}
 *Fig. 6. The self-attention calculation in matrix form. [Image source](http://jalammar.github.io/illustrated-transformer/)*
 
+Also note that that the attention score consists of three components: 1) content based attention score; 2) position based attention score 3); segment based attention score. 
+
 ```python
 def rel_attn_core(self, q_head, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat,
                   r_w_bias, r_r_bias, r_s_bias, attn_mask, scale):

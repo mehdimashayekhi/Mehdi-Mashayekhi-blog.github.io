@@ -584,15 +584,14 @@ for num_epoch in range(args.num_epoch):
                                               perm_size=args.perm_size,
                                               num_predict=args.num_predict)
 
-        # batch size is 1
-        inp_k = permutation['input_k'].unsqueeze(-1) # [seq_len, 1(=bsz)]
-        seg_id = permutation['seg_id'].unsqueeze(-1) # [seq_len, 1(=bsz)]
-        target = permutation['target'].unsqueeze(-1) # [num_predict, 1(=bsz)]
-        perm_mask = permutation['perm_mask'].unsqueeze(-1) # [seq_len, seq_len, 1(=bsz)]
+        inp_k = permutation['input_k'] # [seq_len x bsz]
+        seg_id = permutation['seg_id'] # [seq_len x bsz]
+        target = permutation['target'] # [num_predict x bsz]
+        perm_mask = permutation['perm_mask'] # [seq_len x seq_len x bsz]
         target_mapping = \
-            permutation['target_mapping'].unsqueeze(-1) # [num_predict, seq_len, 1(=bsz)]
-        inp_q = permutation['input_q'].unsqueeze(-1) # [seq_len, 1(=bsz)]
-        tgt_mask = permutation['target_mask'].unsqueeze(-1) # [num_predict, 1(=bsz)]
+            permutation['target_mapping'] # [num_predict x seq_len x bsz]
+        inp_q = permutation['input_q'] # [seq_len x bsz]
+        tgt_mask = permutation['target_mask'] # [num_predict x bsz]
 
         logits, new_mems = model(inp_k=inp_k, seg_id=seg_id, input_mask=None,
               mems=mems, perm_mask=perm_mask, 

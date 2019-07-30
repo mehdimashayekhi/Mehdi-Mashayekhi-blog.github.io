@@ -464,7 +464,7 @@ def rel_attn_core(self, q_head, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat
     ac = torch.einsum('ibnd,jbnd->ijbn', q_head + r_w_bias, k_head_h) # [seq_len x (mem_len+seq_len) x bsz x n_head]
 
     # position based attention score
-    bd = torch.einsum('ibnd,jbnd->ijbn', q_head + r_r_bias, k_head_r)  # [seq_len x (klen+q_len+1) x bsz x n_head]
+    bd = torch.einsum('ibnd,jbnd->ijbn', q_head + r_r_bias, k_head_r)  # [seq_len x (klen+q_len) x bsz x n_head]
     bd = self.rel_shift(bd, klen=ac.shape[1])  #[seq_len x klen x bsz x n_head]
 
     # segment based attention score
@@ -503,7 +503,7 @@ def rel_shift(self, x, klen=-1):
     return x   # [seq_len x klen x bsz x n_head]
 ```
 
-Following function is `post_attention`, which does Post-attention processing. In other words, it projects last dimension back to the $$d_{model}$$, adds residual connection, and applies layer normalization as described earlier. 
+Following function `post_attention`, does Post-attention processing. In other words, it projects last dimension back to the $$d_{model}$$, adds residual connection, and applies layer normalization as described earlier. 
 
 ```python
 def post_attention(self, h, attn_vec, residual=True):

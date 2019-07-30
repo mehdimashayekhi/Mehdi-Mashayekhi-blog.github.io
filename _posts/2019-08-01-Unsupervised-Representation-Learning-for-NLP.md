@@ -376,13 +376,13 @@ Next is the implementation details of the two-stream attention with a Transforme
 {: class="center" style="width: 70%;"}
 *Fig. 5. Query, Key, and Value calculations illustrations.
 
-Following the Transformer architecture, the schematic architecture of the two-stream attention is shown in Fig. x. 
+Following the Transformer architecture, the schematic architecture of the two-stream attention is shown in Fig. 6. 
 
 ![OPTIONS]({{ '/assets/images/trans_two_stream_rel_attn.png' | relative_url }})
 {: class="center" style="width: 70%;"}
 *Fig. 6. Two-stream attention illustrations.
 
-As is shown in the figure, it is consists of three main functions: 1) `rel_attn_core` 2) `post_attention` ; 3) `positionwise_ffn` . Implementation details of each component will be presented in the following. 
+As is shown in the figure, `two_stream_rel_attn` consists of three main functions: 1) `rel_attn_core` 2) `post_attention` ; 3) `positionwise_ffn` . Implementation details of each component will be presented in the following. 
 
 In summary, the `two_stream_rel_attn` implements the next $$\hat{h}$$, and $$\hat{g}$$ according to the following formulas, described in appendix A.2 of the the [paper](https://arxiv.org/pdf/1901.02860.pdf):
 

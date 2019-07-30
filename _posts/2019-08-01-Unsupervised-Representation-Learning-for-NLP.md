@@ -588,8 +588,7 @@ for num_epoch in range(args.num_epoch):
         seg_id = permutation['seg_id'] # [seq_len x bsz]
         target = permutation['target'] # [num_predict x bsz]
         perm_mask = permutation['perm_mask'] # [seq_len x seq_len x bsz]
-        target_mapping = \
-            permutation['target_mapping'] # [num_predict x seq_len x bsz]
+        target_mapping = permutation['target_mapping'] # [num_predict x seq_len x bsz]
         inp_q = permutation['input_q'] # [seq_len x bsz]
         tgt_mask = permutation['target_mask'] # [num_predict x bsz]
 

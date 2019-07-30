@@ -527,7 +527,7 @@ def post_attention(self, h, attn_vec, residual=True):
     return output  #[seq_len x bsz x dmodel]; seq_len or q_len
 ```
 
-The last part of the Two-stream relative attention is the `positionwise_ffn` function, also shown in Fig. 6. which applies a fully connected feed-forward layer (i.e., conv1), with a non linear activation function (typically relu), and then adding the residual connection. Following formula summarized this:
+The last part of the Two-stream relative attention is the `positionwise_ffn` function, also shown in Fig. 6. which applies a fully connected feed-forward layer (i.e., conv1), with a non linear activation function (typically relu), and then adding the residual connection. Following formula summarizes this:
 
 
 $$\text{LayerNorm}(input + \text{activation}(\text{conv1}(input))$$

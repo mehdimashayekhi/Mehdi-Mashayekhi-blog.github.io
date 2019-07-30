@@ -458,7 +458,7 @@ $$ \text{Attention}(Q, K, V) = \text{softmax}(\frac{Q K^\top}{\sqrt{d_k}})V $$
 {: class="center" style="width: 99%;"}
 *Fig. 6. The self-attention calculation in matrix form. [Image source](http://jalammar.github.io/illustrated-transformer/)*
 
-Also note that that the attention score consists of three components: 1) content based attention score; 2) position based attention score 3); segment based attention score. 
+Also note that that the attention score consists of three components: 1) content based attention score (i.e., `ac`); 2) position based attention score (i.e., `bd`) 3); segment based attention score (i.e., `ef`). 
 
 ```python
 def rel_attn_core(self, q_head, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat,
@@ -495,7 +495,7 @@ def rel_attn_core(self, q_head, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat
 
     return attn_vec
 ```
-following function performs relative shift to form the relative attention score. Considering a tensor like the one shown in Fig. 4, this function captures the red slices shown in the figure. 
+following function performs relative shift to form the relative attention score. Considering a tensor like the one shown in Fig. 4, this function captures the $$\color{red}$$ slices shown in the figure. 
 
 ```python
 def rel_shift(self, x, klen=-1):

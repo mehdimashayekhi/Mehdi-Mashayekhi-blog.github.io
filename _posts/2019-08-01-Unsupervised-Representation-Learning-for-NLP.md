@@ -455,7 +455,7 @@ Here is the implementation details of the core relative positional attention ope
 $$ \text{Attention}(Q, K, V) = \text{softmax}(\frac{Q K^\top}{\sqrt{d_k}})V $$
 
 ![OPTIONS]({{ '/assets/images/ self-attention-calculation.png' | relative_url }})
-{: class="center" style="width: 90%;"}
+{: class="center" style="width: 99%;"}
 *Fig. 6. The self-attention calculation in matrix form. [Image source](http://jalammar.github.io/illustrated-transformer/)*
 
 Also note that that the attention score consists of three components: 1) content based attention score; 2) position based attention score 3); segment based attention score. 

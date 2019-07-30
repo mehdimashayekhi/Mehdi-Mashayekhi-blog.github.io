@@ -382,7 +382,7 @@ Following the Transformer architecture, the schematic architecture of the two-st
 {: class="center" style="width: 70%;"}
 *Fig. 6. Two-stream attention illustrations.
 
-As is shown in the figure, Two-stream relational attention (i.e., `two_stream_rel_attn`) consists of three main functions: 1) `rel_attn_core` 2) `post_attention` ; 3) `positionwise_ffn` . Implementation details of each component will be presented in the following. 
+As is shown in the figure, Two-stream relative attention (i.e., `two_stream_rel_attn`) consists of three main functions: 1) `rel_attn_core` 2) `post_attention` ; 3) `positionwise_ffn` . Implementation details of each component will be presented in the following. 
 
 In summary, the `two_stream_rel_attn` implements the next $$\hat{h}$$, and $$\hat{g}$$ according to the following formulas, described in appendix A.2 of the the [paper](https://arxiv.org/pdf/1901.02860.pdf):
 
@@ -449,7 +449,7 @@ $$\hat{g_{z_t}^{(m)}} = \text{LayerNorm}(g_{z_t}^{(m-1)} + \text{RelAttn}(g_{z_t
         return output_h, output_g
 ```
 
-Here is the implementation details of the core relative positional attention operations. Note that the backbone of this, is the scaled Dot-Product Attention described in [Transformer](https://arxiv.org/pdf/1706.03762.pdf), and shown in Fig. 6. :
+In the following, we will have the implementation details of the core relative positional attention operations ( i.e., `rel_attn_core`). Note that the backbone of this, is the scaled Dot-Product Attention described in [Transformer](https://arxiv.org/pdf/1706.03762.pdf), and shown in Fig. 6. :
 
 
 $$ \text{Attention}(Q, K, V) = \text{softmax}(\frac{Q K^\top}{\sqrt{d_k}})V $$

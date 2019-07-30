@@ -552,6 +552,67 @@ def positionwise_ffn(self, inp, activation_type='relu'):
 ### Training
 TBD
 
+```python
+sp = BertTokenizer.from_pretrained(args.tokenizer)
+model = xlnet.XLNet(n_token=len(sp.vocab), n_layer=6, n_head=4, d_head=8,
+                    d_inner=32, d_model=32,
+                    dropout=0.1, dropatt=0.1,
+                    attn_type="bi", bi_data=args.bi_data,
+                    clamp_len=-1, same_length=False,
+                    reuse_len=args.reuse_len, mem_len=args.mem_len)
+
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.01)
+
+for num_epoch in range(args.num_epoch):
+    mems = None
+
+    features = data_utils._create_data(sp=sp,
+                                       input_paths=args.data,
+                                       seq_len=args.seq_len,
+                                       reuse_len=args.reuse_len,
+                                       bi_data=args.bi_data,
+                                       num_predict=args.num_predict,
+                                       mask_alpha=args.mask_alpha,
+                                       mask_beta=args.mask_beta)
+
+    num_step = 0
+    for feature in features:
+        permutation = data_utils.make_permute(feature,
+                                              reuse_len=args.reuse_len,
+                                              seq_len=args.seq_len,
+                                              perm_size=args.perm_size,
+                                              num_predict=args.num_predict)
+
+        # batch size is 1
+        inp_k = permutation['input_k'].unsqueeze(-1) # [seq_len, 1(=bsz)]
+        seg_id = permutation['seg_id'].unsqueeze(-1) # [seq_len, 1(=bsz)]
+        target = permutation['target'].unsqueeze(-1) # [num_predict, 1(=bsz)]
+        perm_mask = permutation['perm_mask'].unsqueeze(-1) # [seq_len, seq_len, 1(=bsz)]
+        target_mapping = \
+            permutation['target_mapping'].unsqueeze(-1) # [num_predict, seq_len, 1(=bsz)]
+        inp_q = permutation['input_q'].unsqueeze(-1) # [seq_len, 1(=bsz)]
+        tgt_mask = permutation['target_mask'].unsqueeze(-1) # [num_predict, 1(=bsz)]
+
+        logits, new_mems = model(inp_k=inp_k, seg_id=seg_id, input_mask=None,
+              mems=mems, perm_mask=perm_mask, 
+              target_mapping=target_mapping, inp_q=inp_q) # [num_predict x bsz x n_token]
+
+        lm_loss = criterion(logits.transpose(1, 2), target).type(torch.float32)
+        tgt_mask_sum = tgt_mask.reshape(-1).sum()
+        lm_loss_sum = (lm_loss * tgt_mask).reshape(-1).sum()
+
+        optimizer.zero_grad()
+        total_loss = lm_loss_sum / tgt_mask_sum
+        print('Number of Epoch: %04d in %04d Step' % ((num_epoch + 1), (num_step + 1)),
+              'cost =', '{:.6f}'.format(total_loss))
+        num_step += 1
+
+        total_loss.backward()
+        optimizer.step()
+
+        mems = new_mems
+```
 
 ---
 

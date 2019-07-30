@@ -495,7 +495,7 @@ def rel_attn_core(self, q_head, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat
 
     return attn_vec
 ```
-following function performs relative shift to form the relative attention score. Considering a tensor like the one shown in Fig. 4, this function captures the $$\color{red}$$ slices shown in the figure. 
+following function performs relative shift to form the relative attention score. Considering a tensor like the one shown in Fig. 4, this function captures the $$\color{red}{red}$$ slices shown in the figure. 
 
 ```python
 def rel_shift(self, x, klen=-1):

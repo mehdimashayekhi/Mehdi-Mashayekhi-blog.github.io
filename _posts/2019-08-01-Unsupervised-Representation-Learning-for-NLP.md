@@ -200,7 +200,17 @@ def _create_data(seq_len, reuse_len, num_predict, mask_alpha, mask_beta):
         i += reuse_len
 ```
 
+### Data Permutation
 
+Next step is to permute the data. 
+
+```python
+def make_permute(feature, reuse_len, seq_len, perm_size, num_predict):
+
+    inputs = torch.LongTensor(feature.pop("input"))
+    target = torch.LongTensor(feature.pop("target"))
+    is_masked = torch.ByteTensor(feature.pop("is_masked"))
+```
 ### Modeling
 
 #### XLNet Model

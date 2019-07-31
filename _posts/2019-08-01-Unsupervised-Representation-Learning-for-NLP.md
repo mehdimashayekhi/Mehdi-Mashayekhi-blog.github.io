@@ -156,13 +156,13 @@ In summary here is how we create the data (`_create_data` function).  Our input 
       
       # get segments A, B
       results = _split_a_and_b(
-                  data[0], # all line in one Text file.
+                  all_data[0], # all line in one Text file.
                   sent_ids[0],
                   begin_idx=i + reuse_len,
                   tot_len=seq_len - reuse_len - 3,
                   extend_target=True)
       # unpack the results
-      a_data, b_data, label, _, a_target, b_target = tuple(results)
+      a_data, b_data, label, a_target, b_target = tuple(results)
       
       # sample ngram spans to predict
       num_predict_1 = num_predict // 2

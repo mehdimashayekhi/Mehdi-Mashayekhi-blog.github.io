@@ -140,64 +140,64 @@ Note that the authors, have released the full implementation [here]( https://git
 
 ### Data Creation
 
-Note for the full implementation of this part you can look at [here](https://github.com/zihangdai/xlnet/blob/master/data_utils.py). 
-
-In summary here is how we create the data (`_create_data` function).  Our input consists of two parts. First part is `INP` part, and second part consist of two segments with special tokens. For the first part we slice the data from all the data with length `reuse_len`. For the second part, we randomly sample two segments (either from the same context or not) and treat the concatenation of two segments as one. We only reuse the memory that belongs to the same context. Precisely, the input to the model is: `[INP, A, SEP, B, SEP, CLS]`, where `INP` has length of `reuse_len` ,  `SEP` and `CLS` are two special symbols and `A` and `B` are the two segments.  Also note that `len(A +SEP+ B+SEP+CLS)=seq_len-reuse_len`. Note that the `reuse_len`  is the number of token that can be reused as memory.
+In summary here is how we create the data.  Our input consists of two parts. First part is `INP` part, and second part consist of two segments with special tokens. For the first part we slice the data from all the data with length `reuse_len`. For the second part, we randomly sample two segments (either from the same context or not) and treat the concatenation of two segments as one. We only reuse the memory that belongs to the same context. Precisely, the input to the model is: `[INP, A, SEP, B, SEP, CLS]`, where `INP` has length of `reuse_len` ,  `SEP` and `CLS` are two special symbols and `A` and `B` are the two segments.  Also note that `len(A +SEP+ B+SEP+CLS)=seq_len-reuse_len`. Note that the `reuse_len`  is the number of token that can be reused as memory.
 
 ```python
-  # all_data, and sent_ids have the same shape
-  all_data = np.array([input_data], dtype=np.int64)
-  sent_ids = np.array([sent_ids], dtype=np.bool) # helps to determine whether the tokens belongs to same segment or not
-  data_len = all_data.shape[1]
-  
-  while i + seq_len <= data_len:
-      inp = all_data[0, i: i + reuse_len]
-      tgt = all_data[0, i + 1: i + reuse_len + 1]
-      
-      # get segments A, B
-      results = _split_a_and_b(
-                  all_data[0], # all line in one Text file.
-                  sent_ids[0],
-                  begin_idx=i + reuse_len,
-                  tot_len=seq_len - reuse_len - 3,
-                  extend_target=True)
-      # unpack the results
-      a_data, b_data, label, a_target, b_target = tuple(results)
-      
-      # sample ngram spans to predict
-      num_predict_1 = num_predict // 2
-      num_predict_0 = num_predict - num_predict_1
-      
-      sp = BertTokenizer.from_pretrained('bert-base-uncased')
-      
-      """Sample `goal_num_predict` tokens for partial prediction.About `mask_beta` tokens are chosen in a context of `mask_alpha` tokens."""
-      mask_0 = _sample_mask(sp, inp, mask_alpha, mask_beta, reverse=reverse,
-                              goal_num_predict=num_predict_0)
-      mask_1 = _sample_mask(sp, np.concatenate([a_data, sep_array, b_data,
-                                                sep_array, cls_array]),
-                            mask_alpha, mask_beta,
-                            goal_num_predict=num_predict_1)
-      # concatenate data
-      cat_data = np.concatenate([inp, a_data, sep_array, b_data,
-                                 sep_array, cls_array])
-      seg_id = ([0] * (reuse_len + a_data.shape[0]) + [0] +
-                [1] * b_data.shape[0] + [1] + [2])
-                
-      # the last two CLS's are not used, just for padding purposes
-      tgt = np.concatenate([tgt, a_target, b_target, cls_array, cls_array])
-      
-      is_masked = np.concatenate([mask_0, mask_1], 0)
-      
-      feature = {
-            "input": cat_data,
-            "is_masked": is_masked,
-            "target": tgt,
-            "seg_id": seg_id,
-            "label": [label],
-        }
-      features.append(feature)
+def _create_data(seq_len, reuse_len, num_predict, mask_alpha, mask_beta):
+    features = []
+    # all_data, and sent_ids have the same shape
+    all_data = np.array([input_data], dtype=np.int64)
+    sent_ids = np.array([sent_ids], dtype=np.bool) # helps to determine whether the tokens belongs to same segment or not
+    data_len = all_data.shape[1]
 
-      i += reuse_len
+    while i + seq_len <= data_len:
+        inp = all_data[0, i: i + reuse_len]
+        tgt = all_data[0, i + 1: i + reuse_len + 1]
+
+        # get segments A, B
+        results = _split_a_and_b(
+                    all_data[0], # all line in one Text file.
+                    sent_ids[0],
+                    begin_idx=i + reuse_len,
+                    tot_len=seq_len - reuse_len - 3,
+                    extend_target=True)
+        # unpack the results
+        a_data, b_data, label, a_target, b_target = tuple(results)
+
+        # sample ngram spans to predict
+        num_predict_1 = num_predict // 2
+        num_predict_0 = num_predict - num_predict_1
+
+        sp = BertTokenizer.from_pretrained('bert-base-uncased')
+
+        """Sample `goal_num_predict` tokens for partial prediction.About `mask_beta` tokens are chosen in a context of `mask_alpha` tokens."""
+        mask_0 = _sample_mask(sp, inp, mask_alpha, mask_beta, reverse=reverse,
+                                goal_num_predict=num_predict_0)
+        mask_1 = _sample_mask(sp, np.concatenate([a_data, sep_array, b_data,
+                                                  sep_array, cls_array]),
+                              mask_alpha, mask_beta,
+                              goal_num_predict=num_predict_1)
+        # concatenate data
+        cat_data = np.concatenate([inp, a_data, sep_array, b_data,
+                                   sep_array, cls_array])
+        seg_id = ([0] * (reuse_len + a_data.shape[0]) + [0] +
+                  [1] * b_data.shape[0] + [1] + [2])
+
+        # the last two CLS's are not used, just for padding purposes
+        tgt = np.concatenate([tgt, a_target, b_target, cls_array, cls_array])
+
+        is_masked = np.concatenate([mask_0, mask_1], 0)
+
+        feature = {
+              "input": cat_data,
+              "is_masked": is_masked,
+              "target": tgt,
+              "seg_id": seg_id,
+              "label": [label],
+          }
+        features.append(feature)
+
+        i += reuse_len
 ```
 
 

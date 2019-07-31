@@ -550,7 +550,8 @@ def positionwise_ffn(self, inp, activation_type='relu'):
 ```
 
 ### Training
-TBD
+
+Finally we need to loop over the data, and feed the inputs to the network and optimize.
 
 ```python
 sp = BertTokenizer.from_pretrained(args.tokenizer)
@@ -599,7 +600,8 @@ for num_epoch in range(args.num_epoch):
         lm_loss = criterion(logits.transpose(1, 2), target).type(torch.float32)
         tgt_mask_sum = tgt_mask.reshape(-1).sum()
         lm_loss_sum = (lm_loss * tgt_mask).reshape(-1).sum()
-
+        
+        # zero the parameter gradients
         optimizer.zero_grad()
         total_loss = lm_loss_sum / tgt_mask_sum
         print('Number of Epoch: %04d in %04d Step' % ((num_epoch + 1), (num_step + 1)),

@@ -139,7 +139,9 @@ TBD
 Note that the authors, have released the full implementation [here]( https://github.com/zihangdai/xlnet). My goal here is to summarize the implementation of important components of the model, provide additional comments, and have the algorithm and implementation in one place.
 
 ### Data Creation
-TBD
+
+In summary here is how we create the data. We randomly sample two segments (either from the same context or not) and treat the concatenation of two segments as one sequence to perform permutation language modeling. We only reuse the memory that belongs to the same context. Specifically, the input to our model is: `[INP, A, SEP, B, SEP, CLS]`, where `INP` is the reused input (number of token that can be reused as memory, which could be half of  `seq_len`) with length `reuse_len`,  `SEP` and `CLS` are two special symbols and `A` and `B` are the two segments.  Also note that `len(A +SEP+ B+SEP+CLS)=seq_len-reuse_len`. 
+
 ### Modeling
 TBD
 

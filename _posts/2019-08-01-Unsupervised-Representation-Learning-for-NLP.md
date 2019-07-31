@@ -309,7 +309,6 @@ def _local_perm(inputs, targets, is_masked, perm_size, seq_len):
     # 1: cannot attend if i <= j and j is not non-masked (masked_or_func_tokens)
     # 0: can attend if i > j or j is non-masked
     perm_mask = (self_rev_index[:, None] <= rev_index[None, :]) &  masked_or_func_tokens
-    perm_mask = perm_mask.type(torch.float32)
     
     # new target: [next token] for LM and [curr token] (self) for PLM
     new_targets = torch.cat([inputs[0: 1], targets[: -1]], dim=0)

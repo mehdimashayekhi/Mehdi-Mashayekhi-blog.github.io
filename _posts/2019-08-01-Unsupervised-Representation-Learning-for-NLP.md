@@ -140,7 +140,15 @@ Note that the authors, have released the full implementation [here]( https://git
 
 ### Data Creation
 
-In summary here is how we create the data. We randomly sample two segments (either from the same context or not) and treat the concatenation of two segments as one sequence to perform permutation language modeling. We only reuse the memory that belongs to the same context. Specifically, the input to the model is: `[INP, A, SEP, B, SEP, CLS]`, where `INP` is the reused input (number of token that can be reused as memory, which could be half of  `seq_len`) with length `reuse_len`,  `SEP` and `CLS` are two special symbols and `A` and `B` are the two segments.  Also note that `len(A +SEP+ B+SEP+CLS)=seq_len-reuse_len`. 
+In summary here is how we create the data.  Our input consists of two parts. First part is `INP` part, and second part consist of two segments with special tokens. Specifically, we randomly sample two segments (either from the same context or not) and treat the concatenation of two segments as one. We only reuse the memory that belongs to the same context. Precisely, the input to the model is: `[INP, A, SEP, B, SEP, CLS]`, where `INP` has length of ` reuse_len` ,  `SEP` and `CLS` are two special symbols and `A` and `B` are the two segments.  Also note that `len(A +SEP+ B+SEP+CLS)=seq_len-reuse_len`. Note that the `reuse_len`  is the number of token that can be reused as memory.
+
+```python
+def _create_data(sp, input_paths, seq_len, reuse_len,
+                bi_data, num_predict, mask_alpha, mask_beta):
+    features = []
+            
+```
+
 
 ### Modeling
 

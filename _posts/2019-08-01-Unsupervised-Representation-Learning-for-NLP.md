@@ -172,11 +172,11 @@ def _create_data(seq_len, reuse_len, num_predict, mask_alpha, mask_beta):
 
         """Sample `goal_num_predict` tokens for partial prediction.About `mask_beta` tokens are chosen in a context of `mask_alpha` tokens."""
         mask_0 = _sample_mask(sp, inp, mask_alpha, mask_beta, reverse=reverse,
-                                goal_num_predict=num_predict_0) # Boolean array of seq_len/2; True means it is masked
+                                goal_num_predict=num_predict_0) # Boolean array of size reuse_len; True means it is masked
         mask_1 = _sample_mask(sp, np.concatenate([a_data, sep_array, b_data,
                                                   sep_array, cls_array]),
                               mask_alpha, mask_beta,
-                              goal_num_predict=num_predict_1) # Boolean array of seq_len/2; True means it is masked
+                              goal_num_predict=num_predict_1) # Boolean array of size [seq_len-reuse_len]; 
         # concatenate data
         cat_data = np.concatenate([inp, a_data, sep_array, b_data,
                                    sep_array, cls_array])

@@ -206,10 +206,55 @@ Next step is to permute the data.
 
 ```python
 def make_permute(feature, reuse_len, seq_len, perm_size, num_predict):
-
+    
+    # perm_size is the length of longest permutation. Could be set to be reuse_len.
+    
     inputs = torch.LongTensor(feature.pop("input"))
     target = torch.LongTensor(feature.pop("target"))
     is_masked = torch.ByteTensor(feature.pop("is_masked"))
+    
+    non_reuse_len = seq_len - reuse_len
+    
+    #Sample a permutation of the factorization order, and create an
+    attention mask accordingly
+    perm_mask_0, target_0, target_mask_0, input_k_0, input_q_0 = _local_perm(
+        inputs[:reuse_len], # inp
+        target[:reuse_len],
+        is_masked[:reuse_len],
+        perm_size,
+        reuse_len)
+
+    perm_mask_1, target_1, target_mask_1, input_k_1, input_q_1 = _local_perm(
+        inputs[reuse_len:], # (senA, sep, senBm sep, cls)
+        target[reuse_len:],
+        is_masked[reuse_len:],
+        perm_size,
+        non_reuse_len)
+    perm_mask_0 = torch.cat([perm_mask_0, torch.ones([reuse_len, non_reuse_len])],
+                            dim=1)
+    perm_mask_1 = torch.cat([torch.zeros([non_reuse_len, reuse_len]), perm_mask_1],
+                            dim=1) # can attend to memory of length reuse len
+    
+    perm_mask = torch.cat([perm_mask_0, perm_mask_1], dim=0) # seq_len*seq_len
+    target = torch.cat([target_0, target_1], dim=0) # seq_len
+    target_mask = torch.cat([target_mask_0, target_mask_1], dim=0) # seq_len
+    input_k = torch.cat([input_k_0, input_k_1], dim=0) # seq_len
+    input_q = torch.cat([input_q_0, input_q_1], dim=0) # seq_len;  note that this equal target_mask
+    
+    indices = torch.arange(seq_len, dtype=torch.int64)
+    indices = indices[bool_target_mask] # indices of masked targets
+    
+    ##### target_mapping
+    target_mapping = torch.eye(seq_len, dtype=torch.float32)[indices] # this is used later on to get "q_head_g"
+    
+    feature["target_mapping"] = torch.reshape(target_mapping,[num_predict, seq_len])
+    feature["target"] = torch.reshape(target, [seq_len])
+    feature["target_mask"] = torch.reshape(target_mask, [seq_len])
+    feature["seg_id"] = torch.IntTensor(feature["seg_id"])
+    feature["perm_mask"] = torch.reshape(perm_mask, [seq_len, seq_len])
+    feature["input_k"] = torch.reshape(input_k, [seq_len])
+    feature["input_q"] = torch.reshape(input_q, [seq_len])
+    
 ```
 ### Modeling
 

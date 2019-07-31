@@ -186,7 +186,7 @@ def _create_data(seq_len, reuse_len, num_predict, mask_alpha, mask_beta):
         # the last two CLS's are not used, just for padding purposes
         tgt = np.concatenate([tgt, a_target, b_target, cls_array, cls_array])
 
-        is_masked = np.concatenate([mask_0, mask_1], 0)
+        is_masked = np.concatenate([mask_0, mask_1], 0) # shape [num_predict]
 
         feature = {
               "input": cat_data,
@@ -255,6 +255,74 @@ def make_permute(feature, reuse_len, seq_len, perm_size, num_predict):
     feature["input_q"] = torch.reshape(input_q, [seq_len])
     
 ```
+`_local_perm` function is a little bit tricky, especially the `perm_mask` calculation. 
+Note that as also mentioned ealier, the proposed objective only permutes the factorization order, not the sequence order. In other words, we keep the original sequence order, use the positional encodings corresponding to the original sequence, and rely on a proper attention mask `perm_mask` to achieve permutation of the factorization order.
+
+```python
+def _local_perm(inputs, targets, is_masked, perm_size, seq_len):
+    """
+    Sample a permutation of the factorization order, and create an
+    attention mask accordingly.
+
+    Args:
+    inputs: int64 Tensor in shape [seq_len], input ids.
+    targets: int64 Tensor in shape [seq_len], target ids.
+    is_masked: bool Tensor in shape [seq_len]. True means being selected
+      for partial prediction.
+    perm_size: the length of longest permutation. Could be set to be reuse_len.
+      Should not be larger than reuse_len or there will be data leaks.
+    seq_len: int, sequence length.
+    """
+
+    # Generate permutation indices
+    index = torch.arange(seq_len, dtype=torch.int64) # e.g., tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10])
+    
+    index = torch.reshape(index, [-1, perm_size]).t()
+    index = index[torch.randperm(index.shape[0])]
+    index = torch.reshape(index.t(), [-1]) # e.g., [ 0,  7, 10,  4,  3,  6,  8,  9,  1,  2,  5]
+    
+    # `perm_mask` and `target_mask`
+    # non-functional tokens
+    non_func_tokens = ~(torch.eq(inputs, SEP_ID) | torch.eq(inputs, CLS_ID))
+    non_mask_tokens = (~is_masked) & non_func_tokens
+    masked_or_func_tokens = ~non_mask_tokens
+    
+    # Set the permutation indices of non-masked (& non-funcional) tokens to the
+    # smallest index (-1):
+    # (1) they can be seen by all other positions
+    # (2) they cannot see masked positions, so there won"t be information leak
+    smallest_index = -torch.ones([seq_len], dtype=torch.int64)
+
+    # put -1 if `non_mask_tokens(real token not cls or sep)` not permutation index
+    rev_index = torch.where(non_mask_tokens, smallest_index, index)
+    
+    # Create `target_mask`: non-funcional and maksed tokens
+    # 1: use mask as input and have loss
+    # 0: use token (or [SEP], [CLS]) as input and do not have loss
+    target_tokens = masked_or_func_tokens & non_func_tokens
+
+    # Create `perm_mask`
+    # `target_tokens` cannot see themselves
+    # put `rev_index` if real mask(not cls or sep) else `rev_index + 1`
+    self_rev_index = torch.where(target_tokens, rev_index, rev_index + 1)
+    
+    # 1: cannot attend if i <= j and j is not non-masked (masked_or_func_tokens)
+    # 0: can attend if i > j or j is non-masked
+    perm_mask = (self_rev_index[:, None] <= rev_index[None, :]) &  masked_or_func_tokens
+    perm_mask = perm_mask.type(torch.float32)
+    
+    # new target: [next token] for LM and [curr token] (self) for PLM
+    new_targets = torch.cat([inputs[0: 1], targets[: -1]], dim=0)
+
+    # construct inputs_k
+    inputs_k = inputs
+
+    # construct inputs_q
+    inputs_q = target_mask
+
+    return perm_mask, new_targets, target_mask, inputs_k, inputs_q
+```
+
 ### Modeling
 
 #### XLNet Model

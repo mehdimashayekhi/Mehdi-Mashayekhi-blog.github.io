@@ -140,13 +140,14 @@ Note that the authors, have released the full implementation [here]( https://git
 
 ### Data Creation
 
-In summary here is how we create the data.  Our input consists of two parts. First part is `INP` part, and second part consist of two segments with special tokens. Specifically, we randomly sample two segments (either from the same context or not) and treat the concatenation of two segments as one. We only reuse the memory that belongs to the same context. Precisely, the input to the model is: `[INP, A, SEP, B, SEP, CLS]`, where `INP` has length of ` reuse_len` ,  `SEP` and `CLS` are two special symbols and `A` and `B` are the two segments.  Also note that `len(A +SEP+ B+SEP+CLS)=seq_len-reuse_len`. Note that the `reuse_len`  is the number of token that can be reused as memory.
+Note for the full implementation of this part you can look at [here](https://github.com/zihangdai/xlnet/blob/master/data_utils.py). 
+
+In summary here is how we create the data (`_create_data` function).  Our input consists of two parts. First part is `INP` part, and second part consist of two segments with special tokens. For the first part we slice the data from all the data with length `reuse_len`. For the second part, we randomly sample two segments (either from the same context or not) and treat the concatenation of two segments as one. We only reuse the memory that belongs to the same context. Precisely, the input to the model is: `[INP, A, SEP, B, SEP, CLS]`, where `INP` has length of ` reuse_len` ,  `SEP` and `CLS` are two special symbols and `A` and `B` are the two segments.  Also note that `len(A +SEP+ B+SEP+CLS)=seq_len-reuse_len`. Note that the `reuse_len`  is the number of token that can be reused as memory.
 
 ```python
-def _create_data(sp, input_paths, seq_len, reuse_len,
-                bi_data, num_predict, mask_alpha, mask_beta):
-    features = []
-            
+  # all_data, and sent_ids have the same shape
+  all_data = np.array([input_data], dtype=np.int64)
+  sent_ids = np.array([sent_ids], dtype=np.bool) # helps to determine whether the tokens belongs to same segment or not
 ```
 
 

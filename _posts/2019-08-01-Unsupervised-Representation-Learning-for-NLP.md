@@ -597,7 +597,7 @@ for num_epoch in range(args.num_epoch):
               mems=mems, perm_mask=perm_mask, 
               target_mapping=target_mapping, inp_q=inp_q) # [num_predict x bsz x n_token]
 
-        lm_loss = criterion(logits.transpose(1, 2), target).type(torch.float32)
+        lm_loss = criterion(logits.transpose(1, 2), target).type(torch.float32) # [num_predict x bsz]
         tgt_mask_sum = tgt_mask.reshape(-1).sum()
         lm_loss_sum = (lm_loss * tgt_mask).reshape(-1).sum()
         

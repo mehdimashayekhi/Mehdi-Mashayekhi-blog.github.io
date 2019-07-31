@@ -215,8 +215,7 @@ def make_permute(feature, reuse_len, seq_len, perm_size, num_predict):
     
     non_reuse_len = seq_len - reuse_len
     
-    #Sample a permutation of the factorization order, and create an
-    attention mask accordingly
+    #Sample a permutation of the factorization order, and create an attention mask accordingly
     perm_mask_0, target_0, target_mask_0, input_k_0, input_q_0 = _local_perm(
         inputs[:reuse_len], # inp
         target[:reuse_len],

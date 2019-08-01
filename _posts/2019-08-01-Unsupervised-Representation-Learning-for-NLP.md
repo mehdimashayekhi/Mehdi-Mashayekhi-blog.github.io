@@ -98,6 +98,8 @@ $$
 \end{aligned}
 $$
 
+Where $$ h_{\theta}(\mathbf{x}_{\mathbf{z}<t})$$ denotes the hidden representation of $$ \mathbf{x}_{\mathbf{z}<t})$$ produced by the shared Transformer network after proper masking. 
+
 $$
 \begin{aligned}
 &  p_\theta(X_{z_t}=x\mid \mathbf{x}_{z<t})= \frac{\exp({e(x)^\top g_{\theta}(\mathbf{x}_{\mathbf{z}<t},z_t)} )}{\sum_{x'} \exp({e(x)^\top g_{\theta}(\mathbf{x}_{\mathbf{z}<t},z_t)})}

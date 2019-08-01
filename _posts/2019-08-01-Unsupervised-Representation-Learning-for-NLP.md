@@ -89,7 +89,8 @@ $$
 $$
 
 ## Architecture: Two-Stream Self-Attention for Target-Aware Representations
-naive implementation with standard Transformer parameterization may not work. If 
+
+Naive implementation with standard Transformer parameterization may not work. If 
 we parameterize the next-token distribution $$p_\theta(x_{z_t}\mid \mathbf{x}_{z<t})$$ using the standard Softmax formulation, i.e. 
 
 $$
@@ -98,7 +99,7 @@ $$
 \end{aligned}
 $$
 
-Where $$ h_{\theta}(\mathbf{x}_{\mathbf{z}<t})$$ denotes the hidden representation of $$ \mathbf{x}_{\mathbf{z}<t})$$ produced by the shared Transformer network after proper masking. 
+Where $$ h_{\theta}(\mathbf{x}_{\mathbf{z}<t})$$ denotes the hidden representation of $$ \mathbf{x}_{\mathbf{z}<t}$$ produced by the shared Transformer network after proper masking. 
 
 $$
 \begin{aligned}

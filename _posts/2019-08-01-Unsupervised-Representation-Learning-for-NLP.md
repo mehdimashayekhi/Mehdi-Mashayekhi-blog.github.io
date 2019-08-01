@@ -108,9 +108,7 @@ $$
 \end{aligned}
 $$
 
-![OPTIONS]({{ '/assets/images/Two-Stream-Self-Attention.png' | relative_url }})
-{: class="center" style="width: 99%;"}
-*Fig. 2. (a): Content stream attention, which is the same as the standard self-attention. (b): Query stream attention, which does not have access information about the content $$x_{z_t}$$ . (c): Overview of the permutation language modeling training with two-stream attention. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
+where $$ g_{\theta}(\mathbf{x}_{\mathbf{z}<t}, z_t)$$ indicates a new type of representations which additionally take the target position $$z_t$$ as input. 
 
 ### Two-Stream Self-Attention
 TBD
@@ -118,6 +116,10 @@ TBD
 $$g_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=g_{z_t}^{(m-1)},\mathbf{KV}=h_{z<t}^{(m-1)}; \theta)$$
 
 $$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},,\mathbf{KV}=h_{z\leq{t}}^{(m-1)}; \theta)$$
+
+![OPTIONS]({{ '/assets/images/Two-Stream-Self-Attention.png' | relative_url }})
+{: class="center" style="width: 99%;"}
+*Fig. 2. (a): Content stream attention, which is the same as the standard self-attention. (b): Query stream attention, which does not have access information about the content $$x_{z_t}$$ . (c): Overview of the permutation language modeling training with two-stream attention. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
 
 ### Partial Prediction
 TBD

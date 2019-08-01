@@ -129,7 +129,8 @@ $$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},,\mathbf{KV}=h_{
 *Fig. 2. (a): Content stream attention, which is the same as the standard self-attention. (b): Query stream attention, which does not have access information about the content $$x_{z_t}$$ . (c): Overview of the permutation language modeling training with two-stream attention. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1906.08237.pdf))*
 
 ### Partial Prediction
-TBD
+
+To reduce the difficulty of the full permutation optimization, the authors have proposed to only predict the last tokens in a factorization order. In other words, splitting $$z$$ into a non-target subsequence $$z_{\leq{c} }$$ and a target subsequence $$z_{>c}$where $$c$$ is the cutting point. Then the optimization objective becomes: 
 
 $$
 \begin{aligned}

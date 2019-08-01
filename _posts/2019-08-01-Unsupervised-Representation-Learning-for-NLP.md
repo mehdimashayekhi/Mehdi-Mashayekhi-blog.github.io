@@ -118,6 +118,7 @@ How to formulate $$ g_{\theta}(\mathbf{x}_{\mathbf{z}<t}, z_t)$$ is a non-trivia
 
 • The query representation $$ g_{\theta}(\mathbf{x}_{\mathbf{z}<t}, z_t)$$, or abbreviated as $$g_{z_{t}}$$ ,which only has access to the contextual information $$x_{z_{<t}}$$  and the position $$z_t$$, but not the content $$x_{z_{<t}}$$  , as discussed above. 
 
+The first layer query stream is initialized with a trainable vector, i.e. $$g_{i}^{(0)} =w$$, and the content stream is set to the corresponding word embedding, $$h_{i}^{(0)} = e(x_{i})$ . The two stream of representations are schematically updated according to following:
 
 $$g_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=g_{z_t}^{(m-1)},\mathbf{KV}=h_{z<t}^{(m-1)}; \theta)$$
 

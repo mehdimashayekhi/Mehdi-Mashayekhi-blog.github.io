@@ -89,6 +89,14 @@ $$
 $$
 
 ## Architecture: Two-Stream Self-Attention for Target-Aware Representations
+naive implementation with standard Transformer parameterization may not work. If 
+we parameterize the next-token distribution $$p_\theta(x_{z_t}\mid \mathbf{x}_{z<t})$$ using the standard Softmax formulation, i.e. 
+
+$$
+\begin{aligned}
+&  p_\theta(X_{z_t}=x\mid \mathbf{x}_{z<t})= \frac{\exp({e(x)^\top h_{\theta}(\mathbf{x}_{\mathbf{z}<t})} )}{\sum_{x'} \exp({e(x)^\top h_{\theta}(\mathbf{x}_{\mathbf{z}<t})})}
+\end{aligned}
+$$
 
 $$
 \begin{aligned}

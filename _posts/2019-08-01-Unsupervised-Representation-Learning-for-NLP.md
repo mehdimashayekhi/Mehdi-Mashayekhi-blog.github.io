@@ -99,7 +99,7 @@ $$
 \end{aligned}
 $$
 
-Where $$ h_{\theta}(\mathbf{x}_{\mathbf{z}<t})$$ denotes the hidden representation of $$ \mathbf{x}_{\mathbf{z}<t}$$ produced by the shared Transformer network after proper masking. 
+Where $$h_{\theta}(\mathbf{x}_{\mathbf{z}<t})$$ denotes the hidden representation of $$ \mathbf{x}_{\mathbf{z}<t}$$ produced by the shared Transformer network after proper masking. As you can observe form the above formula, the representation $$h_{\theta}(\mathbf{x}_{\mathbf{z}<t})$$ does not depend on which position it will predict, i.e., the value of $$z_t$$. Therefore, the same distribution is predicted irrespective of the target position.  
 
 $$
 \begin{aligned}

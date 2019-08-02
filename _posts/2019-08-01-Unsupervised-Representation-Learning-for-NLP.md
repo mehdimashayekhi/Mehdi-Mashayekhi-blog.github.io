@@ -130,7 +130,7 @@ $$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},,\mathbf{KV}=h_{
 
 ### Partial Prediction
 
-To reduce the difficulty of the full permutation optimization, the authors have proposed to split $$z$$ into a non-target subsequence $$z_{\leq{c} }$$ and a target subsequence $$z_{>c}$where $$c$$ is the cutting point. Then the optimization objective becomes: 
+To reduce the difficulty of the full permutation optimization, the authors have proposed to split $$z$$ into a non-target subsequence $$z_{\leq{c} }$$ and a target subsequence $$z_{>c}$$ where $$c$$ is the cutting point. Then the optimization objective becomes: 
 
 $$
 \begin{aligned}

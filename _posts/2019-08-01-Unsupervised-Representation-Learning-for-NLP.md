@@ -138,7 +138,16 @@ $$
 \end{aligned}
 $$
 
-Note that $$z_{>c}$$ is chosen as the target because it has the longest context in the sequence given the current factorization order $$z$$. A hyperparameter $$K$$ is used such that about $$\frac{1}{K}$$ tokens are selected for predictions ($$\frac{|z|}{|z|-c} \approx K $$) . 
+Note that $$z_{>c}$$ is chosen as the target because it has the longest context in the sequence given the current factorization order $$z$$. A hyperparameter $$K$$ is used such that about $$\frac{1}{K}$$ tokens are selected for predictions:
+
+$$
+\begin{aligned}
+& \frac{|z|}{|z|-c} \approx K 
+\end{aligned}
+$$
+
+For unselected tokens, their query representations do not need to be computed. 
+
 
 ## Incorporating Ideas from Transformer-XL
 TBD

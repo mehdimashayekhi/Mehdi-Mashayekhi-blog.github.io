@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title: "Unsupervised Representation Learning for NLP"
+title: "New Generation of Unsupervised Representation Learning Using Transformers"
 date: 2019-08-01 00:15:06
 tags: nlp review long-read
 image: "A3C_vs_A2C.png"

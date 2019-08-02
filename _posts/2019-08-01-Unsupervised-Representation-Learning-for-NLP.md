@@ -138,6 +138,8 @@ $$
 \end{aligned}
 $$
 
+Note that $$z_{>c}$$ is chosen as the target because it has the longest context in the sequence given the current factorization order $$z$$. A hyperparameter $$K$$ is used such that about $$1/K$$ tokens are selected for predictions; i.e., $$|z| /(|z| − c) ≈ K$$ . For unselected tokens, their query representations do not need to be computed. 
+
 ## Incorporating Ideas from Transformer-XL
 TBD
 ### Segment-level Recurrence

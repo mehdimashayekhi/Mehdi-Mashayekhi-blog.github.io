@@ -176,6 +176,8 @@ In the standard Transformer, the sequence order information is provided by a mat
 {: style="width: 25%;" class="center"}
 *Fig. 4. Recap of Transformer Encoder model architecture. (Image source: [Transformer paper](https://arxiv.org/abs/1706.03762))*
 
+Positional encoding conceptually presents the model a temporal clue or “bias” about how information should be gathered, or in other words, where to attend. So, rather than including bias statically into the initial embedding, one can inject the same information into the attention score of each layer. 
+
 Consider that we have a query of length `seq_len`, a memory of  length `mem_len`, and key of length `klen= mem_len+seq_len`. Note that the relative distance $$(i-j)$$ between query $$q_i$$ and key vector $$k_j$$ can only be integer form 0 to `mem_len+seq_len-1`. So, eventually we want a positional matrix of shape `[(seq_len)  x (mem_len+seq_len)]`.   To get the desired matrix, it’s efficient  to construct a matrix of shape `[(seq_len)  x (mem_len+2*seq_len)]`, and then sliced it out to get the desired parts and reshape. Fig. 5 shows an example in which we have a memory of length 3, a sequence of length 5, and a tensor of shape `[5 x (3+2*5)]`. And imagine query in reversed order. So the relative distance for the first token of query, varies from 5 to 12, and so on and so forth. The red rectangles show the desired slices for each token of the query. Look at the code snippets below on the implementation details.  
 
 ![OPTIONS]({{ '/assets/images/positional_encoding_illu.png' | relative_url }})

@@ -170,17 +170,17 @@ Fig. 2 (c) presents an overview of the proposed permutation language modeling wi
 
 ### Relative Positional Encodings
 
-In the standard Transformer, the sequence order information is provided by a matrix of positional encodings, indicated as $$U \in  R^{L_{max} ×d }$$ where the i-th row $$ U_{i} $$ corresponds to the i-th $$\color{red}{absolute}$$ position within a segment and $$ L_{max}$$ is the maximum possible length to be modeled. Then, the actual input to the Transformer is the element-wise addition of the positional encodings and word embeddings as shown in Fig. 3. 
+In the standard Transformer, the sequence order information is provided by a matrix of positional encodings, indicated as $$U \in  R^{L_{max} ×d }$$ where the i-th row $$ U_{i} $$ corresponds to the i-th $$\color{red}{absolute}$$ position within a segment and $$ L_{max}$$ is the maximum possible length to be modeled. Then, the actual input to the Transformer is the element-wise addition of the positional encodings and word embeddings as shown in Fig. 4. 
 
 ![transformer encoder]({{ '/assets/images/transformer-encoder-2.png' | relative_url }})
 {: style="width: 25%;" class="center"}
-*Fig. 3. Recap of Transformer Encoder model architecture. (Image source: [Transformer paper](https://arxiv.org/abs/1706.03762))*
+*Fig. 4. Recap of Transformer Encoder model architecture. (Image source: [Transformer paper](https://arxiv.org/abs/1706.03762))*
 
-Consider that we have a query of length `seq_len`, a memory of  length `mem_len`, and key of length `klen= mem_len+seq_len`. Note that the relative distance $$(i-j)$$ between query $$q_i$$ and key vector $$k_j$$ can only be integer form 0 to `mem_len+seq_len-1`. So, eventually we want a positional matrix of shape `[(seq_len)  x (mem_len+seq_len)]`.   To get the desired matrix, it’s efficient  to construct a matrix of shape `[(seq_len)  x (mem_len+2*seq_len)]`, and then sliced it out to get the desired parts and reshape. Fig. 4 shows an example in which we have a memory of length 3, a sequence of length 5, and a tensor of shape `[5 x (3+2*5)]`. And imagine query in reversed order. So the relative distance for the first token of query, varies from 5 to 12, and so on and so forth. The red rectangles show the desired slices for each token of the query. Look at the code snippets below on the implementation details.  
+Consider that we have a query of length `seq_len`, a memory of  length `mem_len`, and key of length `klen= mem_len+seq_len`. Note that the relative distance $$(i-j)$$ between query $$q_i$$ and key vector $$k_j$$ can only be integer form 0 to `mem_len+seq_len-1`. So, eventually we want a positional matrix of shape `[(seq_len)  x (mem_len+seq_len)]`.   To get the desired matrix, it’s efficient  to construct a matrix of shape `[(seq_len)  x (mem_len+2*seq_len)]`, and then sliced it out to get the desired parts and reshape. Fig. 5 shows an example in which we have a memory of length 3, a sequence of length 5, and a tensor of shape `[5 x (3+2*5)]`. And imagine query in reversed order. So the relative distance for the first token of query, varies from 5 to 12, and so on and so forth. The red rectangles show the desired slices for each token of the query. Look at the code snippets below on the implementation details.  
 
 ![OPTIONS]({{ '/assets/images/positional_encoding_illu.png' | relative_url }})
 {: class="center" style="width: 80%;"}
-*Fig. 4. Relative positional encoding illustration.
+*Fig. 5. Relative positional encoding illustration.
 
 ## Code Snippets 
 
@@ -599,17 +599,17 @@ def _cache_mem(self, curr_out, prev_mem, mem_len, reuse_len=None):
 
         return new_mem
 ```
-Next is the implementation details of the two-stream attention with a Transformer-XL backbone. The first step is to calculate the Query, Key, and value matrices, as shown in Fig. 5. Note that,  `cat` is the concatenated matrix of memory and hidden state. 
+Next is the implementation details of the two-stream attention with a Transformer-XL backbone. The first step is to calculate the Query, Key, and value matrices, as shown in Fig. 6. Note that,  `cat` is the concatenated matrix of memory and hidden state. 
 
 ![OPTIONS]({{ '/assets/images/Query_Key_Value.png' | relative_url }})
 {: class="center" style="width: 70%;"}
-*Fig. 5. Query, Key, and Value calculations illustrations.
+*Fig. 6. Query, Key, and Value calculations illustrations.
 
-Following the Transformer architecture, the schematic architecture of the two-stream attention is shown in Fig. 6. 
+Following the Transformer architecture, the schematic architecture of the two-stream attention is shown in Fig. 7. 
 
 ![OPTIONS]({{ '/assets/images/trans_two_stream_rel_attn.png' | relative_url }})
 {: class="center" style="width: 70%;"}
-*Fig. 6. Two-stream attention illustrations.
+*Fig. 7. Two-stream attention illustrations.
 
 As is shown in the figure, Two-stream relative attention (i.e., `two_stream_rel_attn`) consists of three main functions: 1) `rel_attn_core` 2) `post_attention` ; 3) `positionwise_ffn` (this is added in the `forward` pass of the model). Implementation details of each component will be presented in the following. 
 
@@ -678,14 +678,14 @@ $$\hat{g_{z_t}^{(m)}} = \text{LayerNorm}(g_{z_t}^{(m-1)} + \text{RelAttn}(g_{z_t
         return output_h, output_g
 ```
 
-In the following, we will have the implementation details of the core relative positional attention operations ( i.e., `rel_attn_core`). Note that the backbone of this, is the scaled Dot-Product Attention described in [Transformer](https://arxiv.org/pdf/1706.03762.pdf), and shown in Fig. 6. :
+In the following, we will have the implementation details of the core relative positional attention operations ( i.e., `rel_attn_core`). Note that the backbone of this, is the scaled Dot-Product Attention described in [Transformer](https://arxiv.org/pdf/1706.03762.pdf), and shown in Fig. 8. :
 
 
 $$ \text{Attention}(Q, K, V) = \text{softmax}(\frac{Q K^\top}{\sqrt{d_k}})V $$
 
 ![OPTIONS]({{ '/assets/images/ self-attention-calculation.png' | relative_url }})
 {: class="center" style="width: 99%;"}
-*Fig. 6. The self-attention calculation in matrix form. [Image source](http://jalammar.github.io/illustrated-transformer/)*
+*Fig. 8. The self-attention calculation in matrix form. [Image source](http://jalammar.github.io/illustrated-transformer/)*
 
 Also note that that the attention score consists of three components: 1) content based attention score (i.e., `ac`); 2) position based attention score (i.e., `bd`) 3); segment based attention score (i.e., `ef`). 
 
@@ -724,7 +724,7 @@ def rel_attn_core(self, q_head, k_head_h, v_head_h, k_head_r, seg_embed, seg_mat
 
     return attn_vec
 ```
-following function performs relative shift to form the relative attention score. Considering a tensor like the one shown in Fig. 4, this function captures the $$\color{red}{red}$$ slices shown in the figure. 
+following function performs relative shift to form the relative attention score. Considering a tensor like the one shown in Fig. 5, this function captures the $$\color{red}{red}$$ slices shown in the figure. 
 
 ```python
 def rel_shift(self, x, klen=-1):
@@ -738,7 +738,7 @@ def rel_shift(self, x, klen=-1):
     return x   # [seq_len x klen x bsz x n_head]
 ```
 
-Following function `post_attention`, does Post-attention processing. In other words, it projects last dimension back to the $$d_{model}$$, adds residual connection, and applies layer normalization as described earlier and shown in the Fig. 6. 
+Following function `post_attention`, does Post-attention processing. In other words, it projects last dimension back to the $$d_{model}$$, adds residual connection, and applies layer normalization as described earlier and shown in the Fig. 7. 
 
 ```python
 def post_attention(self, h, attn_vec, residual=True):
@@ -756,7 +756,7 @@ def post_attention(self, h, attn_vec, residual=True):
     return output  #[seq_len x bsz x dmodel]; seq_len or q_len
 ```
 
-The last part of the Two-stream relative attention is the `positionwise_ffn` function, also shown in Fig. 6. which applies a fully connected feed-forward layer (i.e., conv1), with a non linear activation function (typically relu), and then adding the residual connection. Following formula summarizes this:
+The last part of the Two-stream relative attention is the `positionwise_ffn` function, also shown in Fig. 7. which applies a fully connected feed-forward layer (i.e., conv1), with a non linear activation function (typically relu), and then adding the residual connection. Following formula summarizes this:
 
 
 $$\text{LayerNorm}(input + \text{activation}(\text{conv1}(input))$$

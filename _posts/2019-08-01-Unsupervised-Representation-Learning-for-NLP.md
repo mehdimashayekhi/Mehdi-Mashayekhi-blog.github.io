@@ -170,7 +170,11 @@ Fig. 2 (c) presents an overview of the proposed permutation language modeling wi
 
 ### Relative Positional Encodings
 
-In the standard Transformer, the sequence order information is provided by a matrix of positional encodings, indicated as $$U \in  R^{L_{i} ×d }$$ where the i-th row $$ U_{i} $$ corresponds to the i-th $$\color{red}{absolute}$$ position within a segment and $$ L_{max}$$ is the maximum possible length to be modeled. Then, the actual input to the Transformer is the element-wise addition of the positional encodings and word embeddings. 
+In the standard Transformer, the sequence order information is provided by a matrix of positional encodings, indicated as $$U \in  R^{L_{i} ×d }$$ where the i-th row $$ U_{i} $$ corresponds to the i-th $$\color{red}{absolute}$$ position within a segment and $$ L_{max}$$ is the maximum possible length to be modeled. Then, the actual input to the Transformer is the element-wise addition of the positional encodings and word embeddings as shown in Fig. 3. 
+
+![transformer encoder]({{ '/assets/images/transformer-encoder-2.png' | relative_url }})
+{: style="width: 25%;" class="center"}
+*Fig. 3. Recap of Transformer Encoder model architecture. (Image source: [Transformer paper](https://arxiv.org/abs/1706.03762))*
 
 Consider that we have a query of length `seq_len`, a memory of  length `mem_len`, and key of length `klen= mem_len+seq_len`. Note that the relative distance $$(i-j)$$ between query $$q_i$$ and key vector $$k_j$$ can only be integer form 0 to `mem_len+seq_len-1`. So, eventually we want a positional matrix of shape `[(seq_len)  x (mem_len+seq_len)]`.   To get the desired matrix, it’s efficient  to construct a matrix of shape `[(seq_len)  x (mem_len+2*seq_len)]`, and then sliced it out to get the desired parts and reshape. Fig. 4 shows an example in which we have a memory of length 3, a sequence of length 5, and a tensor of shape `[5 x (3+2*5)]`. And imagine query in reversed order. So the relative distance for the first token of query, varies from 5 to 12, and so on and so forth. The red rectangles show the desired slices for each token of the query. Look at the code snippets below on the implementation details.  
 

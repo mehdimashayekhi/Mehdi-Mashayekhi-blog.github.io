@@ -150,11 +150,9 @@ For unselected tokens, their query representations do not need to be computed.
 
 
 ## Incorporating Ideas from Transformer-XL
-TBD
+
 ### Segment-level Recurrence
-![OPTIONS]({{ '/assets/images/Transformer-XL-segment-level recurrence.png' | relative_url }})
-{: class="center" style="width: 90%;"}
-*Fig. 3. Transformer-XL with segment-level recurrence. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1901.02860.pdf))*
+Assume we have two segments taken from a long sequences; i.e., $$ \tilde{x}= s_{1:T}$$, and $$x=s_{ T+1:2T }$$. Let $$\tilde{z}$$ and $$z$$ be permutations of $$[1···T]$$ and [T + 1 · · · 2T ] respectively. Then, based on the permutation $$\tilde{z}$$, we process the first segment, and then cache the result content representations $$\tilde{h}^{(m)}$$ for each layer $$m$$. Then, for the next segment $$x$$, the attention update with memory can be written as :
 
 $$
 \begin{aligned}
@@ -162,7 +160,13 @@ $$
 \end{aligned}
 $$
 
-where where the function $$SG(·)$$ stands for stop-gradient, and $$\big[.,.\big]$$ indicates concatenation along the sequence dimension. The query stream can be computed in the same way. Fig. 2 (c) presents an overview of the proposed permutation language modeling with two-stream attention. 
+where where the function $$SG(·)$$ stands for stop-gradient, and $$\big[.,.\big]$$ indicates concatenation along the sequence dimension. The query stream can be computed in the same way. Fig. 3 shows this idea. 
+
+Fig. 2 (c) presents an overview of the proposed permutation language modeling with two-stream attention. 
+
+![OPTIONS]({{ '/assets/images/Transformer-XL-segment-level recurrence.png' | relative_url }})
+{: class="center" style="width: 90%;"}
+*Fig. 3. Transformer-XL with segment-level recurrence. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1901.02860.pdf))*
 
 ### Relative Positional Encodings
 

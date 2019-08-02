@@ -152,7 +152,7 @@ For unselected tokens, their query representations do not need to be computed.
 ## Incorporating Ideas from Transformer-XL
 
 ### Segment-level Recurrence
-Assume we have two segments taken from a long sequences; i.e., $$ \tilde{x}= s_{1:T}$$, and $$x=s_{ T+1:2T }$$. Let $$\tilde{z}$$ and $$z$$ be permutations of $$[1···T]$$ and [T + 1 · · · 2T ] respectively. Then, based on the permutation $$\tilde{z}$$, we process the first segment, and then cache the result content representations $$\tilde{h}^{(m)}$$ for each layer $$m$$. Then, for the next segment $$x$$, the attention update with memory can be written as :
+Assume we have two segments taken from a long sequences; i.e., $$ \tilde{x}= s_{1:T}$$, and $$x=s_{ T+1:2T }$$. Let $$\tilde{z}$$ and $$z$$ be permutations of $$[1···T]$$ and $$[T + 1 · · · 2T ]$$ respectively. Then, based on the permutation $$\tilde{z}$$, we process the first segment, and then cache the result content representations $$\tilde{h}^{(m)}$$ for each layer $$m$$. Then, for the next segment $$x$$, the attention update with memory can be written as :
 
 $$
 \begin{aligned}

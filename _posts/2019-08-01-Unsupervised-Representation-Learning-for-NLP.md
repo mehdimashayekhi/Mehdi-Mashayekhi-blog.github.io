@@ -853,6 +853,8 @@ for num_epoch in range(args.num_epoch):
         mems = new_mems
 ```
 
+That’s it! I know it was a long read, but hopefully you find it helpful!
+
 ---
 
 *If you notice mistakes and errors in this post, please don't hesitate to contact me at [mehdi dot mashayekhi dot 65 at gmail dot com]*

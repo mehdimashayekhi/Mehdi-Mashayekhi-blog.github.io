@@ -152,6 +152,7 @@ For unselected tokens, their query representations do not need to be computed.
 ## Incorporating Ideas from Transformer-XL
 
 ### Segment-level Recurrence
+
 Assume we have two segments taken from a long sequences; i.e., $$ \tilde{x}= s_{1:T}$$, and $$x=s_{ T+1:2T }$$. Let $$\tilde{z}$$ and $$z$$ be permutations of $$[1···T]$$ and $$[T + 1 · · · 2T ]$$ respectively. Then, based on the permutation $$\tilde{z}$$, we process the first segment, and then cache the result content representations $$\tilde{h}^{(m)}$$ for each layer $$m$$. Then, for the next segment $$x$$, the attention update with memory can be written as :
 
 $$
@@ -177,6 +178,8 @@ In the standard Transformer, the sequence order information is provided by a mat
 *Fig. 4. Recap of Transformer Encoder model architecture. (Image source: [Transformer paper](https://arxiv.org/abs/1706.03762))*
 
 Positional encoding conceptually presents the model a temporal clue or “bias” about how information should be gathered, or in other words, where to attend. So, rather than including bias statically into the initial embedding, one can inject the same information into the attention score of each layer. 
+
+For example, when a query vector $$q_{\tau,i}$$ attends on the key vectors $$k_{\tau , \leq{i}}$$, it does not need to know the absolute position of each key vector to determine the temporal order of the segment. Instead, it is enough to know the relative distance between each key vector $$k_{\tau,j}$$   and itself $$q_{\tau,i}$$ ,  i.e. $$i−j$$. Practically, one can build a set of relative positional encodings $$R \in  R^{L_{max} ×d }$$, where the i-th row $$R_{i}$$ is a relative distance of $i$ between two positions. 
 
 Consider that we have a query of length `seq_len`, a memory of  length `mem_len`, and key of length `klen= mem_len+seq_len`. Note that the relative distance $$(i-j)$$ between query $$q_i$$ and key vector $$k_j$$ can only be integer form 0 to `mem_len+seq_len-1`. So, eventually we want a positional matrix of shape `[(seq_len)  x (mem_len+seq_len)]`.   To get the desired matrix, it’s efficient  to construct a matrix of shape `[(seq_len)  x (mem_len+2*seq_len)]`, and then sliced it out to get the desired parts and reshape. Fig. 5 shows an example in which we have a memory of length 3, a sequence of length 5, and a tensor of shape `[5 x (3+2*5)]`. And imagine query in reversed order. So the relative distance for the first token of query, varies from 5 to 12, and so on and so forth. The red rectangles show the desired slices for each token of the query. Look at the code snippets below on the implementation details.  
 

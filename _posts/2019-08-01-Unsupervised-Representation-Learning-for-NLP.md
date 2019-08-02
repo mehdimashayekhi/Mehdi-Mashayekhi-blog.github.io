@@ -138,7 +138,7 @@ $$
 \end{aligned}
 $$
 
-Note that $$z_{>c}$$ is chosen as the target because it has the longest context in the sequence given the current factorization order $$z$$. 
+Note that $$z_{>c}$$ is chosen as the target because it has the longest context in the sequence given the current factorization order $$z$$. A hyperparameter $$K$$ is used such that about $$\frac{1}{K}$$ tokens are selected for predictions
 
 ## Incorporating Ideas from Transformer-XL
 TBD

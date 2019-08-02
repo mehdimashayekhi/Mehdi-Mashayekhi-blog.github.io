@@ -91,6 +91,8 @@ $$
 \end{aligned}
 $$
 
+As you can see that XLNet can capture the dependency between the pair (New, York), which is ignored by BERT.
+
 ## Architecture: Two-Stream Self-Attention for Target-Aware Representations
 
 Naive implementation with standard Transformer parameterization may not work. If 

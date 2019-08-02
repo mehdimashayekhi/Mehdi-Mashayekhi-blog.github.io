@@ -60,6 +60,8 @@ In summary, XLNet offers the following advantages:
 4. Incorporating ideas from Transformer-XL including Segment-level Recurrence, and Relative Positional Encodings.
 5. Because the factorization order is arbitrary and the target is ambiguous, a new reformulation of the Transformer-XL model is needed to eliminate the ambiguity. 
 
+In regards to difference between BERT and XLNET, it is worth to mention that, XLNet is pretrained using nearly 10 times more data than BERT. It is also trained with a batch size eight times larger for half as many optimization steps, therefore seeing four times as many sequences in pretraining in comparison to BERT.
+
 In the following we will go over the details of the XLNet model and its implementation details. 
 
 ## Optimization Objective: Permutation Language Modeling
@@ -92,8 +94,6 @@ $$
 $$
 
 As you can see that XLNet can capture the dependency between the pair (New, York), which is ignored by BERT. 
-
-In regards to difference between BERT and XLNET, it is worth to mention that, XLNet is pretrained using nearly 10 times more data than BERT. It is also trained with a batch size eight times larger for half as many optimization steps, therefore seeing four times as many sequences in pretraining in comparison to BERT.
 
 ## Architecture: Two-Stream Self-Attention for Target-Aware Representations
 

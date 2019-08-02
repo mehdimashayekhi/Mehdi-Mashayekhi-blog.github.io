@@ -7,7 +7,7 @@ tags: nlp review long-read
 image: "A3C_vs_A2C.png"
 ---
 
-> Recently there has been a significant progress in regards to unsupervised representation learning in the domain of natural language processing such as OpenAI-GPT, BERT, Transformer-XL, and XLNet. XLNet has achieved SOTA performance on many NLP tasks. Just shortly after XLNet, Facebook AI’s model RoBERTa, outperformed XLNet on GLUE benchmark. The backbone of all these models is based on attention, and language modeling. In my opinion, there are really some interesting ideas in the XLNet paper, and in this post we are going to review this model, and look at some code snippets to fully understand the ideas present in the paper.
+> Recently there has been a significant progress in regards to unsupervised representation learning in the domain of natural language processing such as OpenAI-GPT, BERT, Transformer-XL, and XLNet. XLNet has achieved SOTA performance on many NLP tasks. Just shortly after XLNet, Facebook AI’s model RoBERTa (it is essentially BERT model), outperformed XLNet on GLUE benchmark. The backbone of all these models is based on attention, and language modeling. In my opinion, there are really some interesting ideas in the XLNet paper, and in this post we are going to review this model, and look at some code snippets to fully understand the ideas present in the paper.
 
 
 <!--more-->
@@ -50,7 +50,7 @@ where $$m_{t} = 1$$ indicates $$x_t$$ is masked, and $$H_{\theta}$$ is a Transfo
 
 Even though BERT achieves better performance than pretraining approaches that are based on autoregressive language modeling, there are two main issues with BERT. One is discrepancy between pretraining and fine tuning, since the `[MASK]` tokens are absent during fine tuning. Second is, BERT assumes the predicted tokens are independent of each other given the unmasked tokens, this is the reason to have $$\approx$$ in the above equation.
 
-Considering these pros and cons of AR and AE, the researchers from CMU and Google proposed [XLNet](https://arxiv.org/pdf/1906.08237.pdf), a generalized autoregressive pretraining method that leverages the best of these two modeling. By the time of releasing **XLNet** model, it achieved the state-of-the-art results on 18 NLP tasks. Also note that, just shortly after XLNet, Facebook AI’s model [RoBERTa](https://arxiv.org/abs/1907.11692), outperformed XLNet on GLUE benchmark. 
+Considering these pros and cons of AR and AE, the researchers from CMU and Google proposed [XLNet](https://arxiv.org/pdf/1906.08237.pdf), a generalized autoregressive pretraining method that leverages the best of these two modeling. By the time of releasing **XLNet** model, it achieved the state-of-the-art results on 18 NLP tasks. Also note that, just shortly after XLNet, Facebook AI’s model [RoBERTa](https://arxiv.org/abs/1907.11692), outperformed XLNet on GLUE benchmark. As far as I know; **RoBERTa** is essentially BERT; but has a careful hyper tuning approach, and has a longer training time. 
 
 In summary, XLNet offers the following advantages: 
 

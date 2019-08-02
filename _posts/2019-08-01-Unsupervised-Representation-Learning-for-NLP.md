@@ -154,7 +154,7 @@ For unselected tokens, their query representations do not need to be computed.
 
 ### Segment-level Recurrence
 
-To properly understand a book, occasionally one will need to refer to a word or a sentence that occurs a few pages back. Transformer offers the promise of better capturing long-term dependency. But, in language modeling, Transformers are presently implemented with a fixed-length context. In other words, a long text sequence is truncated into fixed-length segments of a few hundred characters, and each segment is handled independently. 
+To properly understand a book, occasionally one will need to refer to a word or a sentence that occurs a few pages back. Transformer offers the promise of better capturing long-term dependency. But, in language modeling, Transformers are presently implemented with a fixed-length context. In other words, a long text sequence is truncated into fixed-length segments of a few hundred characters, and each segment is handled independently. **Transformer-XL** incorporates the idea of recurrence into Transformer. During training, the representations computed for the previous segment are fixed and cached to be reused as an extended context when the model processes the next new segment.
 
 Assume we have two segments taken from a long sequences; i.e., $$ \tilde{x}= s_{1:T}$$, and $$x=s_{ T+1:2T }$$. Let $$\tilde{z}$$ and $$z$$ be permutations of $$[1···T]$$ and $$[T + 1 · · · 2T ]$$ respectively. Then, based on the permutation $$\tilde{z}$$, we process the first segment, and then cache the result content representations $$\tilde{h}^{(m)}$$ for each layer $$m$$. Then, for the next segment $$x$$, the attention update with memory can be written as :
 

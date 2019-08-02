@@ -176,10 +176,6 @@ Consider that we have a query of length `seq_len`, a memory of  length `mem_len`
 {: class="center" style="width: 80%;"}
 *Fig. 4. Relative positional encoding illustration.
 
-## Modeling Multiple Segments
-
-TBD
-
 ## Code Snippets 
 
 Note that the authors, have released the full implementation [here]( https://github.com/zihangdai/xlnet). My goal here is to summarize the implementation of important components of the model, provide additional comments, and have the algorithm and implementation in one place.

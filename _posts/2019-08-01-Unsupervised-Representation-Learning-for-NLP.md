@@ -158,11 +158,11 @@ TBD
 
 $$
 \begin{aligned}
-& h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},\mathbf{KV}=\big[\tilde{h}^{(m-1)}, h_{z\leq{t}}^{(m-1)}\big]; \theta)
+& h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},\mathbf{KV}=\big[SG(\tilde{h}^{(m-1)}), h_{z\leq{t}}^{(m-1)}\big]; \theta)
 \end{aligned}
 $$
 
-where $$\big[.,.\big]$$ indicates concatenation along the sequence dimension. The query stream can be computed in the same way. Fig. 2 (c) presents an overview of the proposed permutation language modeling with two-stream attention. 
+where where the function $$SG(·)$$ stands for stop-gradient, and $$\big[.,.\big]$$ indicates concatenation along the sequence dimension. The query stream can be computed in the same way. Fig. 2 (c) presents an overview of the proposed permutation language modeling with two-stream attention. 
 
 ### Relative Positional Encodings
 

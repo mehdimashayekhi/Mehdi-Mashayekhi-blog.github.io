@@ -122,7 +122,7 @@ The first layer query stream is initialized with a trainable vector, i.e. $$g_{i
 
 $$g_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=g_{z_t}^{(m-1)},\mathbf{KV}=h_{z<t}^{(m-1)}; \theta)$$
 
-$$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},,\mathbf{KV}=h_{z\leq{t}}^{(m-1)}; \theta)$$
+$$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},\mathbf{KV}=h_{z\leq{t}}^{(m-1)}; \theta)$$
 
 ![OPTIONS]({{ '/assets/images/Two-Stream-Self-Attention.png' | relative_url }})
 {: class="center" style="width: 99%;"}
@@ -155,6 +155,9 @@ TBD
 ![OPTIONS]({{ '/assets/images/Transformer-XL-segment-level recurrence.png' | relative_url }})
 {: class="center" style="width: 90%;"}
 *Fig. 3. Transformer-XL with segment-level recurrence. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1901.02860.pdf))*
+
+$$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},\mathbf{KV}=\big[h_{z\leq{t}}^{(m-1)}\big]; \theta)$$
+
 ### Relative Positional Encodings
 
 Consider that we have a query of length `seq_len`, a memory of  length `mem_len`, and key of length `klen= mem_len+seq_len`. Note that the relative distance $$(i-j)$$ between query $$q_i$$ and key vector $$k_j$$ can only be integer form 0 to `mem_len+seq_len-1`. So, eventually we want a positional matrix of shape `[(seq_len)  x (mem_len+seq_len)]`.   To get the desired matrix, it’s efficient  to construct a matrix of shape `[(seq_len)  x (mem_len+2*seq_len)]`, and then sliced it out to get the desired parts and reshape. Fig. 4 shows an example in which we have a memory of length 3, a sequence of length 5, and a tensor of shape `[5 x (3+2*5)]`. And imagine query in reversed order. So the relative distance for the first token of query, varies from 5 to 12, and so on and so forth. The red rectangles show the desired slices for each token of the query. Look at the code snippets below on the implementation details.  

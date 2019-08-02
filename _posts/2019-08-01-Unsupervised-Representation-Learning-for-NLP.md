@@ -50,7 +50,9 @@ where $$m_{t} = 1$$ indicates $$x_t$$ is masked, and $$H_{\theta}$$ is a Transfo
 
 Even though BERT achieves better performance than pretraining approaches that are based on autoregressive language modeling, there are two main issues with BERT. One is discrepancy between pretraining and fine tuning, since the `[MASK]` tokens are absent during fine tuning. Second is, BERT assumes the predicted tokens are independent of each other given the unmasked tokens, this is the reason to have $$\approx$$ in the above equation.
 
-Considering these pros and cons of AR and AE, the researchers from CMU and Google proposed [XLNet](https://arxiv.org/pdf/1906.08237.pdf), a generalized autoregressive pretraining method that leverages the best of these two modeling. More specifically, XLNet offers the following advantages: 
+Considering these pros and cons of AR and AE, the researchers from CMU and Google proposed [XLNet](https://arxiv.org/pdf/1906.08237.pdf), a generalized autoregressive pretraining method that leverages the best of these two modeling. By the time of releasing **XLNet** model, it achieved the state-of-the-art results on 18 NLP tasks. Also note that, just shortly after XLNet, Facebook AI’s model [RoBERTa](https://arxiv.org/abs/1907.11692), outperformed XLNet on GLUE benchmark. 
+
+In summary, XLNet offers the following advantages: 
 
 1. Enables learning bidirectional contexts by simply maximizing the expected likelihood over **all possible permutations of the factorization order**. In contrast to a fixed forward or backward factorization. As a result, in expectation, each position learns to utilize contextual information from all positions, and captures bidirectional context. 
 2. Since it does not rely on data corruption, it does not suffer from the pretrain-finetune discrepancy
@@ -881,3 +883,5 @@ Cited as:
 [5] Zhilin Yang, et al. [Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context](https://arxiv.org/pdf/1901.02860.pdf). 2019.
 
 [6] Zhilin Yang, et al. [XLNet: Generalized Autoregressive Pretraining for Language Understanding](https://arxiv.org/pdf/1906.08237.pdf). 2019.
+
+[7] Yinhan Liu, et al. [RoBERTa: A Robustly Optimized BERT Pretraining Approach](https://arxiv.org/abs/1907.11692). 2019.

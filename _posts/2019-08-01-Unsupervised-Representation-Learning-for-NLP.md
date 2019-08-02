@@ -162,7 +162,7 @@ $$
 \end{aligned}
 $$
 
-where $$\big[.,.\big]$$ indicates concatenation along the sequence dimension. 
+where $$\big[.,.\big]$$ indicates concatenation along the sequence dimension. The query stream can be computed in the same way. Fig. 2 (c) presents an overview of the proposed permutation language modeling with two-stream attention. 
 
 ### Relative Positional Encodings
 

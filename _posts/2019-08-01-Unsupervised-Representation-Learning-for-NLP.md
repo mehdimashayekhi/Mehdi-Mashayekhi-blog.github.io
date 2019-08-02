@@ -156,7 +156,7 @@ TBD
 {: class="center" style="width: 90%;"}
 *Fig. 3. Transformer-XL with segment-level recurrence. (Image source: [Zhilin Yang, et al., 2019](https://arxiv.org/pdf/1901.02860.pdf))*
 
-$$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},\mathbf{KV}=\big[h_{z\leq{t}}^{(m-1)}\big]; \theta)$$
+$$h_{z_t}^{(m)} \leftarrow Attention(\mathbf{Q}=h_{z_t}^{(m-1)},\mathbf{KV}=\big[\tilde{h}^{(m-1)}; h_{z\leq{t}}^{(m-1)}\big]; \theta)$$
 
 ### Relative Positional Encodings
 

@@ -170,7 +170,7 @@ Fig. 2 (c) presents an overview of the proposed permutation language modeling wi
 
 ### Relative Positional Encodings
 
-In the standard Transformer, the sequence order information is provided by a matrix of positional encodings, indicated as $$U \in  R^{L_{i} ×d }$$ where the i-th row $$ U_{i} $$ corresponds to the i-th $$\color{red}{absolute}$$ position within a segment and $$ L_{max}$$ is the maximum possible length to be modeled. Then, the actual input to the Transformer is the element-wise addition of the positional encodings and word embeddings as shown in Fig. 3. 
+In the standard Transformer, the sequence order information is provided by a matrix of positional encodings, indicated as $$U \in  R^{L_{max} ×d }$$ where the i-th row $$ U_{i} $$ corresponds to the i-th $$\color{red}{absolute}$$ position within a segment and $$ L_{max}$$ is the maximum possible length to be modeled. Then, the actual input to the Transformer is the element-wise addition of the positional encodings and word embeddings as shown in Fig. 3. 
 
 ![transformer encoder]({{ '/assets/images/transformer-encoder-2.png' | relative_url }})
 {: style="width: 25%;" class="center"}
